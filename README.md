@@ -1,1 +1,1 @@
-# rapidjs
+# rapid.js
