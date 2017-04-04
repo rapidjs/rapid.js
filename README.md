@@ -1,4 +1,7 @@
-# rapid.js (alpha)
+<p align="center">
+<img src="http://rapidjs.io/images/rapid-logo-gh-readme.png" />
+</p>
+
 A Fluent Interface To Rapidly Interact With APIs 
 Create simple, resusable, and cleaner wrappers and interfaces for your API requests.
 
