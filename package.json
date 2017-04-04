@@ -1,14 +1,16 @@
 {
   "name": "rapid.js",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "",
-  "main": "src/rapid.js",
+  "main": "dist/rapid.js",
   "scripts": {
-    "test": "nyc ava"
+    "test": "nyc ava",
+    "compile": "babel --presets=es2015 -d dist src",
+    "prepublish": "npm run compile"
   },
   "babel": {
     "presets": [
-      "es2015-node5"
+      "es2015"
     ]
   },
   "repository": {
@@ -30,6 +32,8 @@
   "homepage": "https://github.com/rapidjs/rapid.js#readme",
   "devDependencies": {
     "ava": "^0.18.2",
+    "babel-cli": "^6.24.0",
+    "babel-preset-es2015": "^6.24.0",
     "nyc": "^10.2.0",
     "sinon": "^2.1.0"
   },

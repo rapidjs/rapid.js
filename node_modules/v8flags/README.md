@@ -23,6 +23,7 @@ v8flags(function (err, results) {
 
 ## Release History
 
+* 2017-03-31 - v2.0.12 - don't pollute global namespace
 * 2015-12-07 - v2.0.11 - cache to temp directory if home is present but unwritable
 * 2015-07-28 - v2.0.10 - don't throw for electron runtime, just call back with empty array
 * 2015-06-25 - v2.0.9 - call back with flags even if cache file can't be written

@@ -42,7 +42,7 @@ function tryOpenConfig (configpath, cb) {
     // if the config file is valid, it should be json and therefore
     // node should be able to require it directly. if this doesn't
     // throw, we're done!
-    content = require(configpath);
+    var content = require(configpath);
     process.nextTick(function () {
       cb(null, content);
     });
