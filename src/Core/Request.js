@@ -3,8 +3,8 @@
  */
 
 import Routes from './Routes';
-import _isArray from 'lodash.isarray';
-import _defaultsDeep from 'lodash.defaultsdeep';
+var _isArray = require('lodash').isArray;
+var _defaultsDeep = require('lodash').defaultsDeep;
 
 class Request extends Routes {
     constructor (config) {

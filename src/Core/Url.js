@@ -3,7 +3,7 @@
  */
 
 import Core from './Core';
-import _isArray from 'lodash.isarray';
+var _isArray = require('lodash').isArray;
 
 class Url extends Core {
     constructor (config) {

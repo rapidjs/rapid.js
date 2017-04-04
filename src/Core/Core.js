@@ -3,11 +3,11 @@
  */
 
 import axios from 'axios';
-import _defaultsDeep from 'lodash.defaultsdeep';
+var _defaultsDeep = require('lodash').defaultsDeep;
 
-import Defaults from './../Defaults';
-import Debugger from './../Debugger';
-import Logger from './../Logger';
+import Defaults from './Defaults';
+import Debugger from './../Debug/Debugger';
+import Logger from './../Debug/Logger';
 
 class Core {
     constructor (config) {

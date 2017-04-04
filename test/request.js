@@ -1,6 +1,6 @@
 import test from 'ava';
 import sinon from 'sinon';
-import Rapid from './../resources/assets/js/Interface/Rapid/Rapid';
+import Rapid from './../src/rapid';
 
 var Lobster = new Rapid({ debug: true, modelName: 'Lobster', baseURL: 'http://maine.com/ocean/' });
 

@@ -1,5 +1,5 @@
-import Rapid from './../Rapid';
-import _defaultsDeep from 'lodash.defaultsdeep';
+import Rapid from './Core/Rapid';
+var _defaultsDeep = require('lodash').defaultsDeep;
 
 var authConfig = {
     auth: {

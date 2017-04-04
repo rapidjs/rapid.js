@@ -1,5 +1,5 @@
 import test from 'ava';
-import Rapid from './../resources/assets/js/Interface/Rapid/Rapid';
+import Rapid from './../src/rapid';
 
 let postModel = new Rapid({
     modelName: 'post',

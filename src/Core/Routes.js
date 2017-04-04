@@ -4,7 +4,7 @@
 
 import Url from './Url';
 import pluralize from 'pluralize';
-import _kebabCase from 'lodash.kebabcase';
+var _kebabCase = require('lodash').kebabCase;
 
 class Routes extends Url {
 
