@@ -1,3 +1,3 @@
-import Rapid from './Core/Rapid';
+var Rapid = require('./Core/Rapid');
 
-export default Rapid;
+module.exports = Rapid;

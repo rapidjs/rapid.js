@@ -8,7 +8,7 @@
   },
   "babel": {
     "presets": [
-      "es2015"
+      "es2015-node5"
     ]
   },
   "repository": {
