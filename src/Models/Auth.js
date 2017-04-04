@@ -15,7 +15,7 @@ var authConfig = {
             auth   : 'get'
         },
 
-        authPrefix: false
+        modelPrefix: false
     }
 };
 
@@ -29,19 +29,21 @@ class Auth extends Rapid {
     }
 
     login (credentials) {
-        return this[this.authPrefix].withParams(credentials).buildRequest(this.config.auth.methods.login, this.config.auth.routes.login);
+        return this[this.modelPrefix].withParams(credentials)
+                                    .withOption('auth', credentials)
+                                    .buildRequest(this.config.auth.methods.login, this.config.auth.routes.login);
     }
 
     logout () {
-        return this[this.authPrefix].buildRequest(this.config.auth.methods.logout, this.config.auth.routes.logout);
+        return this[this.modelPrefix].buildRequest(this.config.auth.methods.logout, this.config.auth.routes.logout);
     }
 
     check () {
-        return this[this.authPrefix].buildRequest(this.config.auth.methods.auth, this.config.auth.routes.auth);
+        return this[this.modelPrefix].buildRequest(this.config.auth.methods.auth, this.config.auth.routes.auth);
     }
 
-    get authPrefix () {
-        return this.config.auth.authPrefix ? 'model' : 'any';
+    get modelPrefix () {
+        return this.config.auth.modelPrefix ? 'model' : 'any';
     }
 
 }

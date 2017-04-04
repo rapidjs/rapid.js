@@ -3,8 +3,6 @@
  */
 
 import Routes from './Routes';
-import Debugger from './../Debugger';
-import Logger from './../Logger';
 import _isArray from 'lodash.isarray';
 import _defaultsDeep from 'lodash.defaultsdeep';
 
@@ -77,7 +75,9 @@ class Request extends Routes {
      */
     isAllowedRequestType (type) {
         if(!this.config.allowedRequestTypes.includes(type)) {
-            Logger.warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
+            if(this.config.debug) {
+                this.logger.warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
+            }
 
             return false;
         }
@@ -191,7 +191,7 @@ class Request extends Routes {
      *
      * @param data An object of params: {}, options: {}
      */
-    with (data = {}) {
+    withData (data = {}) {
         this.requestData = _defaultsDeep(data, this.requestData);
 
         return this;

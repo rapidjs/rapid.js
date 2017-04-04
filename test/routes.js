@@ -1,18 +1,38 @@
-// test('current route will reset', t => {
-//
-//     myModel.collection.findBy('key', 'value');
-//
-//     t.is(myModel.config.defaultRoute, myModel.currentRoute);
-//
-// });
-
 import test from 'ava';
+import Rapid from './../resources/assets/js/Interface/Rapid/Rapid';
 
-test.todo('that delimeter will work');
-test.todo('that the route will reset');
-test.todo('that the defaultRoute will work');
-test.todo('that collection routes will work');
-test.todo('that model routes will work');
-test.todo('that delimeted model like some-model will work');
+test('that routeDelimiter will work', t => {
 
-test.todo('consider setting flag when the .model and .collection are set');
+    let postModel = new Rapid({
+        modelName: 'PacificCrestTrail',
+        routeDelimeter: '_',
+        debug: true
+    });
+
+    postModel.debugger.logEnabled = false;
+
+    postModel.find(1);
+    t.is('api/pacific_crest_trail/1', postModel.debugger.data.lastUrl);
+
+    postModel.all();
+    t.is('api/pacific_crest_trails', postModel.debugger.data.lastUrl);
+
+});
+
+test('that caseSensitive will work', t => {
+
+    let postModel = new Rapid({
+        modelName: 'PacificCrestTrail',
+        caseSensitive: true,
+        debug: true
+    });
+
+    postModel.debugger.logEnabled = false;
+
+    postModel.find(1);
+    t.is('api/PacificCrestTrail/1', postModel.debugger.data.lastUrl);
+
+    postModel.all();
+    t.is('api/PacificCrestTrails', postModel.debugger.data.lastUrl);
+
+});

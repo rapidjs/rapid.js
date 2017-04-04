@@ -4,6 +4,7 @@
 
 import _isArray from 'lodash.isarray';
 import Request from './Request';
+import _camelCase from 'lodash.camelcase';
 
 class Relationships extends Request {
 
@@ -34,16 +35,16 @@ class Relationships extends Request {
      * @param relation The relation name OR object
      */
     registerHasRelation (type, relation) {
-        let relationRoute = this.getRouteByRelationType(type, relation);
+        let relationRoute = this.getRouteByRelationType(type, relation),
+            relationName = this.getRelationshipName(type, relation);
 
-        this[relationRoute] = (
+        this.$rels[relationName] = (
             (type, route) => {
                 return (primaryKey, foreignKey) => { return this.hasRelationship(type, route, primaryKey, foreignKey); }
             }
         )(type, relationRoute);
 
-        // add to methodRoutes for debugging
-        this.methodRoutes.push(relationRoute);
+        this.registerRelationship(relationName, relation);
 
         return this;
     }
@@ -100,16 +101,16 @@ class Relationships extends Request {
      */
     registerBelongsTo (type, relation) {
 
-        let relationRoute = this.getRouteByRelationType(type, relation);
+        let relationRoute = this.getRouteByRelationType(type, relation),
+            relationName = this.getRelationshipName(type, relation);
 
-        this[relationRoute] = (
+        this.$rels[relationName] = (
             (type, route) => {
                 return (primaryKey, foreignKey, after) => { return this.belongsToRelationship(type, route, primaryKey, foreignKey, after); }
             }
         )(type, relationRoute);
 
-        // add to methodRoutes for debugging
-        this.methodRoutes.push(relationRoute);
+        this.registerRelationship(relationName, relation);
 
         return this;
     }
@@ -182,11 +183,24 @@ class Relationships extends Request {
 
         if(typeof relation == 'object') {
             relationRoute = relation.routes[routes[type]];
-
-            this.relationships[relationRoute] = relation;
         }
 
         return relationRoute;
+    }
+
+    registerRelationship (relationRoute, relation) {
+
+        // add to methodRoutes for debugging
+        this.methodRoutes.push(relationRoute);
+
+        if(typeof relation == 'object') {
+            // add to rels
+            this.rels[relationRoute] = relation;
+        }
+    }
+
+    getRelationshipName (type, relation) {
+        return _camelCase(this.getRouteByRelationType(type, relation))
     }
 }
 

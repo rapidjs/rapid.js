@@ -1,10 +1,10 @@
 /**
- * All the CRUD 
+ * All the CRUD
  */
 
-import Relationships from './Relationships';
+import Request from './Request';
 
-class Crud extends Relationships {
+class Crud extends Request {
     /**
      * Model Only Functions
      */
@@ -95,7 +95,7 @@ class Crud extends Relationships {
         }
 
         // needs to prepend
-        this.setURLParams(params, true);
+        this.prepend(params);
 
         return this;
     }

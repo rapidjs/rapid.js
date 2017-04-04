@@ -29,15 +29,12 @@ class Core {
      * Setup the all of properties.
      */
     initialize (config) {
-        this.methodRoutes  = []; // for debugging and registering routes
-
-        this.relationships = {}; // any relationships that are now accessible
 
         this.config = config;
 
-        this.boot();
-
         this.initializeRoutes();
+
+        this.boot();
 
         this.resetURLParams();
 
@@ -48,6 +45,8 @@ class Core {
         this.setCurrentRoute(this.config.defaultRoute);
 
         this.initializeDebugger();
+
+        this.initializeLogger();
 
         this.resetRequestData();
     }
@@ -65,6 +64,13 @@ class Core {
      */
     initializeDebugger () {
         this.debugger = this.config.debug ? new Debugger(this) : false;
+    }
+
+    /**
+     * Initialze the debugger if debug is set to true.
+     */
+    initializeLogger () {
+        this.logger = this.config.debug ? Logger : false;
     }
 
     /**
@@ -100,7 +106,7 @@ class Core {
      */
 
     set debug (val) {
-        Logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
+        if(this.config.debug) this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
     }
 
     get collection () {

@@ -1,11 +1,10 @@
-import Logger from './Logger';
 import qs from 'qs';
 
 export default class {
     constructor (caller) {
         this.caller           = caller;
         this.data             = {};
-        this.logEnabled       = false;
+        this.logEnabled       = true;
     }
 
     fakeRequest (type, url) {
@@ -15,8 +14,8 @@ export default class {
         this.setLastRequest(...arguments);
 
         if(this.logEnabled) {
-            Logger.debug(`${this.caller.config.modelName} made a ${type.toUpperCase()} request (${lastUrl})`);
-            Logger.log(params);
+            this.caller.logger.debug(`${this.caller.config.modelName} made a ${type.toUpperCase()} request (${lastUrl})`);
+            this.caller.logger.log(params);
         }
 
         this.caller.afterRequest({});
@@ -28,7 +27,7 @@ export default class {
         let lastUrl = '';
 
         if(['put', 'post', 'patch'].includes(type)) {
-            lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/')) + '?'+ qs.stringify(params);
+            lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/'));
         } else {
             let urlParams = params.params,
                 stringified = urlParams ? '?' + qs.stringify(urlParams) : '';
@@ -50,34 +49,5 @@ export default class {
             data,
             options
         };
-    }
-
-    listRoutes () {
-        // let coreFunctions = {
-        //     'create' : {
-        //         method: '',
-        //         params: []
-        //     },
-        //     'find' : {
-        //         method: '',
-        //         params: []
-        //     },
-        //     'all' : {
-        //         method: '',
-        //         params: []
-        //     },
-        //     'update' : {
-        //         method: '',
-        //         params: []
-        //     },
-        //     'destroy' : {
-        //         method: '',
-        //         params: []
-        //     }
-        // };
-        //
-        // console.log(this.caller.methodRoutes);
-        //
-        // coreFunctions.concat(this.caller.methodRoutes).forEach(func => this.caller[func].call(this.caller));
     }
 }
