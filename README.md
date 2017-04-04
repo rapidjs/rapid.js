@@ -2,6 +2,8 @@
 A Fluent Interface To Rapidly Interact With APIs 
 Create simple, resusable, and cleaner wrappers and interfaces for your API requests.
 
+*This is the first release of rapid and it is still in development. Please report any bugs to the github page.*
+
 Read the official docs at [http://rapidjs.io](http://rapidjs.io).
 
 ### Define Simple Models
