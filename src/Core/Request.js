@@ -3,8 +3,7 @@
  */
 
 import Routes from './Routes';
-var _isArray = require('lodash').isArray;
-var _defaultsDeep = require('lodash').defaultsDeep;
+import { isArray, defaultsDeep } from 'lodash';
 
 class Request extends Routes {
     constructor (config) {
@@ -23,11 +22,11 @@ class Request extends Routes {
 
         // axios handles the options differently for the request type
         if(['put', 'post', 'patch'].includes(type)) {
-            params = _defaultsDeep(params, this.config.globalParameters);
+            params = defaultsDeep(params, this.config.globalParameters);
             requestData.push(params);
             requestData.push(options);
         } else {
-            options.params = _defaultsDeep(params, this.config.globalParameters);
+            options.params = defaultsDeep(params, this.config.globalParameters);
             requestData.push(options);
         }
 
@@ -95,7 +94,7 @@ class Request extends Routes {
             this.resetURLParams();
         }
 
-        let url = _isArray(urlParams) ? this.makeUrl(...urlParams) : this.makeUrl(urlParams);
+        let url = isArray(urlParams) ? this.makeUrl(...urlParams) : this.makeUrl(urlParams);
 
         return this.request(type, url);
     }
@@ -192,7 +191,7 @@ class Request extends Routes {
      * @param data An object of params: {}, options: {}
      */
     withData (data = {}) {
-        this.requestData = _defaultsDeep(data, this.requestData);
+        this.requestData = defaultsDeep(data, this.requestData);
 
         return this;
     }

@@ -1,3 +1,3 @@
-var Rapid = require('./Core/Rapid');
+import Rapid from './Core/Rapid';
 
 module.exports = Rapid;
