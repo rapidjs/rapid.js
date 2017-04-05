@@ -10,6 +10,8 @@ var _Rapid2 = require('./Core/Rapid');
 
 var _Rapid3 = _interopRequireDefault(_Rapid2);
 
+var _lodash = require('lodash');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -17,8 +19,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _defaultsDeep = require('lodash').defaultsDeep;
 
 var authConfig = {
     auth: {
@@ -44,7 +44,7 @@ var Auth = function (_Rapid) {
     function Auth(config) {
         _classCallCheck(this, Auth);
 
-        config = _defaultsDeep(config, authConfig);
+        config = (0, _lodash.defaultsDeep)(config, authConfig);
         config.modelName = config.modelName ? config.modelName : 'auth';
 
         return _possibleConstructorReturn(this, (Auth.__proto__ || Object.getPrototypeOf(Auth)).call(this, config));

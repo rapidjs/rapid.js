@@ -12,6 +12,8 @@ var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _lodash = require('lodash');
+
 var _Defaults = require('./Defaults');
 
 var _Defaults2 = _interopRequireDefault(_Defaults);
@@ -28,15 +30,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _defaultsDeep = require('lodash').defaultsDeep;
-
 var Core = function () {
     function Core(config) {
         _classCallCheck(this, Core);
 
         config = config || {};
 
-        config = _defaultsDeep(config, _Defaults2.default);
+        config = (0, _lodash.defaultsDeep)(config, _Defaults2.default);
 
         this.initialize(config);
     }
@@ -121,7 +121,7 @@ var Core = function () {
     }, {
         key: 'initializeAPI',
         value: function initializeAPI() {
-            this.api = _axios2.default.create(_defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+            this.api = _axios2.default.create((0, _lodash.defaultsDeep)({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
         }
 
         /**

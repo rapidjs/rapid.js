@@ -10,6 +10,8 @@ var _Routes2 = require('./Routes');
 
 var _Routes3 = _interopRequireDefault(_Routes2);
 
+var _lodash = require('lodash');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -21,9 +23,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * The Re-Quest to find the API
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
-
-var _isArray = require('lodash').isArray;
-var _defaultsDeep = require('lodash').defaultsDeep;
 
 var Request = function (_Routes) {
     _inherits(Request, _Routes);
@@ -44,17 +43,17 @@ var Request = function (_Routes) {
     _createClass(Request, [{
         key: 'parseRequestData',
         value: function parseRequestData(type) {
-            var requestData = [],
-                params = this.requestData.params,
-                options = this.requestData.options;
+            var requestData = [];
+            var options = this.requestData.options;
+            var params = this.requestData.params;
 
             // axios handles the options differently for the request type
             if (['put', 'post', 'patch'].includes(type)) {
-                params = _defaultsDeep(params, this.config.globalParameters);
+                params = (0, _lodash.defaultsDeep)(params, this.config.globalParameters);
                 requestData.push(params);
                 requestData.push(options);
             } else {
-                options.params = _defaultsDeep(params, this.config.globalParameters);
+                options.params = (0, _lodash.defaultsDeep)(params, this.config.globalParameters);
                 requestData.push(options);
             }
 
@@ -133,7 +132,7 @@ var Request = function (_Routes) {
                 this.resetURLParams();
             }
 
-            var url = _isArray(urlParams) ? this.makeUrl.apply(this, _toConsumableArray(urlParams)) : this.makeUrl(urlParams);
+            var url = (0, _lodash.isArray)(urlParams) ? this.makeUrl.apply(this, _toConsumableArray(urlParams)) : this.makeUrl(urlParams);
 
             return this.request(type, url);
         }
@@ -285,7 +284,7 @@ var Request = function (_Routes) {
         value: function withData() {
             var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-            this.requestData = _defaultsDeep(data, this.requestData);
+            this.requestData = (0, _lodash.defaultsDeep)(data, this.requestData);
 
             return this;
         }

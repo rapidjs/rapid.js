@@ -28,8 +28,8 @@ var _class = function () {
     _createClass(_class, [{
         key: 'fakeRequest',
         value: function fakeRequest(type, url) {
-            var params = this.caller.parseRequestData(type),
-                lastUrl = this.setLastUrl.apply(this, [type, url].concat(_toConsumableArray(params)));
+            var params = this.caller.parseRequestData(type);
+            var lastUrl = this.setLastUrl.apply(this, [type, url].concat(_toConsumableArray(params)));
 
             this.setLastRequest.apply(this, arguments);
 
@@ -52,8 +52,8 @@ var _class = function () {
             if (['put', 'post', 'patch'].includes(type)) {
                 lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/'));
             } else {
-                var urlParams = params.params,
-                    stringified = urlParams ? '?' + _qs2.default.stringify(urlParams) : '';
+                var urlParams = params.params;
+                var stringified = urlParams ? '?' + _qs2.default.stringify(urlParams) : '';
 
                 lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/')) + stringified;
             }

@@ -56,9 +56,9 @@ var Crud = function (_Request) {
     }, {
         key: 'updateOrDestroy',
         value: function updateOrDestroy(method) {
-            var urlParams = [],
-                id = arguments.length <= 1 ? undefined : arguments[1],
-                data = arguments.length <= 2 ? undefined : arguments[2];
+            var urlParams = [];
+            var id = arguments.length <= 1 ? undefined : arguments[1];
+            var data = arguments.length <= 2 ? undefined : arguments[2];
 
             if (Number.isInteger(id)) {
                 this.id(id);
