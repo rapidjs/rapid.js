@@ -4,7 +4,7 @@
 
 import Url from './Url';
 import pluralize from 'pluralize';
-var _kebabCase = require('lodash').kebabCase;
+import { kebabCase } from 'lodash';
 
 class Routes extends Url {
 
@@ -39,7 +39,7 @@ class Routes extends Url {
         if(this.config.routes[route] != '') {
             newRoute = this.config.routes[route];
         } else {
-            newRoute = _kebabCase(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);
+            newRoute = kebabCase(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);
 
             if(this.config.caseSensitive) {
                 newRoute = formattedRoute[route];

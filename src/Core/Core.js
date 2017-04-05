@@ -3,7 +3,7 @@
  */
 
 import axios from 'axios';
-var _defaultsDeep = require('lodash').defaultsDeep;
+import { defaultsDeep } from 'lodash';
 
 import Defaults from './Defaults';
 import Debugger from './../Debug/Debugger';
@@ -13,7 +13,7 @@ class Core {
     constructor (config) {
         config = config || {};
 
-        config = _defaultsDeep(config, Defaults);
+        config = defaultsDeep(config, Defaults);
 
         this.initialize(config);
     }
@@ -77,7 +77,7 @@ class Core {
      * Initialize the API.
      */
     initializeAPI () {
-        this.api = axios.create(_defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+        this.api = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
     }
 
     /**
