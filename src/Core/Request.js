@@ -17,9 +17,9 @@ class Request extends Routes {
      * @param type The request type
      */
     parseRequestData (type) {
-        let requestData = [],
-            params        = this.requestData.params,
-            options       = this.requestData.options;
+        const requestData = [];
+        const options     = this.requestData.options;
+        let params        = this.requestData.params;
 
         // axios handles the options differently for the request type
         if(['put', 'post', 'patch'].includes(type)) {
@@ -95,7 +95,7 @@ class Request extends Routes {
             this.resetURLParams();
         }
 
-        let url = _isArray(urlParams) ? this.makeUrl(...urlParams) : this.makeUrl(urlParams);
+        const url = _isArray(urlParams) ? this.makeUrl(...urlParams) : this.makeUrl(urlParams);
 
         return this.request(type, url);
     }

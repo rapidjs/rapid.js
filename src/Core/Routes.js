@@ -29,12 +29,12 @@ class Routes extends Url {
      * @param route The key of the route to be set
      */
     setRoute (route) {
-        let newRoute = '',
-            formattedRoute = {
-                model      : this.config.modelName,
-                collection : pluralize(this.config.modelName),
-                any        : ''
-            };
+        let newRoute = '';
+        const formattedRoute = {
+            model      : this.config.modelName,
+            collection : pluralize(this.config.modelName),
+            any        : ''
+        };
 
         if(this.config.routes[route] != '') {
             newRoute = this.config.routes[route];
