@@ -1,5 +1,5 @@
 import Rapid from './Core/Rapid';
-var _defaultsDeep = require('lodash').defaultsDeep;
+import { defaultsDeep } from 'lodash';
 
 var authConfig = {
     auth: {
@@ -22,7 +22,7 @@ var authConfig = {
 class Auth extends Rapid {
 
     constructor (config) {
-        config = _defaultsDeep(config, authConfig);
+        config = defaultsDeep(config, authConfig);
         config.modelName = config.modelName ? config.modelName : 'auth';
 
         super(config);

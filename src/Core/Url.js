@@ -3,7 +3,7 @@
  */
 
 import Core from './Core';
-var _isArray = require('lodash').isArray;
+import { isArray } from 'lodash';
 
 class Url extends Core {
     constructor (config) {
@@ -60,7 +60,7 @@ class Url extends Core {
     setURLParams (urlParams = [], prepend = false, overwrite = false) {
         this.urlParams = this.urlParams || [];
 
-        if(!_isArray(urlParams)) {
+        if(!isArray(urlParams)) {
             urlParams = [urlParams];
         }
 
