@@ -1,7 +1,7 @@
 import Rapid from './Core/Rapid';
 import { defaultsDeep } from 'lodash';
 
-var authConfig = {
+const authConfig = {
     auth: {
         routes: {
             login  : 'login',

@@ -26,9 +26,9 @@ class Crud extends Request {
      * @param ...params Can be either (id, data) OR (data)
      */
     updateOrDestroy(method, ...params) {
-        let urlParams = [],
-            id        = params[0],
-            data      = params[1];
+        const urlParams = [];
+        const id        = params[0];
+        let data        = params[1];
 
         if(Number.isInteger(id)) {
             this.id(id);
@@ -123,7 +123,7 @@ class Crud extends Request {
      * @param value The value to search by
      */
     findBy (key, value) {
-        let urlParams = [key];
+        const urlParams = [key];
 
         if(value) {
             urlParams.push(value);

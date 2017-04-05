@@ -8,8 +8,8 @@ export default class {
     }
 
     fakeRequest (type, url) {
-        let params    = this.caller.parseRequestData(type),
-            lastUrl   = this.setLastUrl(type, url, ...params);
+        const params    = this.caller.parseRequestData(type);
+        const lastUrl   = this.setLastUrl(type, url, ...params);
 
         this.setLastRequest(...arguments);
 
@@ -29,8 +29,8 @@ export default class {
         if(['put', 'post', 'patch'].includes(type)) {
             lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/'));
         } else {
-            let urlParams = params.params,
-                stringified = urlParams ? '?' + qs.stringify(urlParams) : '';
+            const urlParams = params.params;
+            const stringified = urlParams ? '?' + qs.stringify(urlParams) : '';
 
             lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/')) + stringified;
         }
