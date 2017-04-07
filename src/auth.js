@@ -4,15 +4,17 @@ import { defaultsDeep } from 'lodash';
 const authConfig = {
     auth: {
         routes: {
-            login  : 'login',
-            logout : 'logout',
-            auth   : 'auth'
+            login    : 'login',
+            logout   : 'logout',
+            auth     : 'auth',
+            register : 'register'
         },
 
         methods: {
-            login  : 'post',
-            logout : 'post',
-            auth   : 'get'
+            login    : 'post',
+            logout   : 'post',
+            auth     : 'get',
+            register : 'post'
         },
 
         modelPrefix: false
@@ -28,7 +30,7 @@ class Auth extends Rapid {
         super(config);
     }
 
-    login (credentials) {
+    login (credentials = {}) {
         return this[this.modelPrefix].withParams(credentials)
                                     .withOption('auth', credentials)
                                     .buildRequest(this.config.auth.methods.login, this.config.auth.routes.login);
@@ -40,6 +42,11 @@ class Auth extends Rapid {
 
     check () {
         return this[this.modelPrefix].buildRequest(this.config.auth.methods.auth, this.config.auth.routes.auth);
+    }
+
+    register (credentials = {}) {
+        return this[this.modelPrefix].withParams(credentials)
+                                     .buildRequest(this.config.auth.methods.register, this.config.auth.routes.register);
     }
 
     get modelPrefix () {
