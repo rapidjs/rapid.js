@@ -23,6 +23,10 @@ class Url extends Core {
             params.push('');
         }
 
+        if(this.config.extension) {
+            params.push(this.config.extension);
+        }
+
         const url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
 
         // reset currentRoute

@@ -7,6 +7,8 @@ export default {
 
     trailingSlash: false,
 
+    extension: '',
+
     caseSensitive: false,
 
     routeDelimeter: '-',
