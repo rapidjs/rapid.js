@@ -2,7 +2,7 @@
 <img src="http://rapidjs.io/images/rapid-logo-gh-readme.png" />
 </p>
 
-A Fluent Interface To Rapidly Interact With APIs 
+A Fluent Interface To Rapidly Interact With APIs
 Create simple, resusable, and cleaner wrappers and interfaces for your API requests.
 
 *This is the first release of rapid and it is still in development. Please report any bugs to the github page.*
@@ -11,30 +11,30 @@ Read the official docs at [http://rapidjs.io](http://rapidjs.io).
 
 ### Define Simple Models
 ```js
-var Post = new Rapid({ modelName: 'Post' });
+var post = new Rapid({ modelName: 'Post' });
 
-Post.find(1).then((response) => {
+post.find(1).then((response) => {
     // GET => /api/post/1
 });
 
-Post.collection.findBy('category', 'featured').then((response) => {
+post.collection.findBy('category', 'featured').then((response) => {
     // GET => /api/posts/category/featured
 });
 
-Post.withParams({ limit: 20, order: 'desc' }).all().then((response) => {
+post.withParams({ limit: 20, order: 'desc' }).all().then((response) => {
     // GET => /api/posts?limit=20&order=desc
 });
 
-Post.update(25, { title: 'Rapid JS Is Awesome!' })
+post.update(25, { title: 'Rapid JS Is Awesome!' })
     // POST => /api/posts/25/update
 
-Post.destroy(9)
+post.destroy(9)
     // POST => /api/posts/9/destroy
 ```
 
 ### Easily Customize Your API Requests
 ```js
-var Post = new Rapid({
+var post = new Rapid({
     modelName: 'Post',
     suffixes: {
         destroy: '',
@@ -46,10 +46,10 @@ var Post = new Rapid({
     trailingSlash: true
  });
 
-Post.update(25, { title: 'Rapid JS Is Awesome!' })
+post.update(25, { title: 'Rapid JS Is Awesome!' })
     // POST => /api/posts/25/save/
 
-Post.destroy(9)
+post.destroy(9)
     // DELETE => /api/posts/9/
 ```
 
@@ -62,17 +62,17 @@ class Base extends Rapid {
     }
 }
 
-var Photo = new Base({ modelName: 'Photo' });
-var Gallery = new Base({ modelName: 'Gallery' });
-var Tag = new Base({ modelName: 'Tag' });
+var photo = new Base({ modelName: 'Photo' });
+var gallery = new Base({ modelName: 'Gallery' });
+var tag = new Base({ modelName: 'Tag' });
 
-Photo.find(1)
+photo.find(1)
     // GET => https://myapp.com/api/photo/1?key=MY_API_KEY
 
-Tag.collection.findBy('color', 'red')
+tag.collection.findBy('color', 'red')
     // GET => https://myapp.com/api/tags/color/red?key=MY_API_KEY
 
-Gallery.id(23).get('tags', 'nature')
+gallery.id(23).get('tags', 'nature')
     // GET => https://myapp.com/api/gallery/23/tag/nature?key=MY_API_KEY
 ```
 
@@ -93,11 +93,12 @@ class GalleryWrapper extends Rapid {
     }
 }
 
-var Gallery = new GalleryWrapper({
+var gallery = new GalleryWrapper({
     globalParameters: { key: 'MY_API_KEY' }
 });
 
-Gallery.tagSearch('nature').json().get().then(...);
+gallery.tagSearch('nature').json().get().then(...);
+    // GET https://myapp.com/gallery/api/tagsearch/json?query=nature&key=MY_API_KEY
     // GET https://myapp.com/gallery/api/tagsearch/json?query=nature&key=MY_API_KEY
 ```    
 
