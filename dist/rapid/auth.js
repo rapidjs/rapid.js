@@ -25,15 +25,13 @@ var authConfig = {
         routes: {
             login: 'login',
             logout: 'logout',
-            auth: 'auth',
-            register: 'register'
+            auth: 'auth'
         },
 
         methods: {
             login: 'post',
             logout: 'post',
-            auth: 'get',
-            register: 'post'
+            auth: 'get'
         },
 
         modelPrefix: false
@@ -54,9 +52,7 @@ var Auth = function (_Rapid) {
 
     _createClass(Auth, [{
         key: 'login',
-        value: function login() {
-            var credentials = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
+        value: function login(credentials) {
             return this[this.modelPrefix].withParams(credentials).withOption('auth', credentials).buildRequest(this.config.auth.methods.login, this.config.auth.routes.login);
         }
     }, {
@@ -68,13 +64,6 @@ var Auth = function (_Rapid) {
         key: 'check',
         value: function check() {
             return this[this.modelPrefix].buildRequest(this.config.auth.methods.auth, this.config.auth.routes.auth);
-        }
-    }, {
-        key: 'register',
-        value: function register() {
-            var credentials = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-            return this[this.modelPrefix].withParams(credentials).buildRequest(this.config.auth.methods.register, this.config.auth.routes.register);
         }
     }, {
         key: 'modelPrefix',

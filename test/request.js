@@ -2,101 +2,101 @@ import test from 'ava';
 import sinon from 'sinon';
 import Rapid from './../src/rapid';
 
-var Lobster = new Rapid({ debug: true, modelName: 'Lobster', baseURL: 'http://maine.com/ocean/' });
+var lobster = new Rapid({ debug: true, modelName: 'Lobster', baseURL: 'http://maine.com/ocean/' });
 
 test('get() works', t => {
 
-    Lobster.get('butter');
+    lobster.get('butter');
 
-    t.true((Lobster.debugger.data.lastRequest.type == 'get'));
+    t.true((lobster.debugger.data.lastRequest.type == 'get'));
 
-    t.is('http://maine.com/ocean/lobster/butter', Lobster.debugger.data.lastUrl);
+    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
-    Lobster.collection.get('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', Lobster.debugger.data.lastUrl);
+    lobster.collection.get('butter', 'salt');
+    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
 
-    Lobster.get('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', Lobster.debugger.data.lastUrl);
+    lobster.get('butter', 'salt', 'crackers');
+    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
 
 });
 
 test('post() works', t => {
 
-    Lobster.post('butter');
+    lobster.post('butter');
 
-    t.true((Lobster.debugger.data.lastRequest.type == 'post'));
+    t.true((lobster.debugger.data.lastRequest.type == 'post'));
 
-    t.is('http://maine.com/ocean/lobster/butter', Lobster.debugger.data.lastUrl);
+    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
-    Lobster.collection.post('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', Lobster.debugger.data.lastUrl);
+    lobster.collection.post('butter', 'salt');
+    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
 
-    Lobster.post('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', Lobster.debugger.data.lastUrl);
+    lobster.post('butter', 'salt', 'crackers');
+    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
 
 });
 
 test('head() works', t => {
 
-    Lobster.head('butter');
+    lobster.head('butter');
 
-    t.true((Lobster.debugger.data.lastRequest.type == 'head'));
+    t.true((lobster.debugger.data.lastRequest.type == 'head'));
 
-    t.is('http://maine.com/ocean/lobster/butter', Lobster.debugger.data.lastUrl);
+    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
-    Lobster.collection.head('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', Lobster.debugger.data.lastUrl);
+    lobster.collection.head('butter', 'salt');
+    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
 
-    Lobster.head('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', Lobster.debugger.data.lastUrl);
+    lobster.head('butter', 'salt', 'crackers');
+    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
 
 });
 
 test('put() works', t => {
 
-    Lobster.put('butter');
+    lobster.put('butter');
 
-    t.true((Lobster.debugger.data.lastRequest.type == 'put'));
+    t.true((lobster.debugger.data.lastRequest.type == 'put'));
 
-    t.is('http://maine.com/ocean/lobster/butter', Lobster.debugger.data.lastUrl);
+    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
-    Lobster.collection.put('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', Lobster.debugger.data.lastUrl);
+    lobster.collection.put('butter', 'salt');
+    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
 
-    Lobster.put('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', Lobster.debugger.data.lastUrl);
+    lobster.put('butter', 'salt', 'crackers');
+    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
 
 });
 
 test('patch() works', t => {
 
-    Lobster.patch('butter');
+    lobster.patch('butter');
 
-    t.true((Lobster.debugger.data.lastRequest.type == 'patch'));
+    t.true((lobster.debugger.data.lastRequest.type == 'patch'));
 
-    t.is('http://maine.com/ocean/lobster/butter', Lobster.debugger.data.lastUrl);
+    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
-    Lobster.collection.patch('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', Lobster.debugger.data.lastUrl);
+    lobster.collection.patch('butter', 'salt');
+    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
 
-    Lobster.patch('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', Lobster.debugger.data.lastUrl);
+    lobster.patch('butter', 'salt', 'crackers');
+    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
 
 });
 
 test('delete() works', t => {
 
-    Lobster.delete('butter');
+    lobster.delete('butter');
 
-    t.true((Lobster.debugger.data.lastRequest.type == 'delete'));
+    t.true((lobster.debugger.data.lastRequest.type == 'delete'));
 
-    t.is('http://maine.com/ocean/lobster/butter', Lobster.debugger.data.lastUrl);
+    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
-    Lobster.collection.delete('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', Lobster.debugger.data.lastUrl);
+    lobster.collection.delete('butter', 'salt');
+    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
 
-    Lobster.delete('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', Lobster.debugger.data.lastUrl);
+    lobster.delete('butter', 'salt', 'crackers');
+    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
 
 });
 
