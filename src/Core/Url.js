@@ -23,11 +23,13 @@ class Url extends Core {
             params.push('');
         }
 
-        if(this.config.extension) {
-            params.push(this.config.extension);
-        }
+        let url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
 
-        const url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
+        // strip the extra .
+        // make sure routes don't need to regenerate
+        if(this.config.extension) {
+            url += `.${this.config.extension}`;
+        }
 
         // reset currentRoute
         this.setCurrentRoute(this.config.defaultRoute);

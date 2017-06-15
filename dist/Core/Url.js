@@ -53,6 +53,10 @@ var Url = function (_Core) {
 
             var url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
 
+            if (this.config.extension) {
+                url += '.' + this.config.extension;
+            }
+
             // reset currentRoute
             this.setCurrentRoute(this.config.defaultRoute);
 
