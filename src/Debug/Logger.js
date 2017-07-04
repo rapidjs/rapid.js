@@ -7,7 +7,7 @@ class Logger {
 
     fireDebugNotice () {
         if(!this.firedDebugNotice) {
-            this.debug('You are running Rapid in debug mode. All requests will be mimicked.');
+            // this.debug('You are running Rapid in debug mode. All requests will be mimicked.');
 
             this.firedDebugNotice = true;
         }
