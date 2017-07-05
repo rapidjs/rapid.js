@@ -53,6 +53,8 @@ var Url = function (_Core) {
 
             var url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
 
+            // strip the extra .
+            // make sure routes don't need to regenerate
             if (this.config.extension) {
                 url += '.' + this.config.extension;
             }
