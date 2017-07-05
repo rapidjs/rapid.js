@@ -21,7 +21,7 @@ var Logger = function () {
         key: 'fireDebugNotice',
         value: function fireDebugNotice() {
             if (!this.firedDebugNotice) {
-                this.debug('You are running Rapid in debug mode. All requests will be mimicked.');
+                // this.debug('You are running Rapid in debug mode. All requests will be mimicked.');
 
                 this.firedDebugNotice = true;
             }
