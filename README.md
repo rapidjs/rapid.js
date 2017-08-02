@@ -2,6 +2,8 @@
 <img src="http://rapidjs.io/images/rapid-logo-gh-readme.png" />
 </p>
 
+<img src="https://img.shields.io/npm/v/rapid.js.svg" />
+
 A Fluent Interface To Rapidly Interact With APIs
 Create simple, resusable, and cleaner wrappers and interfaces for your API requests.
 
