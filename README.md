@@ -104,4 +104,4 @@ gallery.tagSearch('nature').json().get().then(...);
     // GET https://myapp.com/gallery/api/tagsearch/json?query=nature&key=MY_API_KEY
 ```    
 
-Read the official docs at [http://rapidjs.io](http://rapidjs.io).
+Read the official docs at [https://rapidjs.io](https://rapidjs.io).
