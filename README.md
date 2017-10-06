@@ -1,15 +1,15 @@
 <p align="center">
-<img src="http://rapidjs.io/images/rapid-logo-gh-readme.png" />
+<img src="https://rapidjs.io/images/rapid-logo-gh-readme.png" />
 </p>
 
 <img src="https://img.shields.io/npm/v/rapid.js.svg" />
 
-A Fluent Interface To Rapidly Interact With APIs
+An ORM-like Interface For Your Frontend Requests
 Create simple, resusable, and cleaner wrappers and interfaces for your API requests.
 
 *This is the first release of rapid and it is still in development. Please report any bugs to the github page.*
 
-Read the official docs at [http://rapidjs.io](http://rapidjs.io).
+Read the official docs at [https://rapidjs.io](https://rapidjs.io).
 
 ### Define Simple Models
 ```js
