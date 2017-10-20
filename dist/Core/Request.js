@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _lodash = require('lodash');
+
 var _Routes2 = require('./Routes');
 
 var _Routes3 = _interopRequireDefault(_Routes2);
-
-var _lodash = require('lodash');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48,6 +48,7 @@ var Request = function (_Routes) {
             var params = this.requestData.params;
 
             // axios handles the options differently for the request type
+
             if (['put', 'post', 'patch'].includes(type)) {
                 params = (0, _lodash.defaultsDeep)(params, this.config.globalParameters);
                 requestData.push(params);

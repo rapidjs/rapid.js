@@ -158,7 +158,9 @@ var Core = function () {
     }, {
         key: 'debug',
         set: function set(val) {
-            if (this.config.debug) this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
+            if (this.config.debug) {
+                this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
+            }
         }
     }, {
         key: 'collection',
