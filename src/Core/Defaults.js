@@ -18,21 +18,21 @@ export default {
     },
 
     suffixes: {
-        create : 'create',
-        update : 'update',
-        destroy : 'destroy',
+        create: 'create',
+        update: 'update',
+        destroy: 'destroy'
     },
 
     methods: {
-        create : 'post',
-        update : 'post',
-        destroy : 'post'
+        create: 'post',
+        update: 'post',
+        destroy: 'post'
     },
 
     routes: {
-        model      : '',
-        collection : '',
-        any        : ''
+        model: '',
+        collection: '',
+        any: ''
     },
 
     defaultRoute: 'model',

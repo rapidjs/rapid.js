@@ -1,9 +1,8 @@
 /*!
-  * Rapid.js v0.0.1
-  * (c) 2017 Drew J Bartlett (http://drewjbartlett.com)
+  * Rapid.js v0.0.13
+  * (c) 2017 Drew J Bartlett (https://drewjbartlett.com)
   * Released under the MIT License.
   */
-
 
 /**
  * The inheritance of the classes

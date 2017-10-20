@@ -15,6 +15,10 @@ class GalleryWrapper extends Rapid {
         return this.append('categorysearch').withParam('query', query);
     }
 
+    paginate (pagination) {
+        return this.withParams(pagination);
+    }
+
     taxonomy (taxonomy) {
         return this.append(taxonomy);
     }
@@ -51,5 +55,8 @@ test('extending and creating a wrapper works', t => {
 
     wrapper.id(45).taxonomy('categories').xml().get();
     t.is('https://mysite.com/api/gallery/45/categories/xml?key=YOUR_API_KEY', wrapper.debugger.data.lastUrl);
+
+    wrapper.id(45).paginate({ page: 1, perPage: 20 }).xml().get();
+    t.is('https://mysite.com/api/gallery/45/xml?page=1&perPage=20&key=YOUR_API_KEY', wrapper.debugger.data.lastUrl);
 
 });

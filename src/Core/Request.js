@@ -2,8 +2,8 @@
  * The Re-Quest to find the API
  */
 
+import { isArray, defaultsDeep, set } from 'lodash';
 import Routes from './Routes';
-import { isArray, defaultsDeep } from 'lodash';
 
 class Request extends Routes {
     constructor (config) {
@@ -17,11 +17,11 @@ class Request extends Routes {
      */
     parseRequestData (type) {
         const requestData = [];
-        const options     = this.requestData.options;
-        let params        = this.requestData.params;
+        const { options } = this.requestData;
+        let { params } = this.requestData;
 
         // axios handles the options differently for the request type
-        if(['put', 'post', 'patch'].includes(type)) {
+        if (['put', 'post', 'patch'].includes(type)) {
             params = defaultsDeep(params, this.config.globalParameters);
             requestData.push(params);
             requestData.push(options);
@@ -42,28 +42,28 @@ class Request extends Routes {
     request (type, url) {
         type = type.toLowerCase();
 
-        if(!this.isAllowedRequestType(type)) {
+        if (!this.isAllowedRequestType(type)) {
             return;
         }
 
         this.beforeRequest(type, url);
 
-        if(this.config.debug) {
+        if (this.config.debug) {
             return this.debugger.fakeRequest(type, url);
         }
 
         return new Promise((resolve, reject) => {
             this.api[type].call(this, this.sanitizeUrl(url), ...this.parseRequestData(type))
-                 .then(response => {
+                .then((response) => {
                     this.afterRequest(response);
 
                     resolve(response);
-                 })
-                 .catch(error => {
+                })
+                .catch((error) => {
                     this.onError(error);
 
                     reject(error);
-                 });
+                });
         });
     }
 
@@ -73,8 +73,8 @@ class Request extends Routes {
      * @param type The request type
      */
     isAllowedRequestType (type) {
-        if(!this.config.allowedRequestTypes.includes(type)) {
-            if(this.config.debug) {
+        if (!this.config.allowedRequestTypes.includes(type)) {
+            if (this.config.debug) {
                 this.logger.warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
             }
 
@@ -89,7 +89,7 @@ class Request extends Routes {
      */
     buildRequest (type, urlParams) {
 
-        if(this.urlParams) {
+        if (this.urlParams) {
             urlParams = this.urlParams.concat(urlParams);
             this.resetURLParams();
         }
@@ -180,7 +180,6 @@ class Request extends Routes {
         this.config.onError(error);
     }
 
-
     /**
      * Params and Options
      */
@@ -202,7 +201,7 @@ class Request extends Routes {
      * @param params An object of params
      */
     withParams (params = {}) {
-        this.requestData.params = params;
+        set(this.requestData, 'params', params);
 
         return this;
     }
@@ -214,7 +213,7 @@ class Request extends Routes {
      * @param value The value
      */
     withParam (key, value) {
-        this.requestData.params[key] = value;
+        set(this.requestData, `params.${key}`, value);
 
         return this;
     }
@@ -225,7 +224,7 @@ class Request extends Routes {
      * @param options An object of options
      */
     withOptions (options = {}) {
-        this.requestData.options = options;
+        set(this.requestData, 'options', options);
 
         return this;
     }
@@ -237,7 +236,7 @@ class Request extends Routes {
      * @param value The value
      */
     withOption (key, value) {
-        this.requestData.options[key] = value;
+        set(this.requestData, `options.${key}`, value);
 
         return this;
     }

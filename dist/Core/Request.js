@@ -300,7 +300,7 @@ var Request = function (_Routes) {
         value: function withParams() {
             var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-            this.requestData.params = params;
+            (0, _lodash.set)(this.requestData, 'params', params);
 
             return this;
         }
@@ -315,7 +315,7 @@ var Request = function (_Routes) {
     }, {
         key: 'withParam',
         value: function withParam(key, value) {
-            this.requestData.params[key] = value;
+            (0, _lodash.set)(this.requestData, 'params.' + key, value);
 
             return this;
         }
@@ -331,7 +331,7 @@ var Request = function (_Routes) {
         value: function withOptions() {
             var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-            this.requestData.options = options;
+            (0, _lodash.set)(this.requestData, 'options', options);
 
             return this;
         }
@@ -346,7 +346,7 @@ var Request = function (_Routes) {
     }, {
         key: 'withOption',
         value: function withOption(key, value) {
-            this.requestData.options[key] = value;
+            (0, _lodash.set)(this.requestData, 'options.' + key, value);
 
             return this;
         }
