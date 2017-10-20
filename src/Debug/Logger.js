@@ -1,12 +1,12 @@
 class Logger {
     constructor (prefix) {
-        this.prefix           = prefix;
+        this.prefix = prefix;
         this.firedDebugNotice = false;
         this.fireDebugNotice();
     }
 
     fireDebugNotice () {
-        if(!this.firedDebugNotice) {
+        if (!this.firedDebugNotice) {
             // this.debug('You are running Rapid in debug mode. All requests will be mimicked.');
 
             this.firedDebugNotice = true;

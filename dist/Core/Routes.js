@@ -6,15 +6,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Url2 = require('./Url');
-
-var _Url3 = _interopRequireDefault(_Url2);
+var _lodash = require('lodash');
 
 var _pluralize = require('pluralize');
 
 var _pluralize2 = _interopRequireDefault(_pluralize);
 
-var _lodash = require('lodash');
+var _Url2 = require('./Url');
+
+var _Url3 = _interopRequireDefault(_Url2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37,7 +37,8 @@ var Routes = function (_Url) {
 
     /**
      * Set the current route.
-     * This will set the current route to either model, collection, or any to make appropriate requests
+     * This will set the current route to either model, collection,
+     * or any to make appropriate requests
      * Can also be changed by calling rapid.model.func() or rapid.collection.func()
      *
      * @param route The route to set
@@ -66,7 +67,7 @@ var Routes = function (_Url) {
                 any: ''
             };
 
-            if (this.config.routes[route] != '') {
+            if (this.config.routes[route] !== '') {
                 newRoute = this.config.routes[route];
             } else {
                 newRoute = (0, _lodash.kebabCase)(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);

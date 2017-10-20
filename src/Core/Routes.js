@@ -2,9 +2,9 @@
  * The Rapid Routes
  */
 
-import Url from './Url';
-import pluralize from 'pluralize';
 import { kebabCase } from 'lodash';
+import pluralize from 'pluralize';
+import Url from './Url';
 
 class Routes extends Url {
 
@@ -14,7 +14,8 @@ class Routes extends Url {
 
     /**
      * Set the current route.
-     * This will set the current route to either model, collection, or any to make appropriate requests
+     * This will set the current route to either model, collection,
+     * or any to make appropriate requests
      * Can also be changed by calling rapid.model.func() or rapid.collection.func()
      *
      * @param route The route to set
@@ -31,17 +32,17 @@ class Routes extends Url {
     setRoute (route) {
         let newRoute = '';
         const formattedRoute = {
-            model      : this.config.modelName,
-            collection : pluralize(this.config.modelName),
-            any        : ''
+            model: this.config.modelName,
+            collection: pluralize(this.config.modelName),
+            any: ''
         };
 
-        if(this.config.routes[route] != '') {
+        if (this.config.routes[route] !== '') {
             newRoute = this.config.routes[route];
         } else {
             newRoute = kebabCase(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);
 
-            if(this.config.caseSensitive) {
+            if (this.config.caseSensitive) {
                 newRoute = formattedRoute[route];
             }
         }

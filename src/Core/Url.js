@@ -2,8 +2,8 @@
  * URL Methods
  */
 
-import Core from './Core';
 import { isArray } from 'lodash';
+import Core from './Core';
 
 class Url extends Core {
     constructor (config) {
@@ -19,7 +19,7 @@ class Url extends Core {
      */
     makeUrl (...params) {
 
-        if(this.config.trailingSlash) {
+        if (this.config.trailingSlash) {
             params.push('');
         }
 
@@ -27,7 +27,7 @@ class Url extends Core {
 
         // strip the extra .
         // make sure routes don't need to regenerate
-        if(this.config.extension) {
+        if (this.config.extension) {
             url += `.${this.config.extension}`;
         }
 
@@ -46,7 +46,7 @@ class Url extends Core {
     sanitizeUrl (url) {
         url = url.replace(/([^:]\/)\/+/g, '$1').replace(/\?$/, '');
 
-        if(!this.config.trailingSlash) {
+        if (!this.config.trailingSlash) {
             url = url.replace(/\/$/, '');
         }
 
@@ -66,17 +66,17 @@ class Url extends Core {
     setURLParams (urlParams = [], prepend = false, overwrite = false) {
         this.urlParams = this.urlParams || [];
 
-        if(!isArray(urlParams)) {
+        if (!isArray(urlParams)) {
             urlParams = [urlParams];
         }
 
-        if(overwrite) {
+        if (overwrite) {
             this.urlParams = urlParams;
 
             return this;
         }
 
-        if(prepend) {
+        if (prepend) {
             this.urlParams = urlParams.concat(this.urlParams);
         } else {
             this.urlParams = this.urlParams.concat(urlParams);

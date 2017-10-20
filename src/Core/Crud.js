@@ -25,22 +25,22 @@ class Crud extends Request {
      * @param method The method (update or destroy)
      * @param ...params Can be either (id, data) OR (data)
      */
-    updateOrDestroy(method, ...params) {
+    updateOrDestroy (method, ...params) {
         const urlParams = [];
-        const id        = params[0];
-        let data        = params[1];
+        const id = params[0];
+        let data = params[1];
 
-        if(Number.isInteger(id)) {
+        if (Number.isInteger(id)) {
             this.id(id);
         } else {
-            data    = params[0];
+            [data] = params;
         }
 
-        if(this.config.suffixes[method]) {
+        if (this.config.suffixes[method]) {
             urlParams.push(this.config.suffixes[method]);
         }
 
-        if(method == 'update') {
+        if (method === 'update') {
             this.withParams(data);
         }
 
@@ -75,7 +75,8 @@ class Crud extends Request {
      * @param data The data to be sent over for creation of model
      */
     create (data) {
-        return this.withParams(data).buildRequest(this.config.methods.create, this.config.suffixes.create);
+        return this.withParams(data)
+            .buildRequest(this.config.methods.create, this.config.suffixes.create);
     }
 
     /**
@@ -88,7 +89,7 @@ class Crud extends Request {
     id (id) {
         let params = [];
 
-        if(this.config.primaryKey) {
+        if (this.config.primaryKey) {
             params = [this.config.primaryKey, id];
         } else {
             params = [id];
@@ -99,7 +100,6 @@ class Crud extends Request {
 
         return this;
     }
-
 
     /**
      * Collection Only Functions
@@ -125,7 +125,7 @@ class Crud extends Request {
     findBy (key, value) {
         const urlParams = [key];
 
-        if(value) {
+        if (value) {
             urlParams.push(value);
         }
 

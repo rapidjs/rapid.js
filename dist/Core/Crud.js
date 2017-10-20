@@ -57,20 +57,25 @@ var Crud = function (_Request) {
         key: 'updateOrDestroy',
         value: function updateOrDestroy(method) {
             var urlParams = [];
-            var id = arguments.length <= 1 ? undefined : arguments[1];
-            var data = arguments.length <= 2 ? undefined : arguments[2];
+
+            for (var _len = arguments.length, params = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+                params[_key - 1] = arguments[_key];
+            }
+
+            var id = params[0];
+            var data = params[1];
 
             if (Number.isInteger(id)) {
                 this.id(id);
             } else {
-                data = arguments.length <= 1 ? undefined : arguments[1];
+                data = params[0];
             }
 
             if (this.config.suffixes[method]) {
                 urlParams.push(this.config.suffixes[method]);
             }
 
-            if (method == 'update') {
+            if (method === 'update') {
                 this.withParams(data);
             }
 
@@ -84,8 +89,8 @@ var Crud = function (_Request) {
     }, {
         key: 'update',
         value: function update() {
-            for (var _len = arguments.length, params = Array(_len), _key = 0; _key < _len; _key++) {
-                params[_key] = arguments[_key];
+            for (var _len2 = arguments.length, params = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                params[_key2] = arguments[_key2];
             }
 
             return this.updateOrDestroy.apply(this, ['update'].concat(params));
@@ -109,8 +114,8 @@ var Crud = function (_Request) {
     }, {
         key: 'destroy',
         value: function destroy() {
-            for (var _len2 = arguments.length, params = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-                params[_key2] = arguments[_key2];
+            for (var _len3 = arguments.length, params = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+                params[_key3] = arguments[_key3];
             }
 
             return this.updateOrDestroy.apply(this, ['destroy'].concat(params));

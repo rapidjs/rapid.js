@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _lodash = require('lodash');
+
 var _Routes2 = require('./Routes');
 
 var _Routes3 = _interopRequireDefault(_Routes2);
-
-var _lodash = require('lodash');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48,6 +48,7 @@ var Request = function (_Routes) {
             var params = this.requestData.params;
 
             // axios handles the options differently for the request type
+
             if (['put', 'post', 'patch'].includes(type)) {
                 params = (0, _lodash.defaultsDeep)(params, this.config.globalParameters);
                 requestData.push(params);
@@ -300,7 +301,7 @@ var Request = function (_Routes) {
         value: function withParams() {
             var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-            this.requestData.params = params;
+            (0, _lodash.set)(this.requestData, 'params', params);
 
             return this;
         }
@@ -315,7 +316,7 @@ var Request = function (_Routes) {
     }, {
         key: 'withParam',
         value: function withParam(key, value) {
-            this.requestData.params[key] = value;
+            (0, _lodash.set)(this.requestData, 'params.' + key, value);
 
             return this;
         }
@@ -331,7 +332,7 @@ var Request = function (_Routes) {
         value: function withOptions() {
             var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-            this.requestData.options = options;
+            (0, _lodash.set)(this.requestData, 'options', options);
 
             return this;
         }
@@ -346,7 +347,7 @@ var Request = function (_Routes) {
     }, {
         key: 'withOption',
         value: function withOption(key, value) {
-            this.requestData.options[key] = value;
+            (0, _lodash.set)(this.requestData, 'options.' + key, value);
 
             return this;
         }
