@@ -127,7 +127,6 @@ var Request = function (_Routes) {
     }, {
         key: 'buildRequest',
         value: function buildRequest(type, urlParams) {
-
             if (this.urlParams) {
                 urlParams = this.urlParams.concat(urlParams);
                 this.resetURLParams();

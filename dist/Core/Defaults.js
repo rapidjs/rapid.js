@@ -46,7 +46,14 @@ exports.default = {
 
     allowedRequestTypes: ['get', 'post', 'put', 'patch', 'head', 'delete'],
 
+    // eslint-disable-next-line no-unused-vars
     beforeRequest: function beforeRequest(type, url) {},
+
+
+    // eslint-disable-next-line no-unused-vars
     afterRequest: function afterRequest(response) {},
+
+
+    // eslint-disable-next-line no-unused-vars
     onError: function onError(response) {}
 };

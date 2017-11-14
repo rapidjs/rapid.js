@@ -71,7 +71,7 @@ var Crud = function (_Request) {
                 data = params[0];
             }
 
-            if (this.config.suffixes[method]) {
+            if (Object.prototype.hasOwnProperty.call(this.config.suffixes, method)) {
                 urlParams.push(this.config.suffixes[method]);
             }
 
@@ -146,6 +146,7 @@ var Crud = function (_Request) {
         value: function id(_id) {
             var params = [];
 
+            // this is checking if primaryKey is true, not if it exists
             if (this.config.primaryKey) {
                 params = [this.config.primaryKey, _id];
             } else {
