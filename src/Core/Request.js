@@ -88,7 +88,6 @@ class Request extends Routes {
      * to build a request url
      */
     buildRequest (type, urlParams) {
-
         if (this.urlParams) {
             urlParams = this.urlParams.concat(urlParams);
             this.resetURLParams();
