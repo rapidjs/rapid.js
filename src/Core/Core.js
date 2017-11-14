@@ -87,7 +87,7 @@ class Core {
         this.routes = {
             model: '',
             collection: '',
-            any: ''
+            any: '',
         };
     }
 
@@ -97,7 +97,7 @@ class Core {
     resetRequestData () {
         this.requestData = {
             params: {},
-            options: {}
+            options: {},
         };
     }
 

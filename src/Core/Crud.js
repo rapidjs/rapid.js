@@ -36,7 +36,7 @@ class Crud extends Request {
             [data] = params;
         }
 
-        if (this.config.suffixes[method]) {
+        if (Object.prototype.hasOwnProperty.call(this.config.suffixes, method)) {
             urlParams.push(this.config.suffixes[method]);
         }
 
@@ -89,6 +89,7 @@ class Crud extends Request {
     id (id) {
         let params = [];
 
+        // this is checking if primaryKey is true, not if it exists
         if (this.config.primaryKey) {
             params = [this.config.primaryKey, id];
         } else {

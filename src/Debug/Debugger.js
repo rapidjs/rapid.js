@@ -47,7 +47,7 @@ export default class {
             type,
             url,
             data,
-            options
+            options,
         };
     }
 }

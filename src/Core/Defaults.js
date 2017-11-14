@@ -20,19 +20,19 @@ export default {
     suffixes: {
         create: 'create',
         update: 'update',
-        destroy: 'destroy'
+        destroy: 'destroy',
     },
 
     methods: {
         create: 'post',
         update: 'post',
-        destroy: 'post'
+        destroy: 'post',
     },
 
     routes: {
         model: '',
         collection: '',
-        any: ''
+        any: '',
     },
 
     defaultRoute: 'model',
@@ -45,15 +45,18 @@ export default {
 
     allowedRequestTypes: ['get', 'post', 'put', 'patch', 'head', 'delete'],
 
+    // eslint-disable-next-line no-unused-vars
     beforeRequest (type, url) {
 
     },
 
+    // eslint-disable-next-line no-unused-vars
     afterRequest (response) {
 
     },
 
+    // eslint-disable-next-line no-unused-vars
     onError (response) {
 
-    }
+    },
 };

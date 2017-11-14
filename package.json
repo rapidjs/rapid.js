@@ -35,9 +35,12 @@
   "devDependencies": {
     "ava": "^0.18.2",
     "babel-cli": "^6.24.0",
+    "babel-eslint": "^8.0.2",
     "babel-preset-es2015": "^6.24.0",
     "eslint": "^4.9.0",
-    "eslint-config-airbnb-standard": "^1.5.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-airbnb-standard": "^1.6.5",
+    "eslint-plugin-import": "^2.8.0",
     "nyc": "^10.2.0",
     "sinon": "^2.1.0"
   },

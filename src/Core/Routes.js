@@ -34,7 +34,7 @@ class Routes extends Url {
         const formattedRoute = {
             model: this.config.modelName,
             collection: pluralize(this.config.modelName),
-            any: ''
+            any: '',
         };
 
         if (this.config.routes[route] !== '') {
