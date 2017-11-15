@@ -152,6 +152,20 @@ class Request extends Routes {
         return this.buildRequest('delete', urlParams);
     }
 
+    route (name = '', routeParams = {}, requestParams = {}) {
+        const route = this.getCustomRoute(name);
+
+        return this.request(route.type, )
+    }
+
+    getCustomRoute (name = '') {
+        if (Object.prototype.hasOwnProperty.call(this.config.customRoutes, name)) {
+            return new CustomRoute(this.config.customRoutes[name]);
+        }
+
+        return {};
+    }
+
     /**
      * Before, after, and error
      */
