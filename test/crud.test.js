@@ -1,14 +1,14 @@
 import test from 'ava';
 import Rapid from './../src/rapid';
 
-var userModel = new Rapid({
+const userModel = new Rapid({
     modelName: 'user',
-    debug: true
+    debug: true,
 });
 
 userModel.debugger.logEnabled = false;
 
-test('that it will have the right url for find', t => {
+test('that it will have the right url for find', (t) => {
 
     userModel.find(1);
 
@@ -16,7 +16,7 @@ test('that it will have the right url for find', t => {
 
 });
 
-test('that it will have the right url for all', t => {
+test('that it will have the right url for all', (t) => {
 
     userModel.all();
 
@@ -24,14 +24,14 @@ test('that it will have the right url for all', t => {
 
 });
 
-var myModel = new Rapid({
+const myModel = new Rapid({
     modelName: 'model',
-    debug: true
+    debug: true,
 });
 
 myModel.debugger.logEnabled = false;
 
-test('that it will have the right url for findBy', t => {
+test('that it will have the right url for findBy', (t) => {
 
     myModel.findBy('key', 'value');
 
@@ -43,24 +43,24 @@ test('that it will have the right url for findBy', t => {
 
 });
 
-var testModel = new Rapid({
+const testModel = new Rapid({
     modelName: 'testModel',
     debug: true,
     suffixes: {
         create: 'new',
         update: 'save',
         destroy: 'delete',
-    }
+    },
 });
 
 testModel.debugger.logEnabled = false;
 
-test('that create will have the correct url', t => {
+test('that create will have the correct url', (t) => {
     testModel.create({});
     t.is('api/test-model/new', testModel.debugger.data.lastUrl);
 });
 
-test('that update will work', t => {
+test('that update will work', (t) => {
     testModel.update({});
     t.is('api/test-model/save', testModel.debugger.data.lastUrl);
 
@@ -68,7 +68,7 @@ test('that update will work', t => {
     t.is('api/test-model/12345/save', testModel.debugger.data.lastUrl);
 });
 
-test('that destroy will work', t => {
+test('that destroy will work', (t) => {
     testModel.destroy({});
     t.is('api/test-model/delete', testModel.debugger.data.lastUrl);
 

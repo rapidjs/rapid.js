@@ -1,12 +1,12 @@
 import test from 'ava';
 import Rapid from './../src/rapid';
 
-test('that routeDelimiter will work', t => {
+test('that routeDelimiter will work', (t) => {
 
-    let postModel = new Rapid({
+    const postModel = new Rapid({
         modelName: 'PacificCrestTrail',
         routeDelimeter: '_',
-        debug: true
+        debug: true,
     });
 
     postModel.debugger.logEnabled = false;
@@ -19,12 +19,12 @@ test('that routeDelimiter will work', t => {
 
 });
 
-test('that caseSensitive will work', t => {
+test('that caseSensitive will work', (t) => {
 
-    let postModel = new Rapid({
+    const postModel = new Rapid({
         modelName: 'PacificCrestTrail',
         caseSensitive: true,
-        debug: true
+        debug: true,
     });
 
     postModel.debugger.logEnabled = false;

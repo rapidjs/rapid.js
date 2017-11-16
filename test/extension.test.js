@@ -4,12 +4,12 @@ import Rapid from './../src/rapid';
 const doc = new Rapid({
     modelName: 'document',
     extension: 'xml',
-    debug: true
+    debug: true,
 });
 
 doc.debugger.logEnabled = false;
 
-test('CRUD works with extension', t => {
+test('CRUD works with extension', (t) => {
 
     doc.id(23).find();
     t.is('api/document/23.xml', doc.debugger.data.lastUrl);
@@ -27,12 +27,12 @@ const issue = new Rapid({
     modelName: 'issue',
     defaultRoute: 'collection',
     extension: 'json',
-    debug: true
+    debug: true,
 });
 
 issue.debugger.logEnabled = false;
 
-test('works with extension', t => {
+test('works with extension', (t) => {
 
     issue.get();
     t.is('api/issues.json', issue.debugger.data.lastUrl);

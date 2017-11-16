@@ -8,7 +8,7 @@
     "compile": "babel --presets=es2015 -d dist src",
     "copy-dev": "npm run compile && rm -rf ./demo/rapid && cp -R ./dist ./demo/rapid",
     "prepublish": "npm run compile",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js test/**/*.js"
   },
   "babel": {
     "presets": [

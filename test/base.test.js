@@ -32,12 +32,12 @@ class GalleryWrapper extends Rapid {
     }
 }
 
-test('extending and creating a wrapper works', t => {
-    var wrapper = new GalleryWrapper({
+test('extending and creating a wrapper works', (t) => {
+    const wrapper = new GalleryWrapper({
         globalParameters: {
-          key: 'YOUR_API_KEY'
+            key: 'YOUR_API_KEY',
         },
-        debug: true
+        debug: true,
     });
     wrapper.debugger.logEnabled = false;
 

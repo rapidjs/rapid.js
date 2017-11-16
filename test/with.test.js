@@ -1,14 +1,14 @@
 import test from 'ava';
 import Rapid from './../src/rapid';
 
-let postModel = new Rapid({
+const postModel = new Rapid({
     modelName: 'post',
-    debug: true
+    debug: true,
 });
 
 postModel.debugger.logEnabled = false;
 
-test('that withParams works', t => {
+test('that withParams works', (t) => {
 
     postModel.collection.withParams({ limit: 20 }).findBy('category', 'featured');
 
@@ -16,7 +16,7 @@ test('that withParams works', t => {
 
 });
 
-test('that withParam works', t => {
+test('that withParam works', (t) => {
 
     postModel.withParam('status', 'published').get();
 
@@ -28,9 +28,13 @@ test('that withParam works', t => {
 
 });
 
-test('that withData works', t => {
+test('that withData works', (t) => {
 
-    postModel.collection.withData({ params: { limit: 20, published: true, orderBy: 'commentCount', order: 'desc' } }).findBy('category', 'featured');
+    postModel.collection.withData({
+        params: {
+            limit: 20, published: true, orderBy: 'commentCount', order: 'desc',
+        },
+    }).findBy('category', 'featured');
 
     t.is('api/posts/category/featured?limit=20&published=true&orderBy=commentCount&order=desc', postModel.debugger.data.lastUrl);
 

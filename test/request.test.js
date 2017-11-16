@@ -2,13 +2,13 @@ import test from 'ava';
 import sinon from 'sinon';
 import Rapid from './../src/rapid';
 
-var lobster = new Rapid({ debug: true, modelName: 'Lobster', baseURL: 'http://maine.com/ocean/' });
+const lobster = new Rapid({ debug: true, modelName: 'Lobster', baseURL: 'http://maine.com/ocean/' });
 
-test('get() works', t => {
+test('get() works', (t) => {
 
     lobster.get('butter');
 
-    t.true((lobster.debugger.data.lastRequest.type == 'get'));
+    t.true((lobster.debugger.data.lastRequest.type === 'get'));
 
     t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
@@ -20,11 +20,11 @@ test('get() works', t => {
 
 });
 
-test('post() works', t => {
+test('post() works', (t) => {
 
     lobster.post('butter');
 
-    t.true((lobster.debugger.data.lastRequest.type == 'post'));
+    t.true((lobster.debugger.data.lastRequest.type === 'post'));
 
     t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
@@ -36,11 +36,11 @@ test('post() works', t => {
 
 });
 
-test('head() works', t => {
+test('head() works', (t) => {
 
     lobster.head('butter');
 
-    t.true((lobster.debugger.data.lastRequest.type == 'head'));
+    t.true((lobster.debugger.data.lastRequest.type === 'head'));
 
     t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
@@ -52,11 +52,11 @@ test('head() works', t => {
 
 });
 
-test('put() works', t => {
+test('put() works', (t) => {
 
     lobster.put('butter');
 
-    t.true((lobster.debugger.data.lastRequest.type == 'put'));
+    t.true((lobster.debugger.data.lastRequest.type === 'put'));
 
     t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
@@ -68,11 +68,11 @@ test('put() works', t => {
 
 });
 
-test('patch() works', t => {
+test('patch() works', (t) => {
 
     lobster.patch('butter');
 
-    t.true((lobster.debugger.data.lastRequest.type == 'patch'));
+    t.true((lobster.debugger.data.lastRequest.type === 'patch'));
 
     t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
@@ -84,11 +84,11 @@ test('patch() works', t => {
 
 });
 
-test('delete() works', t => {
+test('delete() works', (t) => {
 
     lobster.delete('butter');
 
-    t.true((lobster.debugger.data.lastRequest.type == 'delete'));
+    t.true((lobster.debugger.data.lastRequest.type === 'delete'));
 
     t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
 
@@ -100,15 +100,15 @@ test('delete() works', t => {
 
 });
 
-test('afterRequest gets fired', t => {
-    let callback = sinon.spy();
-    let Crab = new Rapid({
+test('afterRequest gets fired', (t) => {
+    const callback = sinon.spy();
+    const Crab = new Rapid({
         debug: true,
         modelName: 'Crab',
         baseURL: 'http://maryland.com/bay/',
         afterRequest() {
             callback();
-        }
+        },
     });
 
     Crab.find(1);
@@ -116,15 +116,15 @@ test('afterRequest gets fired', t => {
     t.truthy(callback.called);
 });
 
-test('beforeRequest gets fired', t => {
-    let callback = sinon.spy();
-    let Crab = new Rapid({
+test('beforeRequest gets fired', (t) => {
+    const callback = sinon.spy();
+    const Crab = new Rapid({
         debug: true,
         modelName: 'Crab',
         baseURL: 'http://maryland.com/bay/',
         beforeRequest() {
             callback();
-        }
+        },
     });
 
     Crab.find(1);

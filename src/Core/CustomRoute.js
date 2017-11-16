@@ -10,6 +10,7 @@ class CustomRoute {
      * Check if the url has interpolated {} in them
      */
     urlParams () {
+        // eslint-disable-next-line
         return this.rawUrl.match(/{\s*[\w\.]+\s*}/g);
         // .map(function (x) { return x.match(/[\w\.]+/)[0]; });
     }

@@ -1,14 +1,14 @@
 import test from 'ava';
 import Rapid from './../src/rapid';
 
-var shark = new Rapid({
+const shark = new Rapid({
     modelName: 'shark',
-    debug: true
+    debug: true,
 });
 
 shark.debugger.logEnabled = false;
 
-test('works with basic CRUD', t => {
+test('works with basic CRUD', (t) => {
 
     shark.id(23).find();
     t.is('api/shark/23', shark.debugger.data.lastUrl);
@@ -21,7 +21,7 @@ test('works with basic CRUD', t => {
 
 });
 
-test('works with other requests', t => {
+test('works with other requests', (t) => {
 
     shark.id(23).get();
     t.is('api/shark/23', shark.debugger.data.lastUrl);
