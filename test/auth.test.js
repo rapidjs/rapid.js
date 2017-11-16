@@ -1,101 +1,86 @@
-import test from 'ava';
-import Auth from './../src/auth';
+import { createAuthModel } from './helpers';
 
-const user = new Auth({ modelName: 'user', debug: true });
-user.debugger.logEnabled = false;
+const user = createAuthModel({ modelName: 'user' });
 
-test('login works', (t) => {
-    user.login();
-    t.is('api/login', user.debugger.data.lastUrl);
-});
+describe('Rapid Auth Model', () => {
 
-test('logout works', (t) => {
-    user.logout();
-    t.is('api/logout', user.debugger.data.lastUrl);
-});
+    it('should generate the login url', () => {
+        user.login();
+        expect(user.debugger.data.lastUrl).toBe('api/login');
+    });
 
-test('check works', (t) => {
-    user.check();
-    t.is('api/auth', user.debugger.data.lastUrl);
-});
+    it('should generate the logout url', () => {
+        user.logout();
+        expect(user.debugger.data.lastUrl).toBe('api/logout');
+    });
 
-test('register works', (t) => {
-    user.register();
-    t.is('api/register', user.debugger.data.lastUrl);
-});
+    it('should generate a route to auth check', () => {
+        user.check();
+        expect(user.debugger.data.lastUrl).toBe('api/auth');
+    });
 
-const userTwo = new Auth({ modelName: 'User', debug: true, auth: { modelPrefix: true } });
-userTwo.debugger.logEnabled = false;
+    it('should generate a route to auth register', () => {
+        user.register();
+        expect(user.debugger.data.lastUrl).toBe('api/register');
+    });
 
-test('modelPrefix works', (t) => {
-    userTwo.register();
-    t.is('api/user/register', userTwo.debugger.data.lastUrl);
-});
+    const userTwo = createAuthModel({ modelName: 'User', auth: { modelPrefix: true } });
 
-const userThree = new Auth({
-    modelName: 'User',
-    debug: true,
-    auth: { modelPrefix: true },
-});
-// user.debugger.logEnabled = false;
+    it('should contain a model prefix when set in config', () => {
+        userTwo.register();
+        expect(userTwo.debugger.data.lastUrl).toBe('api/user/register');
+    });
 
-test('modelPrefix works', (t) => {
-    userThree.register();
-    t.is('api/user/register', userThree.debugger.data.lastUrl);
-});
-
-const userFour = new Auth({
-    modelName: 'User',
-    debug: true,
-    auth: {
-        routes: {
-            login: 'login-user',
-            logout: ['logout', 'user'],
-            auth: 'authenticate',
-            register: 'new',
+    const userFour = createAuthModel({
+        modelName: 'User',
+        auth: {
+            routes: {
+                login: 'login-user',
+                logout: ['logout', 'user'],
+                auth: 'authenticate',
+                register: 'new',
+            },
         },
-    },
-});
-// user.debugger.logEnabled = false;
+    });
 
-test('changing routes works', (t) => {
-    userFour.login();
-    t.is('api/login-user', userFour.debugger.data.lastUrl);
+    it('should allow overriding in the auth routes', () => {
+        userFour.login();
+        expect(userFour.debugger.data.lastUrl).toBe('api/login-user');
 
-    userFour.logout();
-    t.is('api/logout/user', userFour.debugger.data.lastUrl);
+        userFour.logout();
+        expect(userFour.debugger.data.lastUrl).toBe('api/logout/user');
 
-    userFour.check();
-    t.is('api/authenticate', userFour.debugger.data.lastUrl);
+        userFour.check();
+        expect(userFour.debugger.data.lastUrl).toBe('api/authenticate');
 
-    userFour.register();
-    t.is('api/new', userFour.debugger.data.lastUrl);
-});
+        userFour.register();
+        expect(userFour.debugger.data.lastUrl).toBe('api/new');
+    });
 
-const userFive = new Auth({
-    modelName: 'User',
-    debug: true,
-    auth: {
-        methods: {
-            login: 'get',
-            logout: 'delete',
-            auth: 'get',
-            register: 'patch',
+    const userFive = createAuthModel({
+        modelName: 'User',
+        auth: {
+            methods: {
+                login: 'get',
+                logout: 'delete',
+                auth: 'get',
+                register: 'patch',
+            },
         },
-    },
-});
-// user.debugger.logEnabled = false;
+    });
 
-test('changing methods works', (t) => {
-    userFive.login();
-    t.is('get', userFive.debugger.data.lastRequest.type);
+    it('should allow overriding the method types', () => {
+        userFive.login();
+        expect(userFive.debugger.data.lastRequest.type).toBe('get');
 
-    userFive.logout();
-    t.is('delete', userFive.debugger.data.lastRequest.type);
+        userFive.logout();
+        expect(userFive.debugger.data.lastRequest.type).toBe('delete');
 
-    userFive.check();
-    t.is('get', userFive.debugger.data.lastRequest.type);
+        userFive.check();
+        expect(userFive.debugger.data.lastRequest.type).toBe('get');
 
-    userFive.register();
-    t.is('patch', userFive.debugger.data.lastRequest.type);
+        userFive.register();
+        expect(userFive.debugger.data.lastRequest.type).toBe('patch');
+    });
+
 });

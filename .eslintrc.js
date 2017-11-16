@@ -12,5 +12,17 @@ module.exports = {
     'prefer-rest-params': 0,
     'consistent-return': 0,
     'space-before-function-paren': 0
+  },
+  'globals': {
+    'it': true,
+    'describe': true,
+    'beforeAll': true,
+    'beforeEach': true,
+    'afterEach': true,
+    'afterAll': true,
+    'before': true,
+    'after': true,
+    'expect': true,
+    'jest': true
   }
 };

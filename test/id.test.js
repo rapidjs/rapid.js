@@ -1,41 +1,36 @@
-import test from 'ava';
-import Rapid from './../src/rapid';
+import { createModel } from './helpers';
 
-const shark = new Rapid({
+
+const shark = createModel({
     modelName: 'shark',
-    debug: true,
 });
 
-shark.debugger.logEnabled = false;
+describe('The id() method works as it should', () => {
+    it('works with basic CRUD', () => {
+        shark.id(23).find();
+        expect(shark.debugger.data.lastUrl).toBe('api/shark/23');
 
-test('works with basic CRUD', (t) => {
+        shark.id(234).save({});
+        expect(shark.debugger.data.lastUrl).toBe('api/shark/234/update');
 
-    shark.id(23).find();
-    t.is('api/shark/23', shark.debugger.data.lastUrl);
+        shark.id(456).destroy();
+        expect(shark.debugger.data.lastUrl).toBe('api/shark/456/destroy');
+    });
 
-    shark.id(234).save({});
-    t.is('api/shark/234/update', shark.debugger.data.lastUrl);
+    it('works with other requests', () => {
+        shark.id(23).get();
+        expect(shark.debugger.data.lastUrl).toBe('api/shark/23');
 
-    shark.id(456).destroy();
-    t.is('api/shark/456/destroy', shark.debugger.data.lastUrl);
+        shark.id(789).get('fish', 'are', 'friends', 'not', 'food');
+        expect(shark.debugger.data.lastUrl).toBe('api/shark/789/fish/are/friends/not/food');
 
-});
+        shark.id(23).post('swim');
+        expect(shark.debugger.data.lastUrl).toBe('api/shark/23/swim');
 
-test('works with other requests', (t) => {
+        shark.id(234).delete('eat', 'fish');
+        expect(shark.debugger.data.lastUrl).toBe('api/shark/234/eat/fish');
 
-    shark.id(23).get();
-    t.is('api/shark/23', shark.debugger.data.lastUrl);
-
-    shark.id(789).get('fish', 'are', 'friends', 'not', 'food');
-    t.is('api/shark/789/fish/are/friends/not/food', shark.debugger.data.lastUrl);
-
-    shark.id(23).post('swim');
-    t.is('api/shark/23/swim', shark.debugger.data.lastUrl);
-
-    shark.id(234).delete('eat', 'fish');
-    t.is('api/shark/234/eat/fish', shark.debugger.data.lastUrl);
-
-    shark.id(456).patch();
-    t.is('api/shark/456', shark.debugger.data.lastUrl);
-
+        shark.id(456).patch();
+        expect(shark.debugger.data.lastUrl).toBe('api/shark/456');
+    });
 });

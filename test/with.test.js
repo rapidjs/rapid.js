@@ -1,41 +1,33 @@
-import test from 'ava';
-import Rapid from './../src/rapid';
+import { createModel } from './helpers';
 
-const postModel = new Rapid({
+const postModel = createModel({
     modelName: 'post',
-    debug: true,
 });
 
-postModel.debugger.logEnabled = false;
+describe('The with methods all work as should', () => {
+    it('that withParams works', () => {
+        postModel.collection.withParams({ limit: 20 }).findBy('category', 'featured');
 
-test('that withParams works', (t) => {
+        expect(postModel.debugger.data.lastUrl).toBe('api/posts/category/featured?limit=20');
+    });
 
-    postModel.collection.withParams({ limit: 20 }).findBy('category', 'featured');
+    it('that withParam works', () => {
+        postModel.withParam('status', 'published').get();
 
-    t.is('api/posts/category/featured?limit=20', postModel.debugger.data.lastUrl);
+        expect(postModel.debugger.data.lastUrl).toBe('api/post?status=published');
 
-});
+        postModel.collection.withParam('status', 'published').findBy('category', 'featured');
 
-test('that withParam works', (t) => {
+        expect(postModel.debugger.data.lastUrl).toBe('api/posts/category/featured?status=published');
+    });
 
-    postModel.withParam('status', 'published').get();
+    it('that withData works', () => {
+        postModel.collection.withData({
+            params: {
+                limit: 20, published: true, orderBy: 'commentCount', order: 'desc',
+            },
+        }).findBy('category', 'featured');
 
-    t.is('api/post?status=published', postModel.debugger.data.lastUrl);
-
-    postModel.collection.withParam('status', 'published').findBy('category', 'featured');
-
-    t.is('api/posts/category/featured?status=published', postModel.debugger.data.lastUrl);
-
-});
-
-test('that withData works', (t) => {
-
-    postModel.collection.withData({
-        params: {
-            limit: 20, published: true, orderBy: 'commentCount', order: 'desc',
-        },
-    }).findBy('category', 'featured');
-
-    t.is('api/posts/category/featured?limit=20&published=true&orderBy=commentCount&order=desc', postModel.debugger.data.lastUrl);
-
+        expect(postModel.debugger.data.lastUrl).toBe('api/posts/category/featured?limit=20&published=true&orderBy=commentCount&order=desc');
+    });
 });

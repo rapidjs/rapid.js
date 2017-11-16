@@ -1,77 +1,63 @@
-import test from 'ava';
-import Rapid from './../src/rapid';
+import { createModel } from './helpers';
 
-const userModel = new Rapid({
+const userModel = createModel({
     modelName: 'user',
-    debug: true,
 });
 
-userModel.debugger.logEnabled = false;
+describe('The basic CRUD methods should work', () => {
+    it('that it will have the right url for find', () => {
+        userModel.find(1);
 
-test('that it will have the right url for find', (t) => {
+        expect(userModel.debugger.data.lastUrl).toBe('api/user/1');
+    });
 
-    userModel.find(1);
+    it('that it will have the right url for all', () => {
+        userModel.all();
 
-    t.is('api/user/1', userModel.debugger.data.lastUrl);
+        expect(userModel.debugger.data.lastUrl).toBe('api/users');
+    });
 
-});
+    const myModel = createModel({
+        modelName: 'model',
+    });
 
-test('that it will have the right url for all', (t) => {
+    it('that it will have the right url for findBy', () => {
+        myModel.findBy('key', 'value');
 
-    userModel.all();
+        expect(myModel.debugger.data.lastUrl).toBe('api/model/key/value');
 
-    t.is('api/users', userModel.debugger.data.lastUrl);
+        myModel.collection.findBy('key', 'value');
 
-});
+        expect(myModel.debugger.data.lastUrl).toBe('api/models/key/value');
+    });
 
-const myModel = new Rapid({
-    modelName: 'model',
-    debug: true,
-});
+    const testModel = createModel({
+        modelName: 'testModel',
+        suffixes: {
+            create: 'new',
+            update: 'save',
+            destroy: 'delete',
+        },
+    });
 
-myModel.debugger.logEnabled = false;
+    it('that create will have the correct url', () => {
+        testModel.create({});
+        expect(testModel.debugger.data.lastUrl).toBe('api/test-model/new');
+    });
 
-test('that it will have the right url for findBy', (t) => {
+    it('that update will work', () => {
+        testModel.update({});
+        expect(testModel.debugger.data.lastUrl).toBe('api/test-model/save');
 
-    myModel.findBy('key', 'value');
+        testModel.update(12345, {});
+        expect(testModel.debugger.data.lastUrl).toBe('api/test-model/12345/save');
+    });
 
-    t.is('api/model/key/value', myModel.debugger.data.lastUrl);
+    it('that destroy will work', () => {
+        testModel.destroy({});
+        expect(testModel.debugger.data.lastUrl).toBe('api/test-model/delete');
 
-    myModel.collection.findBy('key', 'value');
-
-    t.is('api/models/key/value', myModel.debugger.data.lastUrl);
-
-});
-
-const testModel = new Rapid({
-    modelName: 'testModel',
-    debug: true,
-    suffixes: {
-        create: 'new',
-        update: 'save',
-        destroy: 'delete',
-    },
-});
-
-testModel.debugger.logEnabled = false;
-
-test('that create will have the correct url', (t) => {
-    testModel.create({});
-    t.is('api/test-model/new', testModel.debugger.data.lastUrl);
-});
-
-test('that update will work', (t) => {
-    testModel.update({});
-    t.is('api/test-model/save', testModel.debugger.data.lastUrl);
-
-    testModel.update(12345, {});
-    t.is('api/test-model/12345/save', testModel.debugger.data.lastUrl);
-});
-
-test('that destroy will work', (t) => {
-    testModel.destroy({});
-    t.is('api/test-model/delete', testModel.debugger.data.lastUrl);
-
-    testModel.destroy(12345, {});
-    t.is('api/test-model/12345/delete', testModel.debugger.data.lastUrl);
+        testModel.destroy(12345, {});
+        expect(testModel.debugger.data.lastUrl).toBe('api/test-model/12345/delete');
+    });
 });

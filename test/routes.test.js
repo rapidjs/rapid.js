@@ -1,38 +1,30 @@
-import test from 'ava';
-import Rapid from './../src/rapid';
+import { createModel } from './helpers';
 
-test('that routeDelimiter will work', (t) => {
+describe('The routes are generated properly based off config', () => {
+    it('that routeDelimiter will work', () => {
+        const postModel = createModel({
+            modelName: 'PacificCrestTrail',
+            routeDelimeter: '_',
+        });
 
-    const postModel = new Rapid({
-        modelName: 'PacificCrestTrail',
-        routeDelimeter: '_',
-        debug: true,
+        postModel.find(1);
+        expect(postModel.debugger.data.lastUrl).toBe('api/pacific_crest_trail/1');
+
+        postModel.all();
+        expect(postModel.debugger.data.lastUrl).toBe('api/pacific_crest_trails');
     });
 
-    postModel.debugger.logEnabled = false;
+    it('that caseSensitive will work', () => {
+        const postModel = createModel({
+            modelName: 'PacificCrestTrail',
+            caseSensitive: true,
+        });
 
-    postModel.find(1);
-    t.is('api/pacific_crest_trail/1', postModel.debugger.data.lastUrl);
+        postModel.find(1);
+        expect(postModel.debugger.data.lastUrl).toBe('api/PacificCrestTrail/1');
 
-    postModel.all();
-    t.is('api/pacific_crest_trails', postModel.debugger.data.lastUrl);
-
-});
-
-test('that caseSensitive will work', (t) => {
-
-    const postModel = new Rapid({
-        modelName: 'PacificCrestTrail',
-        caseSensitive: true,
-        debug: true,
+        postModel.all();
+        expect(postModel.debugger.data.lastUrl).toBe('api/PacificCrestTrails');
     });
-
-    postModel.debugger.logEnabled = false;
-
-    postModel.find(1);
-    t.is('api/PacificCrestTrail/1', postModel.debugger.data.lastUrl);
-
-    postModel.all();
-    t.is('api/PacificCrestTrails', postModel.debugger.data.lastUrl);
-
 });
+
