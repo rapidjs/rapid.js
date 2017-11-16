@@ -4,6 +4,7 @@
 
 import { isArray, defaultsDeep, set } from 'lodash';
 import Routes from './Routes';
+import { CustomRoute } from './CustomRoute';
 
 class Request extends Routes {
     constructor (config) {
@@ -153,17 +154,26 @@ class Request extends Routes {
     }
 
     route (name = '', routeParams = {}, requestParams = {}) {
-        const route = this.getCustomRoute(name);
+        const route = this.getCustomRoute(name, routeParams);
 
-        return this.request(route.type, )
-    }
-
-    getCustomRoute (name = '') {
-        if (Object.prototype.hasOwnProperty.call(this.config.customRoutes, name)) {
-            return new CustomRoute(this.config.customRoutes[name]);
+        // if there are request params, set them
+        if (Object.keys(requestParams).length !== 0) {
+            this.withParams(requestParams);
         }
 
-        return {};
+        return this.request(route.type, route.url);
+    }
+
+    getCustomRoute (name = '', routeParams = {}) {
+        if (Object.prototype.hasOwnProperty.call(this.config.customRoutes, name)) {
+            return new CustomRoute(this.config.customRoutes[name], {
+                trailingSlash: this.config.trailingSlash,
+                routeParams,
+            });
+        }
+
+        // to prevent undefined
+        return { url: '' };
     }
 
     /**

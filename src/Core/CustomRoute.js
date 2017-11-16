@@ -6,6 +6,14 @@ class CustomRoute {
         this.config = config;
     }
 
+    /**
+     * Check if the url has interpolated {} in them
+     */
+    urlParams () {
+        return this.rawUrl.match(/{\s*[\w\.]+\s*}/g);
+        // .map(function (x) { return x.match(/[\w\.]+/)[0]; });
+    }
+
     get url () {
         return sanitizeUrl(this.rawUrl, this.config.trailingSlash);
     }
