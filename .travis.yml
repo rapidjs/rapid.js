@@ -8,4 +8,7 @@ deploy:
   cache:
     directories:
       - "node_modules"
-    
+  branches:
+    only:
+      - master
+      - v1-refactor  
