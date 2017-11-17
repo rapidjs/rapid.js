@@ -29,7 +29,6 @@ class Core {
      * Setup the all of properties.
      */
     initialize (config) {
-
         this.config = config;
 
         this.initializeRoutes();
@@ -49,6 +48,8 @@ class Core {
         this.initializeLogger();
 
         this.resetRequestData();
+
+        this.defineCustomRoutes();
     }
 
     /**
@@ -89,6 +90,20 @@ class Core {
             collection: '',
             any: '',
         };
+    }
+
+    /**
+     * Set up the custom routes if we have any
+     */
+    defineCustomRoutes () {
+        this.customRoutes = {};
+        
+        // if we have custom routes, set up a name:route mapping
+        if (this.config.customRoutes.length) {
+            this.config.customRoutes.forEach((route) => {
+                this.customRoutes[route.name] = route;
+            });
+        }
     }
 
     /**

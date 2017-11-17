@@ -4,7 +4,7 @@
 
 import { isArray, defaultsDeep, set } from 'lodash';
 import Routes from './Routes';
-import { CustomRoute } from './CustomRoute';
+import CustomRoute from './CustomRoute';
 
 class Request extends Routes {
     constructor (config) {
@@ -165,9 +165,9 @@ class Request extends Routes {
     }
 
     getCustomRoute (name = '', routeParams = {}) {
-        if (Object.prototype.hasOwnProperty.call(this.config.customRoutes, name)) {
-            return new CustomRoute(this.config.customRoutes[name], {
-                trailingSlash: this.config.trailingSlash,
+        // if a route exists, return a new instance of CustomRoute
+        if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
+            return new CustomRoute(this.customRoutes[name], {
                 routeParams,
             });
         }
