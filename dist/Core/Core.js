@@ -18,13 +18,13 @@ var _Defaults = require('./Defaults');
 
 var _Defaults2 = _interopRequireDefault(_Defaults);
 
-var _Debugger = require('./../Debug/Debugger');
+var _debugger = require('./../debug/debugger');
 
-var _Debugger2 = _interopRequireDefault(_Debugger);
+var _debugger2 = _interopRequireDefault(_debugger);
 
-var _Logger = require('./../Debug/Logger');
+var _logger = require('./../debug/logger');
 
-var _Logger2 = _interopRequireDefault(_Logger);
+var _logger2 = _interopRequireDefault(_logger);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57,7 +57,6 @@ var Core = function () {
     }, {
         key: 'initialize',
         value: function initialize(config) {
-
             this.config = config;
 
             this.initializeRoutes();
@@ -77,6 +76,8 @@ var Core = function () {
             this.initializeLogger();
 
             this.resetRequestData();
+
+            this.defineCustomRoutes();
         }
 
         /**
@@ -101,7 +102,7 @@ var Core = function () {
     }, {
         key: 'initializeDebugger',
         value: function initializeDebugger() {
-            this.debugger = this.config.debug ? new _Debugger2.default(this) : false;
+            this.debugger = this.config.debug ? new _debugger2.default(this) : false;
         }
 
         /**
@@ -111,7 +112,7 @@ var Core = function () {
     }, {
         key: 'initializeLogger',
         value: function initializeLogger() {
-            this.logger = this.config.debug ? _Logger2.default : false;
+            this.logger = this.config.debug ? _logger2.default : false;
         }
 
         /**
@@ -136,6 +137,25 @@ var Core = function () {
                 collection: '',
                 any: ''
             };
+        }
+
+        /**
+         * Set up the custom routes if we have any
+         */
+
+    }, {
+        key: 'defineCustomRoutes',
+        value: function defineCustomRoutes() {
+            var _this2 = this;
+
+            this.customRoutes = {};
+
+            // if we have custom routes, set up a name:route mapping
+            if (this.config.customRoutes.length) {
+                this.config.customRoutes.forEach(function (route) {
+                    _this2.customRoutes[route.name] = route;
+                });
+            }
         }
 
         /**

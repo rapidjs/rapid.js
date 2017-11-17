@@ -3,7 +3,7 @@
  */
 
 import { isArray } from 'lodash';
-import Core from './Core';
+import Core from './core';
 import { sanitizeUrl } from '../common/url';
 
 class Url extends Core {

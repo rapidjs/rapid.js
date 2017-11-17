@@ -2,7 +2,7 @@
  * All the CRUD
  */
 
-import Request from './Request';
+import Request from './request';
 
 class Crud extends Request {
     /**

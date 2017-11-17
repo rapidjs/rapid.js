@@ -5,9 +5,9 @@
 import axios from 'axios';
 import { defaultsDeep } from 'lodash';
 
-import Defaults from './Defaults';
-import Debugger from './../Debug/Debugger';
-import Logger from './../Debug/Logger';
+import Defaults from './defaults';
+import Debugger from './../debug/debugger';
+import Logger from './../debug/logger';
 
 class Core {
     constructor (config) {
@@ -97,7 +97,7 @@ class Core {
      */
     defineCustomRoutes () {
         this.customRoutes = {};
-        
+
         // if we have custom routes, set up a name:route mapping
         if (this.config.customRoutes.length) {
             this.config.customRoutes.forEach((route) => {

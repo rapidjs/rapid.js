@@ -1,5 +1,5 @@
-import Rapid from './Core/Rapid';
 import { defaultsDeep } from 'lodash';
+import Rapid from './core/rapid';
 
 const authConfig = {
     auth: {
@@ -7,14 +7,14 @@ const authConfig = {
             login    : 'login',
             logout   : 'logout',
             auth     : 'auth',
-            register : 'register'
+            register : 'register',
         },
 
         methods: {
             login    : 'post',
             logout   : 'post',
             auth     : 'get',
-            register : 'post'
+            register : 'post',
         },
 
         modelPrefix: false

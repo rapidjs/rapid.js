@@ -38,6 +38,8 @@ exports.default = {
         any: ''
     },
 
+    customRoutes: {},
+
     defaultRoute: 'model',
 
     debug: false,

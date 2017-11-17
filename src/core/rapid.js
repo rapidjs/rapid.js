@@ -16,7 +16,7 @@
  *
  */
 
-import Crud from './Crud';
+import Crud from './crud';
 
 class Rapid extends Crud {
 

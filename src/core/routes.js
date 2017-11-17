@@ -4,7 +4,7 @@
 
 import { kebabCase } from 'lodash';
 import pluralize from 'pluralize';
-import Url from './Url';
+import Url from './url';
 
 class Routes extends Url {
 

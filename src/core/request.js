@@ -3,8 +3,8 @@
  */
 
 import { isArray, defaultsDeep, set } from 'lodash';
-import Routes from './Routes';
-import CustomRoute from './CustomRoute';
+import Routes from './routes';
+import CustomRoute from './custom-route';
 
 class Request extends Routes {
     constructor (config) {
