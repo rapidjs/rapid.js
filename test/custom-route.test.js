@@ -18,3 +18,10 @@
 
 // rapid.route('get_user_forget_name').then();
 // rapid.route('user_save_friends', { id: 1 }).then();
+
+
+describe('Custom Routes should work as designed', () => {
+    it('should allow loading in custom routes', () => {
+        
+    });
+});
