@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/rapid.js",
   "scripts": {
-    "test": "nyc ava",
+    "test": "npm run unit",
     "compile": "babel --presets=es2015 -d dist src",
     "copy-dev": "npm run compile && rm -rf ./demo/rapid && cp -R ./dist ./demo/rapid",
     "prepublish": "npm run compile",
