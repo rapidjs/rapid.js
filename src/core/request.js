@@ -200,9 +200,9 @@ class Request extends Routes {
 
     /**
      * Generate a url to a custom defined route
-     * 
-     * @param {string} name 
-     * @param {object} routeParams 
+     *
+     * @param {string} name
+     * @param {object} routeParams
      */
     generate (name = '', routeParams = {}) {
         return this.getCustomRoute(name, routeParams).url;

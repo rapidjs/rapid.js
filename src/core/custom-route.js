@@ -43,10 +43,9 @@ class CustomRoute {
 
         // if we have params, strip off the {}
         if (params !== null) {
-            // eslint-disable-next-line
-            return params.map((x) => {
-                return x.match(/[\w\.]+/)[0]; 
-            });
+            return params.map(x =>
+                // eslint-disable-next-line
+                 x.match(/[\w\.]+/)[0]);
         }
 
         return [];
