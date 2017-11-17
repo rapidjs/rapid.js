@@ -4,6 +4,7 @@
 
 [![npm](https://img.shields.io/npm/v/rapid.js.svg)](https://www.npmjs.com/package/rapid.js)
 [![npm](https://img.shields.io/npm/dt/rapid.js.svg)](https://www.npmjs.com/package/rapid.js)
+[![npm](https://api.travis-ci.org/rapidjs/rapid.js.svg?branch=master)](https://www.npmjs.com/package/rapid.js)
 
 An ORM-like Interface For Your Frontend Requests
 Create simple, resusable, and cleaner wrappers and interfaces for your API requests.
