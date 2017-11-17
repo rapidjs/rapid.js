@@ -1,9 +1,23 @@
 class CustomRoute {
     constructor (route = {}, config = {}) {
-        this.route = route;
-        this.config = config;
+        // setup the default route object
+        this.route = Object.assign({
+            url: '',
+            type: 'get',
+            name: '',
+        }, route);
+
+        // setup the default config
+        this.config = Object.assign({
+            routeParams: {},
+        }, config);
     }
 
+    /**
+     * This replaces any interpolated params with items passed in via the routeParams object
+     *
+     * @return {string}
+     */
     replaceURLParams () {
         let url = this.rawURL;
 
@@ -21,7 +35,7 @@ class CustomRoute {
     /**
      * Check if the url has interpolated {} in them
      *
-     * @return {Array}
+     * @return {array}
      */
     get urlParams () {
         // eslint-disable-next-line
@@ -38,18 +52,39 @@ class CustomRoute {
         return [];
     }
 
+    /**
+     * Returns the properly prepared URL
+     *
+     * @return {string}
+     */
     get url () {
         return this.replaceURLParams();
     }
 
+    /**
+     * Returns the raw url from the route which would
+     * contain any interpolations
+     *
+     * @return {string}
+     */
     get rawURL () {
         return this.route.url;
     }
 
+    /**
+     * Returns the route name
+     *
+     * @return {string}
+     */
     get name () {
         return this.route.name;
     }
 
+    /**
+     * Returns the request type
+     *
+     * @return {string}
+     */
     get type () {
         return this.route.type;
     }

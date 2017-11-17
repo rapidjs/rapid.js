@@ -153,6 +153,22 @@ class Request extends Routes {
         return this.buildRequest('delete', urlParams);
     }
 
+    /**
+     * Custom Routes
+     *
+     * These can be defined and passed via the customRoutes config attribute.
+     * This allows you to completely override Rapid's usual functionality
+     * and use this more like a router.
+     */
+
+    /**
+     * Make a request to a route via a given route name
+     * The request type depends on the type of request defined in the route
+     *
+     * @param {string} name
+     * @param {object} routeParams
+     * @param {object} requestParams
+     */
     route (name = '', routeParams = {}, requestParams = {}) {
         const route = this.getCustomRoute(name, routeParams);
 
@@ -164,6 +180,12 @@ class Request extends Routes {
         return this.request(route.type, route.url);
     }
 
+    /**
+     * Get a CustomRoute via given name
+     *
+     * @param {string} name
+     * @param {object} routeParams
+     */
     getCustomRoute (name = '', routeParams = {}) {
         // if a route exists, return a new instance of CustomRoute
         if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
@@ -172,8 +194,18 @@ class Request extends Routes {
             });
         }
 
-        // to prevent undefined
-        return { url: '' };
+        // to prevent having undefined
+        return new CustomRoute();
+    }
+
+    /**
+     * Generate a url to a custom defined route
+     * 
+     * @param {string} name 
+     * @param {object} routeParams 
+     */
+    generate (name = '', routeParams = {}) {
+        return this.getCustomRoute(name, routeParams).url;
     }
 
     /**
