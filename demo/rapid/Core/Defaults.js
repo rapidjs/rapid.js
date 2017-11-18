@@ -1,9 +1,4 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = {
+export default {
     modelName: '',
 
     primaryKey: '',
@@ -18,35 +13,52 @@ exports.default = {
 
     routeDelimeter: '-',
 
-    globalParameters: {},
+    globalParameters: {
+
+    },
 
     suffixes: {
         create: 'create',
         update: 'update',
-        destroy: 'destroy'
+        destroy: 'destroy',
     },
 
     methods: {
         create: 'post',
         update: 'post',
-        destroy: 'post'
+        destroy: 'post',
     },
 
     routes: {
         model: '',
         collection: '',
-        any: ''
+        any: '',
     },
+
+    customRoutes: {},
 
     defaultRoute: 'model',
 
     debug: false,
 
-    apiConfig: {},
+    apiConfig: {
+
+    },
 
     allowedRequestTypes: ['get', 'post', 'put', 'patch', 'head', 'delete'],
 
-    beforeRequest: function beforeRequest(type, url) {},
-    afterRequest: function afterRequest(response) {},
-    onError: function onError(response) {}
+    // eslint-disable-next-line no-unused-vars
+    beforeRequest (type, url) {
+
+    },
+
+    // eslint-disable-next-line no-unused-vars
+    afterRequest (response) {
+
+    },
+
+    // eslint-disable-next-line no-unused-vars
+    onError (response) {
+
+    },
 };

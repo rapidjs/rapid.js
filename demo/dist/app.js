@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 46);
+/******/ 	return __webpack_require__(__webpack_require__.s = 49);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -74,6 +74,7 @@
 
 
 var bind = __webpack_require__(10);
+var isBuffer = __webpack_require__(47);
 
 /*global toString:true*/
 
@@ -354,6 +355,7 @@ function extend(a, b, thisArg) {
 module.exports = {
   isArray: isArray,
   isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
   isFormData: isFormData,
   isArrayBufferView: isArrayBufferView,
   isString: isString,
@@ -17464,7 +17466,7 @@ module.exports = {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25), __webpack_require__(26)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27), __webpack_require__(28)(module)))
 
 /***/ }),
 /* 2 */
@@ -17474,7 +17476,7 @@ module.exports = {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(42);
+var normalizeHeaderName = __webpack_require__(44);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -17505,6 +17507,7 @@ var defaults = {
     normalizeHeaderName(headers, 'Content-Type');
     if (utils.isFormData(data) ||
       utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
       utils.isStream(data) ||
       utils.isFile(data) ||
       utils.isBlob(data)
@@ -17572,41 +17575,25 @@ module.exports = defaults;
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Crud2 = __webpack_require__(13);
+var _crud = __webpack_require__(15);
 
-var _Crud3 = _interopRequireDefault(_Crud2);
+var _crud2 = _interopRequireDefault(_crud);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-} /*!
-    * Rapid.js v0.0.1
-    * (c) 2017 Drew J Bartlett (http://drewjbartlett.com)
-    * Released under the MIT License.
-    */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*!
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * Rapid.js v0.0.14
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * (c) 2017 Drew J Bartlett (https://drewjbartlett.com)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * Released under the MIT License.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
 /**
  * The inheritance of the classes
@@ -17630,7 +17617,7 @@ var Rapid = function (_Crud) {
     }
 
     return Rapid;
-}(_Crud3.default);
+}(_crud2.default);
 
 exports.default = Rapid;
 
@@ -17999,12 +17986,12 @@ exports.isBuffer = function (obj) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(34);
-var buildURL = __webpack_require__(37);
-var parseHeaders = __webpack_require__(43);
-var isURLSameOrigin = __webpack_require__(41);
+var settle = __webpack_require__(36);
+var buildURL = __webpack_require__(39);
+var parseHeaders = __webpack_require__(45);
+var isURLSameOrigin = __webpack_require__(43);
 var createError = __webpack_require__(9);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(36);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(38);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -18082,7 +18069,7 @@ module.exports = function xhrAdapter(config) {
     request.onerror = function handleError() {
       // Real errors are hidden from us by the browser
       // onerror should only fire if it's a network error
-      reject(createError('Network Error', config));
+      reject(createError('Network Error', config, null, request));
 
       // Clean up request
       request = null;
@@ -18090,7 +18077,8 @@ module.exports = function xhrAdapter(config) {
 
     // Handle timeout
     request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED'));
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
 
       // Clean up request
       request = null;
@@ -18100,7 +18088,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(39);
+      var cookies = __webpack_require__(41);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -18223,20 +18211,21 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(33);
+var enhanceError = __webpack_require__(35);
 
 /**
- * Create an Error with the specified message, config, error code, and response.
+ * Create an Error with the specified message, config, error code, request and response.
  *
  * @param {string} message The error message.
  * @param {Object} config The config.
  * @param {string} [code] The error code (for example, 'ECONNABORTED').
- @ @param {Object} [response] The response.
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
  * @returns {Error} The created error.
  */
-module.exports = function createError(message, config, code, response) {
+module.exports = function createError(message, config, code, request, response) {
   var error = new Error(message);
-  return enhanceError(error, config, code, response);
+  return enhanceError(error, config, code, request, response);
 };
 
 
@@ -18265,13 +18254,25 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 
 
-var _rapid = __webpack_require__(21);
+var _rapid = __webpack_require__(23);
 
 window.Rapid = _rapid.Rapid; // import Rapid from './../rapid/rapid';
 
 
 window.test = new _rapid.Rapid({ modelName: 'test', debug: true, extension: 'xml' });
 window.auth = new _rapid.Auth({ modelName: 'user', debug: true });
+
+var routes = [{
+    type: 'get',
+    name: 'simple_test',
+    url: '/hi/how/are/you'
+}, {
+    type: 'post',
+    name: 'simple_test_two',
+    url: '/user/{id}/{username}/profile'
+}];
+
+window.newRapid = new _rapid.Rapid({ customRoutes: routes });
 
 /***/ }),
 /* 12 */
@@ -18284,45 +18285,162 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}(); /**
-      * The Caramel Core functionality of Rapid
-      */
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _axios = __webpack_require__(27);
+var _lodash = __webpack_require__(1);
+
+var _rapid = __webpack_require__(3);
+
+var _rapid2 = _interopRequireDefault(_rapid);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var authConfig = {
+    auth: {
+        routes: {
+            login: 'login',
+            logout: 'logout',
+            auth: 'auth',
+            register: 'register'
+        },
+
+        methods: {
+            login: 'post',
+            logout: 'post',
+            auth: 'get',
+            register: 'post'
+        },
+
+        modelPrefix: false
+    }
+};
+
+var Auth = function (_Rapid) {
+    _inherits(Auth, _Rapid);
+
+    function Auth(config) {
+        _classCallCheck(this, Auth);
+
+        config = (0, _lodash.defaultsDeep)(config, authConfig);
+        config.modelName = config.modelName ? config.modelName : 'auth';
+
+        return _possibleConstructorReturn(this, (Auth.__proto__ || Object.getPrototypeOf(Auth)).call(this, config));
+    }
+
+    _createClass(Auth, [{
+        key: 'login',
+        value: function login() {
+            var credentials = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+            return this[this.modelPrefix].withParams(credentials).withOption('auth', credentials).buildRequest(this.config.auth.methods.login, this.config.auth.routes.login);
+        }
+    }, {
+        key: 'logout',
+        value: function logout() {
+            return this[this.modelPrefix].buildRequest(this.config.auth.methods.logout, this.config.auth.routes.logout);
+        }
+    }, {
+        key: 'check',
+        value: function check() {
+            return this[this.modelPrefix].buildRequest(this.config.auth.methods.auth, this.config.auth.routes.auth);
+        }
+    }, {
+        key: 'register',
+        value: function register() {
+            var credentials = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+            return this[this.modelPrefix].withParams(credentials).buildRequest(this.config.auth.methods.register, this.config.auth.routes.register);
+        }
+    }, {
+        key: 'modelPrefix',
+        get: function get() {
+            return this.config.auth.modelPrefix ? 'model' : 'any';
+        }
+    }]);
+
+    return Auth;
+}(_rapid2.default);
+
+exports.default = Auth;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.sanitizeUrl = sanitizeUrl;
+/**
+ * This just makes sure there are no double slashes and no trailing
+ * slash unless the config for it is set.
+ *
+ * @param {String} url a url to sanitize
+ * @param {Boolean} keepTrailingSlash a url to sanitize
+ * @return {String}
+ */
+function sanitizeUrl() {
+    var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var keepTrailingSlash = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    url = url.replace(/([^:]\/)\/+/g, '$1').replace(/\?$/, '');
+
+    if (!keepTrailingSlash) {
+        url = url.replace(/\/$/, '');
+    }
+
+    return url;
+}
+
+exports.default = {
+    sanitizeUrl: sanitizeUrl
+};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The Caramel Core functionality of Rapid
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+var _axios = __webpack_require__(29);
 
 var _axios2 = _interopRequireDefault(_axios);
 
 var _lodash = __webpack_require__(1);
 
-var _Defaults = __webpack_require__(14);
+var _defaults = __webpack_require__(17);
 
-var _Defaults2 = _interopRequireDefault(_Defaults);
+var _defaults2 = _interopRequireDefault(_defaults);
 
-var _Debugger = __webpack_require__(18);
+var _debugger = __webpack_require__(21);
 
-var _Debugger2 = _interopRequireDefault(_Debugger);
+var _debugger2 = _interopRequireDefault(_debugger);
 
-var _Logger = __webpack_require__(19);
+var _logger = __webpack_require__(22);
 
-var _Logger2 = _interopRequireDefault(_Logger);
+var _logger2 = _interopRequireDefault(_logger);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Core = function () {
     function Core(config) {
@@ -18330,7 +18448,7 @@ var Core = function () {
 
         config = config || {};
 
-        config = (0, _lodash.defaultsDeep)(config, _Defaults2.default);
+        config = (0, _lodash.defaultsDeep)(config, _defaults2.default);
 
         this.initialize(config);
     }
@@ -18338,6 +18456,7 @@ var Core = function () {
     /**
      * Set any config overrides in this method when extending
      */
+
 
     _createClass(Core, [{
         key: 'boot',
@@ -18350,7 +18469,6 @@ var Core = function () {
     }, {
         key: 'initialize',
         value: function initialize(config) {
-
             this.config = config;
 
             this.initializeRoutes();
@@ -18370,6 +18488,8 @@ var Core = function () {
             this.initializeLogger();
 
             this.resetRequestData();
+
+            this.defineCustomRoutes();
         }
 
         /**
@@ -18394,7 +18514,7 @@ var Core = function () {
     }, {
         key: 'initializeDebugger',
         value: function initializeDebugger() {
-            this.debugger = this.config.debug ? new _Debugger2.default(this) : false;
+            this.debugger = this.config.debug ? new _debugger2.default(this) : false;
         }
 
         /**
@@ -18404,7 +18524,7 @@ var Core = function () {
     }, {
         key: 'initializeLogger',
         value: function initializeLogger() {
-            this.logger = this.config.debug ? _Logger2.default : false;
+            this.logger = this.config.debug ? _logger2.default : false;
         }
 
         /**
@@ -18432,6 +18552,25 @@ var Core = function () {
         }
 
         /**
+         * Set up the custom routes if we have any
+         */
+
+    }, {
+        key: 'defineCustomRoutes',
+        value: function defineCustomRoutes() {
+            var _this2 = this;
+
+            this.customRoutes = {};
+
+            // if we have custom routes, set up a name:route mapping
+            if (this.config.customRoutes.length) {
+                this.config.customRoutes.forEach(function (route) {
+                    _this2.customRoutes[route.name] = route;
+                });
+            }
+        }
+
+        /**
          * Resets the request data
          */
 
@@ -18451,7 +18590,9 @@ var Core = function () {
     }, {
         key: 'debug',
         set: function set(val) {
-            if (this.config.debug) this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
+            if (this.config.debug) {
+                this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
+            }
         }
     }, {
         key: 'collection',
@@ -18506,55 +18647,31 @@ var Core = function () {
 exports.default = Core;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Request2 = __webpack_require__(15);
+var _request = __webpack_require__(18);
 
-var _Request3 = _interopRequireDefault(_Request2);
+var _request2 = _interopRequireDefault(_request);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-} /**
-   * All the CRUD
-   */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * All the CRUD
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 var Crud = function (_Request) {
     _inherits(Crud, _Request);
@@ -18593,20 +18710,25 @@ var Crud = function (_Request) {
         key: 'updateOrDestroy',
         value: function updateOrDestroy(method) {
             var urlParams = [];
-            var id = arguments.length <= 1 ? undefined : arguments[1];
-            var data = arguments.length <= 2 ? undefined : arguments[2];
+
+            for (var _len = arguments.length, params = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+                params[_key - 1] = arguments[_key];
+            }
+
+            var id = params[0];
+            var data = params[1];
 
             if (Number.isInteger(id)) {
                 this.id(id);
             } else {
-                data = arguments.length <= 1 ? undefined : arguments[1];
+                data = params[0];
             }
 
-            if (this.config.suffixes[method]) {
+            if (Object.prototype.hasOwnProperty.call(this.config.suffixes, method)) {
                 urlParams.push(this.config.suffixes[method]);
             }
 
-            if (method == 'update') {
+            if (method === 'update') {
                 this.withParams(data);
             }
 
@@ -18620,8 +18742,8 @@ var Crud = function (_Request) {
     }, {
         key: 'update',
         value: function update() {
-            for (var _len = arguments.length, params = Array(_len), _key = 0; _key < _len; _key++) {
-                params[_key] = arguments[_key];
+            for (var _len2 = arguments.length, params = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                params[_key2] = arguments[_key2];
             }
 
             return this.updateOrDestroy.apply(this, ['update'].concat(params));
@@ -18645,8 +18767,8 @@ var Crud = function (_Request) {
     }, {
         key: 'destroy',
         value: function destroy() {
-            for (var _len2 = arguments.length, params = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-                params[_key2] = arguments[_key2];
+            for (var _len3 = arguments.length, params = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+                params[_key3] = arguments[_key3];
             }
 
             return this.updateOrDestroy.apply(this, ['destroy'].concat(params));
@@ -18677,6 +18799,7 @@ var Crud = function (_Request) {
         value: function id(_id) {
             var params = [];
 
+            // this is checking if primaryKey is true, not if it exists
             if (this.config.primaryKey) {
                 params = [this.config.primaryKey, _id];
             } else {
@@ -18728,12 +18851,152 @@ var Crud = function (_Request) {
     }]);
 
     return Crud;
-}(_Request3.default);
+}(_request2.default);
 
 exports.default = Crud;
 
 /***/ }),
-/* 14 */
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var CustomRoute = function () {
+    function CustomRoute() {
+        var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        _classCallCheck(this, CustomRoute);
+
+        // setup the default route object
+        this.route = Object.assign({
+            url: '',
+            type: 'get',
+            name: ''
+        }, route);
+
+        // setup the default config
+        this.config = Object.assign({
+            routeParams: {}
+        }, config);
+    }
+
+    /**
+     * This replaces any interpolated params with items passed in via the routeParams object
+     *
+     * @return {string}
+     */
+
+
+    _createClass(CustomRoute, [{
+        key: 'replaceURLParams',
+        value: function replaceURLParams() {
+            var _this = this;
+
+            var url = this.rawURL;
+
+            // only do this if we have route params && params to replace
+            if (this.urlParams.length && Object.keys(this.config.routeParams).length !== 0) {
+                // replace each occurrence of the param with the value passed in
+                this.urlParams.forEach(function (param) {
+                    url = url.replace('{' + param + '}', _this.config.routeParams[param]);
+                });
+            }
+
+            return url;
+        }
+
+        /**
+         * Check if the url has interpolated {} in them
+         *
+         * @return {array}
+         */
+
+    }, {
+        key: 'urlParams',
+        get: function get() {
+            // eslint-disable-next-line
+            var params = this.rawURL.match(/{\s*[\w\.]+\s*}/g);
+
+            // if we have params, strip off the {}
+            if (params !== null) {
+                return params.map(function (x) {
+                    return (
+                        // eslint-disable-next-line
+                        x.match(/[\w\.]+/)[0]
+                    );
+                });
+            }
+
+            return [];
+        }
+
+        /**
+         * Returns the properly prepared URL
+         *
+         * @return {string}
+         */
+
+    }, {
+        key: 'url',
+        get: function get() {
+            return this.replaceURLParams();
+        }
+
+        /**
+         * Returns the raw url from the route which would
+         * contain any interpolations
+         *
+         * @return {string}
+         */
+
+    }, {
+        key: 'rawURL',
+        get: function get() {
+            return this.route.url;
+        }
+
+        /**
+         * Returns the route name
+         *
+         * @return {string}
+         */
+
+    }, {
+        key: 'name',
+        get: function get() {
+            return this.route.name;
+        }
+
+        /**
+         * Returns the request type
+         *
+         * @return {string}
+         */
+
+    }, {
+        key: 'type',
+        get: function get() {
+            return this.route.type;
+        }
+    }]);
+
+    return CustomRoute;
+}();
+
+exports.default = CustomRoute;
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18777,6 +19040,8 @@ exports.default = {
         any: ''
     },
 
+    customRoutes: {},
+
     defaultRoute: 'model',
 
     debug: false,
@@ -18785,73 +19050,52 @@ exports.default = {
 
     allowedRequestTypes: ['get', 'post', 'put', 'patch', 'head', 'delete'],
 
+    // eslint-disable-next-line no-unused-vars
     beforeRequest: function beforeRequest(type, url) {},
+
+
+    // eslint-disable-next-line no-unused-vars
     afterRequest: function afterRequest(response) {},
+
+
+    // eslint-disable-next-line no-unused-vars
     onError: function onError(response) {}
 };
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
-
-var _Routes2 = __webpack_require__(16);
-
-var _Routes3 = _interopRequireDefault(_Routes2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _lodash = __webpack_require__(1);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+var _routes = __webpack_require__(19);
 
-function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-            arr2[i] = arr[i];
-        }return arr2;
-    } else {
-        return Array.from(arr);
-    }
-}
+var _routes2 = _interopRequireDefault(_routes);
 
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+var _customRoute = __webpack_require__(16);
 
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
+var _customRoute2 = _interopRequireDefault(_customRoute);
 
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-} /**
-   * The Re-Quest to find the API
-   */
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * The Re-Quest to find the API
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 var Request = function (_Routes) {
     _inherits(Request, _Routes);
@@ -18868,6 +19112,7 @@ var Request = function (_Routes) {
      * @param type The request type
      */
 
+
     _createClass(Request, [{
         key: 'parseRequestData',
         value: function parseRequestData(type) {
@@ -18876,6 +19121,7 @@ var Request = function (_Routes) {
             var params = this.requestData.params;
 
             // axios handles the options differently for the request type
+
             if (['put', 'post', 'patch'].includes(type)) {
                 params = (0, _lodash.defaultsDeep)(params, this.config.globalParameters);
                 requestData.push(params);
@@ -18954,7 +19200,6 @@ var Request = function (_Routes) {
     }, {
         key: 'buildRequest',
         value: function buildRequest(type, urlParams) {
-
             if (this.urlParams) {
                 urlParams = this.urlParams.concat(urlParams);
                 this.resetURLParams();
@@ -19062,6 +19307,80 @@ var Request = function (_Routes) {
         }
 
         /**
+         * Custom Routes
+         *
+         * These can be defined and passed via the customRoutes config attribute.
+         * This allows you to completely override Rapid's usual functionality
+         * and use this more like a router.
+         */
+
+        /**
+         * Make a request to a route via a given route name
+         * The request type depends on the type of request defined in the route
+         *
+         * @param {string} name
+         * @param {object} routeParams
+         * @param {object} requestParams
+         */
+
+    }, {
+        key: 'route',
+        value: function route() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+            var routeParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+            var requestParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+            var route = this.getCustomRoute(name, routeParams);
+
+            // if there are request params, set them
+            if (Object.keys(requestParams).length !== 0) {
+                this.withParams(requestParams);
+            }
+
+            return this.request(route.type, route.url);
+        }
+
+        /**
+         * Get a CustomRoute via given name
+         *
+         * @param {string} name
+         * @param {object} routeParams
+         */
+
+    }, {
+        key: 'getCustomRoute',
+        value: function getCustomRoute() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+            var routeParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            // if a route exists, return a new instance of CustomRoute
+            if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
+                return new _customRoute2.default(this.customRoutes[name], {
+                    routeParams: routeParams
+                });
+            }
+
+            // to prevent having undefined
+            return new _customRoute2.default();
+        }
+
+        /**
+         * Generate a url to a custom defined route
+         *
+         * @param {string} name
+         * @param {object} routeParams
+         */
+
+    }, {
+        key: 'generate',
+        value: function generate() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+            var routeParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            return this.getCustomRoute(name, routeParams).url;
+        }
+
+        /**
          * Before, after, and error
          */
 
@@ -19128,7 +19447,7 @@ var Request = function (_Routes) {
         value: function withParams() {
             var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-            this.requestData.params = params;
+            (0, _lodash.set)(this.requestData, 'params', params);
 
             return this;
         }
@@ -19143,7 +19462,7 @@ var Request = function (_Routes) {
     }, {
         key: 'withParam',
         value: function withParam(key, value) {
-            this.requestData.params[key] = value;
+            (0, _lodash.set)(this.requestData, 'params.' + key, value);
 
             return this;
         }
@@ -19159,7 +19478,7 @@ var Request = function (_Routes) {
         value: function withOptions() {
             var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-            this.requestData.options = options;
+            (0, _lodash.set)(this.requestData, 'options', options);
 
             return this;
         }
@@ -19174,73 +19493,49 @@ var Request = function (_Routes) {
     }, {
         key: 'withOption',
         value: function withOption(key, value) {
-            this.requestData.options[key] = value;
+            (0, _lodash.set)(this.requestData, 'options.' + key, value);
 
             return this;
         }
     }]);
 
     return Request;
-}(_Routes3.default);
+}(_routes2.default);
 
 exports.default = Request;
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
-
-var _Url2 = __webpack_require__(17);
-
-var _Url3 = _interopRequireDefault(_Url2);
-
-var _pluralize = __webpack_require__(45);
-
-var _pluralize2 = _interopRequireDefault(_pluralize);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _lodash = __webpack_require__(1);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+var _pluralize = __webpack_require__(48);
 
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+var _pluralize2 = _interopRequireDefault(_pluralize);
 
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
+var _url = __webpack_require__(20);
 
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-} /**
-   * The Rapid Routes
-   */
+var _url2 = _interopRequireDefault(_url);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * The Rapid Routes
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 var Routes = function (_Url) {
     _inherits(Routes, _Url);
@@ -19253,11 +19548,13 @@ var Routes = function (_Url) {
 
     /**
      * Set the current route.
-     * This will set the current route to either model, collection, or any to make appropriate requests
+     * This will set the current route to either model, collection,
+     * or any to make appropriate requests
      * Can also be changed by calling rapid.model.func() or rapid.collection.func()
      *
      * @param route The route to set
      */
+
 
     _createClass(Routes, [{
         key: 'setCurrentRoute',
@@ -19281,7 +19578,7 @@ var Routes = function (_Url) {
                 any: ''
             };
 
-            if (this.config.routes[route] != '') {
+            if (this.config.routes[route] !== '') {
                 newRoute = this.config.routes[route];
             } else {
                 newRoute = (0, _lodash.kebabCase)(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);
@@ -19310,62 +19607,40 @@ var Routes = function (_Url) {
     }]);
 
     return Routes;
-}(_Url3.default);
+}(_url2.default);
 
 exports.default = Routes;
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
-
-var _Core2 = __webpack_require__(12);
-
-var _Core3 = _interopRequireDefault(_Core2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _lodash = __webpack_require__(1);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+var _core = __webpack_require__(14);
 
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+var _core2 = _interopRequireDefault(_core);
 
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
+var _url = __webpack_require__(13);
 
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-} /**
-   * URL Methods
-   */
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * URL Methods
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 var Url = function (_Core) {
     _inherits(Url, _Core);
@@ -19384,6 +19659,7 @@ var Url = function (_Core) {
      * @param ...params Can be any length of params that will be joined by /
      */
 
+
     _createClass(Url, [{
         key: 'makeUrl',
         value: function makeUrl() {
@@ -19397,6 +19673,8 @@ var Url = function (_Core) {
 
             var url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
 
+            // strip the extra .
+            // make sure routes don't need to regenerate
             if (this.config.extension) {
                 url += '.' + this.config.extension;
             }
@@ -19417,13 +19695,7 @@ var Url = function (_Core) {
     }, {
         key: 'sanitizeUrl',
         value: function sanitizeUrl(url) {
-            url = url.replace(/([^:]\/)\/+/g, '$1').replace(/\?$/, '');
-
-            if (!this.config.trailingSlash) {
-                url = url.replace(/\/$/, '');
-            }
-
-            return url;
+            return (0, _url.sanitizeUrl)(url, this.config.trailingSlash);
         }
 
         /**
@@ -19494,12 +19766,12 @@ var Url = function (_Core) {
     }]);
 
     return Url;
-}(_Core3.default);
+}(_core2.default);
 
 exports.default = Url;
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19509,39 +19781,17 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _qs = __webpack_require__(22);
+var _qs = __webpack_require__(24);
 
 var _qs2 = _interopRequireDefault(_qs);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-            arr2[i] = arr[i];
-        }return arr2;
-    } else {
-        return Array.from(arr);
-    }
-}
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _class = function () {
     function _class(caller) {
@@ -19612,7 +19862,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19622,21 +19872,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Logger = function () {
     function Logger(prefix) {
@@ -19651,7 +19889,7 @@ var Logger = function () {
         key: 'fireDebugNotice',
         value: function fireDebugNotice() {
             if (!this.firedDebugNotice) {
-                this.debug('You are running Rapid in debug mode. All requests will be mimicked.');
+                // this.debug('You are running Rapid in debug mode. All requests will be mimicked.');
 
                 this.firedDebugNotice = true;
             }
@@ -19679,156 +19917,35 @@ var Logger = function () {
 exports.default = new Logger('rapid js');
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _rapid = __webpack_require__(3);
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+var _rapid2 = _interopRequireDefault(_rapid);
 
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
-
-var _Rapid2 = __webpack_require__(3);
-
-var _Rapid3 = _interopRequireDefault(_Rapid2);
-
-var _lodash = __webpack_require__(1);
-
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
-
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var authConfig = {
-    auth: {
-        routes: {
-            login: 'login',
-            logout: 'logout',
-            auth: 'auth',
-            register: 'register'
-        },
-
-        methods: {
-            login: 'post',
-            logout: 'post',
-            auth: 'get',
-            register: 'post'
-        },
-
-        modelPrefix: false
-    }
-};
-
-var Auth = function (_Rapid) {
-    _inherits(Auth, _Rapid);
-
-    function Auth(config) {
-        _classCallCheck(this, Auth);
-
-        config = (0, _lodash.defaultsDeep)(config, authConfig);
-        config.modelName = config.modelName ? config.modelName : 'auth';
-
-        return _possibleConstructorReturn(this, (Auth.__proto__ || Object.getPrototypeOf(Auth)).call(this, config));
-    }
-
-    _createClass(Auth, [{
-        key: 'login',
-        value: function login() {
-            var credentials = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-            return this[this.modelPrefix].withParams(credentials).withOption('auth', credentials).buildRequest(this.config.auth.methods.login, this.config.auth.routes.login);
-        }
-    }, {
-        key: 'logout',
-        value: function logout() {
-            return this[this.modelPrefix].buildRequest(this.config.auth.methods.logout, this.config.auth.routes.logout);
-        }
-    }, {
-        key: 'check',
-        value: function check() {
-            return this[this.modelPrefix].buildRequest(this.config.auth.methods.auth, this.config.auth.routes.auth);
-        }
-    }, {
-        key: 'register',
-        value: function register() {
-            var credentials = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-            return this[this.modelPrefix].withParams(credentials).buildRequest(this.config.auth.methods.register, this.config.auth.routes.register);
-        }
-    }, {
-        key: 'modelPrefix',
-        get: function get() {
-            return this.config.auth.modelPrefix ? 'model' : 'any';
-        }
-    }]);
-
-    return Auth;
-}(_Rapid3.default);
-
-exports.default = Auth;
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _Rapid = __webpack_require__(3);
-
-var _Rapid2 = _interopRequireDefault(_Rapid);
-
-var _auth = __webpack_require__(20);
+var _auth = __webpack_require__(12);
 
 var _auth2 = _interopRequireDefault(_auth);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = _Rapid2.default;
-module.exports.Rapid = _Rapid2.default;
+module.exports = _rapid2.default;
+module.exports.Rapid = _rapid2.default;
 module.exports.Auth = _auth2.default;
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Stringify = __webpack_require__(24);
-var Parse = __webpack_require__(23);
+var Stringify = __webpack_require__(26);
+var Parse = __webpack_require__(25);
 
 module.exports = {
     stringify: Stringify,
@@ -19837,7 +19954,7 @@ module.exports = {
 
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20010,7 +20127,7 @@ module.exports = function (str, opts) {
 
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20154,7 +20271,7 @@ module.exports = function (object, opts) {
 
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports) {
 
 var g;
@@ -20181,7 +20298,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -20209,13 +20326,13 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(28);
+module.exports = __webpack_require__(30);
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20223,7 +20340,7 @@ module.exports = __webpack_require__(28);
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(10);
-var Axios = __webpack_require__(30);
+var Axios = __webpack_require__(32);
 var defaults = __webpack_require__(2);
 
 /**
@@ -20258,14 +20375,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(7);
-axios.CancelToken = __webpack_require__(29);
+axios.CancelToken = __webpack_require__(31);
 axios.isCancel = __webpack_require__(8);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(44);
+axios.spread = __webpack_require__(46);
 
 module.exports = axios;
 
@@ -20274,7 +20391,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20338,7 +20455,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20346,10 +20463,10 @@ module.exports = CancelToken;
 
 var defaults = __webpack_require__(2);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(31);
-var dispatchRequest = __webpack_require__(32);
-var isAbsoluteURL = __webpack_require__(40);
-var combineURLs = __webpack_require__(38);
+var InterceptorManager = __webpack_require__(33);
+var dispatchRequest = __webpack_require__(34);
+var isAbsoluteURL = __webpack_require__(42);
+var combineURLs = __webpack_require__(40);
 
 /**
  * Create a new instance of Axios
@@ -20379,6 +20496,7 @@ Axios.prototype.request = function request(config) {
   }
 
   config = utils.merge(defaults, this.defaults, { method: 'get' }, config);
+  config.method = config.method.toLowerCase();
 
   // Support baseURL config
   if (config.baseURL && !isAbsoluteURL(config.url)) {
@@ -20430,7 +20548,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20489,14 +20607,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(35);
+var transformData = __webpack_require__(37);
 var isCancel = __webpack_require__(8);
 var defaults = __webpack_require__(2);
 
@@ -20575,7 +20693,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20587,21 +20705,23 @@ module.exports = function dispatchRequest(config) {
  * @param {Error} error The error to update.
  * @param {Object} config The config.
  * @param {string} [code] The error code (for example, 'ECONNABORTED').
- @ @param {Object} [response] The response.
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
  * @returns {Error} The error.
  */
-module.exports = function enhanceError(error, config, code, response) {
+module.exports = function enhanceError(error, config, code, request, response) {
   error.config = config;
   if (code) {
     error.code = code;
   }
+  error.request = request;
   error.response = response;
   return error;
 };
 
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20626,6 +20746,7 @@ module.exports = function settle(resolve, reject, response) {
       'Request failed with status code ' + response.status,
       response.config,
       null,
+      response.request,
       response
     ));
   }
@@ -20633,7 +20754,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20660,7 +20781,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20703,7 +20824,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20778,7 +20899,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20799,7 +20920,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20859,7 +20980,7 @@ module.exports = (
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20880,7 +21001,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20955,7 +21076,7 @@ module.exports = (
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20974,7 +21095,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21018,7 +21139,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21052,7 +21173,34 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 45 */
+/* 47 */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+}
+
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+}
+
+
+/***/ }),
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* global define */
@@ -21520,7 +21668,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(11);

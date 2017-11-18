@@ -1,42 +1,19 @@
-'use strict';
+/**
+ * The Caramel Core functionality of Rapid
+ */
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+import axios from 'axios';
+import { defaultsDeep } from 'lodash';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The Caramel Core functionality of Rapid
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+import Defaults from './defaults';
+import Debugger from './../debug/debugger';
+import Logger from './../debug/logger';
 
-var _axios = require('axios');
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _lodash = require('lodash');
-
-var _Defaults = require('./Defaults');
-
-var _Defaults2 = _interopRequireDefault(_Defaults);
-
-var _Debugger = require('./../Debug/Debugger');
-
-var _Debugger2 = _interopRequireDefault(_Debugger);
-
-var _Logger = require('./../Debug/Logger');
-
-var _Logger2 = _interopRequireDefault(_Logger);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Core = function () {
-    function Core(config) {
-        _classCallCheck(this, Core);
-
+class Core {
+    constructor (config) {
         config = config || {};
 
-        config = (0, _lodash.defaultsDeep)(config, _Defaults2.default);
+        config = defaultsDeep(config, Defaults);
 
         this.initialize(config);
     }
@@ -44,170 +21,148 @@ var Core = function () {
     /**
      * Set any config overrides in this method when extending
      */
+    boot () {
 
+    }
 
-    _createClass(Core, [{
-        key: 'boot',
-        value: function boot() {}
+    /**
+     * Setup the all of properties.
+     */
+    initialize (config) {
+        this.config = config;
 
-        /**
-         * Setup the all of properties.
-         */
+        this.initializeRoutes();
 
-    }, {
-        key: 'initialize',
-        value: function initialize(config) {
+        this.boot();
 
-            this.config = config;
+        this.resetURLParams();
 
-            this.initializeRoutes();
+        this.fireSetters();
 
-            this.boot();
+        this.initializeAPI();
 
-            this.resetURLParams();
+        this.setCurrentRoute(this.config.defaultRoute);
 
-            this.fireSetters();
+        this.initializeDebugger();
 
-            this.initializeAPI();
+        this.initializeLogger();
 
-            this.setCurrentRoute(this.config.defaultRoute);
+        this.resetRequestData();
 
-            this.initializeDebugger();
+        this.defineCustomRoutes();
+    }
 
-            this.initializeLogger();
+    /**
+     * Fire the setters. This will make sure the routes are generated properly.
+     * Consider if this is really even necessary
+     */
+    fireSetters () {
+        ['baseURL', 'modelName', 'routeDelimeter', 'caseSensitive'].forEach(setter => this[setter] = this.config[setter]);
+    }
 
-            this.resetRequestData();
-        }
+    /**
+     * Initialze the debugger if debug is set to true.
+     */
+    initializeDebugger () {
+        this.debugger = this.config.debug ? new Debugger(this) : false;
+    }
 
-        /**
-         * Fire the setters. This will make sure the routes are generated properly.
-         * Consider if this is really even necessary
-         */
+    /**
+     * Initialze the debugger if debug is set to true.
+     */
+    initializeLogger () {
+        this.logger = this.config.debug ? Logger : false;
+    }
 
-    }, {
-        key: 'fireSetters',
-        value: function fireSetters() {
-            var _this = this;
+    /**
+     * Initialize the API.
+     */
+    initializeAPI () {
+        this.api = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+    }
 
-            ['baseURL', 'modelName', 'routeDelimeter', 'caseSensitive'].forEach(function (setter) {
-                return _this[setter] = _this.config[setter];
+    /**
+     * Initialize the routes.
+     */
+    initializeRoutes () {
+        this.routes = {
+            model: '',
+            collection: '',
+            any: '',
+        };
+    }
+
+    /**
+     * Set up the custom routes if we have any
+     */
+    defineCustomRoutes () {
+        this.customRoutes = {};
+
+        // if we have custom routes, set up a name:route mapping
+        if (this.config.customRoutes.length) {
+            this.config.customRoutes.forEach((route) => {
+                this.customRoutes[route.name] = route;
             });
         }
+    }
 
-        /**
-         * Initialze the debugger if debug is set to true.
-         */
+    /**
+     * Resets the request data
+     */
+    resetRequestData () {
+        this.requestData = {
+            params: {},
+            options: {},
+        };
+    }
 
-    }, {
-        key: 'initializeDebugger',
-        value: function initializeDebugger() {
-            this.debugger = this.config.debug ? new _Debugger2.default(this) : false;
+    /**
+     * Setters and Getters
+     */
+
+    set debug (val) {
+        if (this.config.debug) {
+            this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
         }
+    }
 
-        /**
-         * Initialze the debugger if debug is set to true.
-         */
+    get collection () {
+        this.setCurrentRoute('collection');
 
-    }, {
-        key: 'initializeLogger',
-        value: function initializeLogger() {
-            this.logger = this.config.debug ? _Logger2.default : false;
-        }
+        return this;
+    }
 
-        /**
-         * Initialize the API.
-         */
+    get model () {
+        this.setCurrentRoute('model');
 
-    }, {
-        key: 'initializeAPI',
-        value: function initializeAPI() {
-            this.api = _axios2.default.create((0, _lodash.defaultsDeep)({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
-        }
+        return this;
+    }
 
-        /**
-         * Initialize the routes.
-         */
+    get any () {
+        this.setCurrentRoute('any');
 
-    }, {
-        key: 'initializeRoutes',
-        value: function initializeRoutes() {
-            this.routes = {
-                model: '',
-                collection: '',
-                any: ''
-            };
-        }
+        return this;
+    }
 
-        /**
-         * Resets the request data
-         */
+    set baseURL (url) {
+        this.config.baseURL = this.sanitizeUrl(url);
+        this.initializeAPI();
+    }
 
-    }, {
-        key: 'resetRequestData',
-        value: function resetRequestData() {
-            this.requestData = {
-                params: {},
-                options: {}
-            };
-        }
+    set modelName (val) {
+        this.config.modelName = val;
+        this.setRoutes();
+    }
 
-        /**
-         * Setters and Getters
-         */
+    set routeDelimeter (val) {
+        this.config.routeDelimeter = val;
+        this.setRoutes();
+    }
 
-    }, {
-        key: 'debug',
-        set: function set(val) {
-            if (this.config.debug) this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
-        }
-    }, {
-        key: 'collection',
-        get: function get() {
-            this.setCurrentRoute('collection');
+    set caseSensitive (val) {
+        this.config.caseSensitive = val;
+        this.setRoutes();
+    }
+}
 
-            return this;
-        }
-    }, {
-        key: 'model',
-        get: function get() {
-            this.setCurrentRoute('model');
-
-            return this;
-        }
-    }, {
-        key: 'any',
-        get: function get() {
-            this.setCurrentRoute('any');
-
-            return this;
-        }
-    }, {
-        key: 'baseURL',
-        set: function set(url) {
-            this.config.baseURL = this.sanitizeUrl(url);
-            this.initializeAPI();
-        }
-    }, {
-        key: 'modelName',
-        set: function set(val) {
-            this.config.modelName = val;
-            this.setRoutes();
-        }
-    }, {
-        key: 'routeDelimeter',
-        set: function set(val) {
-            this.config.routeDelimeter = val;
-            this.setRoutes();
-        }
-    }, {
-        key: 'caseSensitive',
-        set: function set(val) {
-            this.config.caseSensitive = val;
-            this.setRoutes();
-        }
-    }]);
-
-    return Core;
-}();
-
-exports.default = Core;
+export default Core;
