@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Rapid2 = require('./Core/Rapid');
-
-var _Rapid3 = _interopRequireDefault(_Rapid2);
-
 var _lodash = require('lodash');
+
+var _rapid = require('./core/rapid');
+
+var _rapid2 = _interopRequireDefault(_rapid);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -84,6 +84,6 @@ var Auth = function (_Rapid) {
     }]);
 
     return Auth;
-}(_Rapid3.default);
+}(_rapid2.default);
 
 exports.default = Auth;

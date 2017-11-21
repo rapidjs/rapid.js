@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Request2 = require('./Request');
+var _request = require('./request');
 
-var _Request3 = _interopRequireDefault(_Request2);
+var _request2 = _interopRequireDefault(_request);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -198,6 +198,6 @@ var Crud = function (_Request) {
     }]);
 
     return Crud;
-}(_Request3.default);
+}(_request2.default);
 
 exports.default = Crud;

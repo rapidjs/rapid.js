@@ -12,9 +12,9 @@ var _pluralize = require('pluralize');
 
 var _pluralize2 = _interopRequireDefault(_pluralize);
 
-var _Url2 = require('./Url');
+var _url = require('./url');
 
-var _Url3 = _interopRequireDefault(_Url2);
+var _url2 = _interopRequireDefault(_url);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -96,6 +96,6 @@ var Routes = function (_Url) {
     }]);
 
     return Routes;
-}(_Url3.default);
+}(_url2.default);
 
 exports.default = Routes;

@@ -8,13 +8,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _lodash = require('lodash');
 
-var _Routes2 = require('./Routes');
+var _routes = require('./routes');
 
-var _Routes3 = _interopRequireDefault(_Routes2);
+var _routes2 = _interopRequireDefault(_routes);
 
-var _CustomRoute = require('./CustomRoute');
+var _customRoute = require('./custom-route');
 
-var _CustomRoute2 = _interopRequireDefault(_CustomRoute);
+var _customRoute2 = _interopRequireDefault(_customRoute);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -286,20 +286,20 @@ var Request = function (_Routes) {
 
             // if a route exists, return a new instance of CustomRoute
             if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
-                return new _CustomRoute2.default(this.customRoutes[name], {
+                return new _customRoute2.default(this.customRoutes[name], {
                     routeParams: routeParams
                 });
             }
 
             // to prevent having undefined
-            return new _CustomRoute2.default();
+            return new _customRoute2.default();
         }
 
         /**
          * Generate a url to a custom defined route
-         * 
-         * @param {string} name 
-         * @param {object} routeParams 
+         *
+         * @param {string} name
+         * @param {object} routeParams
          */
 
     }, {
@@ -431,6 +431,6 @@ var Request = function (_Routes) {
     }]);
 
     return Request;
-}(_Routes3.default);
+}(_routes2.default);
 
 exports.default = Request;

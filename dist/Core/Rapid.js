@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Crud2 = require('./Crud');
+var _crud = require('./crud');
 
-var _Crud3 = _interopRequireDefault(_Crud2);
+var _crud2 = _interopRequireDefault(_crud);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42,6 +42,6 @@ var Rapid = function (_Crud) {
     }
 
     return Rapid;
-}(_Crud3.default);
+}(_crud2.default);
 
 exports.default = Rapid;

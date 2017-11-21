@@ -14,9 +14,9 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _lodash = require('lodash');
 
-var _Defaults = require('./Defaults');
+var _defaults = require('./defaults');
 
-var _Defaults2 = _interopRequireDefault(_Defaults);
+var _defaults2 = _interopRequireDefault(_defaults);
 
 var _debugger = require('./../debug/debugger');
 
@@ -36,7 +36,7 @@ var Core = function () {
 
         config = config || {};
 
-        config = (0, _lodash.defaultsDeep)(config, _Defaults2.default);
+        config = (0, _lodash.defaultsDeep)(config, _defaults2.default);
 
         this.initialize(config);
     }

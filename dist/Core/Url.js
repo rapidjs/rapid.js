@@ -8,9 +8,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _lodash = require('lodash');
 
-var _Core2 = require('./Core');
+var _core = require('./core');
 
-var _Core3 = _interopRequireDefault(_Core2);
+var _core2 = _interopRequireDefault(_core);
 
 var _url = require('../common/url');
 
@@ -148,6 +148,6 @@ var Url = function (_Core) {
     }]);
 
     return Url;
-}(_Core3.default);
+}(_core2.default);
 
 exports.default = Url;
