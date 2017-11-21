@@ -1,6 +1,6 @@
 {
   "name": "rapid.js",
-  "version": "0.0.14",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/rapid.js",
   "scripts": {
