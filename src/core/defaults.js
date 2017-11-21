@@ -35,6 +35,8 @@ export default {
         any: '',
     },
 
+    customRoutes: {},
+
     defaultRoute: 'model',
 
     debug: false,

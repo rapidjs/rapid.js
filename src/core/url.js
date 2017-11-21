@@ -3,7 +3,8 @@
  */
 
 import { isArray } from 'lodash';
-import Core from './Core';
+import Core from './core';
+import { sanitizeUrl } from '../common/url';
 
 class Url extends Core {
     constructor (config) {
@@ -44,13 +45,7 @@ class Url extends Core {
      * @param url a url to sanitize
      */
     sanitizeUrl (url) {
-        url = url.replace(/([^:]\/)\/+/g, '$1').replace(/\?$/, '');
-
-        if (!this.config.trailingSlash) {
-            url = url.replace(/\/$/, '');
-        }
-
-        return url;
+        return sanitizeUrl(url, this.config.trailingSlash);
     }
 
     /**

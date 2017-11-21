@@ -1,5 +1,5 @@
 /*!
-  * Rapid.js v0.0.13
+  * Rapid.js v0.0.14
   * (c) 2017 Drew J Bartlett (https://drewjbartlett.com)
   * Released under the MIT License.
   */
@@ -16,7 +16,7 @@
  *
  */
 
-import Crud from './Crud';
+import Crud from './crud';
 
 class Rapid extends Crud {
 

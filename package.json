@@ -4,11 +4,13 @@
   "description": "",
   "main": "dist/rapid.js",
   "scripts": {
-    "test": "nyc ava",
+    "test": "npm run unit",
     "compile": "babel --presets=es2015 -d dist src",
     "copy-dev": "npm run compile && rm -rf ./demo/rapid && cp -R ./dist ./demo/rapid",
     "prepublish": "npm run compile",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js test/**/*.js",
+    "unit": "jest --maxWorkers 2",
+    "unit:watch": "jest test/**/*.test.js --watch"
   },
   "babel": {
     "presets": [
@@ -19,12 +21,6 @@
     "type": "git",
     "url": "git+https://github.com/rapidjs/rapid.js.git"
   },
-  "ava": {
-    "require": [
-      "babel-register"
-    ],
-    "babel": "inherit"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -33,21 +29,22 @@
   },
   "homepage": "https://github.com/rapidjs/rapid.js#readme",
   "devDependencies": {
-    "ava": "^0.18.2",
     "babel-cli": "^6.24.0",
     "babel-eslint": "^8.0.2",
     "babel-preset-es2015": "^6.24.0",
-    "eslint": "^4.9.0",
+    "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-airbnb-standard": "^1.6.5",
     "eslint-plugin-import": "^2.8.0",
-    "nyc": "^10.2.0",
-    "sinon": "^2.1.0"
+    "jest": "^21.2.1"
   },
   "dependencies": {
     "axios": "^0.16.0",
     "lodash": "^4.17.4",
     "pluralize": "^4.0.0",
     "qs": "^6.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

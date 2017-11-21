@@ -1,46 +1,36 @@
-import test from 'ava';
-import Rapid from './../src/rapid';
+import { createModel } from './helpers';
 
-const doc = new Rapid({
+const doc = createModel({
     modelName: 'document',
     extension: 'xml',
-    debug: true
 });
 
-doc.debugger.logEnabled = false;
+describe('The extension feature should work', () => {
+    it('CRUD works with extension', () => {
+        doc.id(23).find();
+        expect(doc.debugger.data.lastUrl).toBe('api/document/23.xml');
 
-test('CRUD works with extension', t => {
+        doc.id(234).save({});
+        expect(doc.debugger.data.lastUrl).toBe('api/document/234/update.xml');
 
-    doc.id(23).find();
-    t.is('api/document/23.xml', doc.debugger.data.lastUrl);
+        doc.id(456).destroy();
+        expect(doc.debugger.data.lastUrl).toBe('api/document/456/destroy.xml');
+    });
 
-    doc.id(234).save({});
-    t.is('api/document/234/update.xml', doc.debugger.data.lastUrl);
+    const issue = createModel({
+        modelName: 'issue',
+        defaultRoute: 'collection',
+        extension: 'json',
+    });
 
-    doc.id(456).destroy();
-    t.is('api/document/456/destroy.xml', doc.debugger.data.lastUrl);
+    it('works with extension', () => {
+        issue.get();
+        expect(issue.debugger.data.lastUrl).toBe('api/issues.json');
 
-});
+        issue.post();
+        expect(issue.debugger.data.lastUrl).toBe('api/issues.json');
 
-
-const issue = new Rapid({
-    modelName: 'issue',
-    defaultRoute: 'collection',
-    extension: 'json',
-    debug: true
-});
-
-issue.debugger.logEnabled = false;
-
-test('works with extension', t => {
-
-    issue.get();
-    t.is('api/issues.json', issue.debugger.data.lastUrl);
-
-    issue.post();
-    t.is('api/issues.json', issue.debugger.data.lastUrl);
-
-    issue.id(234).get();
-    t.is('api/issues/234.json', issue.debugger.data.lastUrl);
-
+        issue.id(234).get();
+        expect(issue.debugger.data.lastUrl).toBe('api/issues/234.json');
+    });
 });

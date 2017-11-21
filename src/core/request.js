@@ -3,7 +3,8 @@
  */
 
 import { isArray, defaultsDeep, set } from 'lodash';
-import Routes from './Routes';
+import Routes from './routes';
+import CustomRoute from './custom-route';
 
 class Request extends Routes {
     constructor (config) {
@@ -150,6 +151,61 @@ class Request extends Routes {
      */
     delete (...urlParams) {
         return this.buildRequest('delete', urlParams);
+    }
+
+    /**
+     * Custom Routes
+     *
+     * These can be defined and passed via the customRoutes config attribute.
+     * This allows you to completely override Rapid's usual functionality
+     * and use this more like a router.
+     */
+
+    /**
+     * Make a request to a route via a given route name
+     * The request type depends on the type of request defined in the route
+     *
+     * @param {string} name
+     * @param {object} routeParams
+     * @param {object} requestParams
+     */
+    route (name = '', routeParams = {}, requestParams = {}) {
+        const route = this.getCustomRoute(name, routeParams);
+
+        // if there are request params, set them
+        if (Object.keys(requestParams).length !== 0) {
+            this.withParams(requestParams);
+        }
+
+        return this.request(route.type, route.url);
+    }
+
+    /**
+     * Get a CustomRoute via given name
+     *
+     * @param {string} name
+     * @param {object} routeParams
+     */
+    getCustomRoute (name = '', routeParams = {}) {
+        // if a route exists, return a new instance of CustomRoute
+        if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
+            return new CustomRoute(this.customRoutes[name], {
+                routeParams,
+            });
+        }
+
+        // to prevent having undefined
+        return new CustomRoute();
+    }
+
+    /**
+     * Generate a url to a custom defined route
+     *
+     * @param {string} name
+     * @param {object} routeParams
+     */
+    generate (name = '', routeParams = {}) {
+        return this.getCustomRoute(name, routeParams).url;
     }
 
     /**

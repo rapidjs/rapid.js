@@ -12,6 +12,10 @@ var _Routes2 = require('./Routes');
 
 var _Routes3 = _interopRequireDefault(_Routes2);
 
+var _CustomRoute = require('./CustomRoute');
+
+var _CustomRoute2 = _interopRequireDefault(_CustomRoute);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -231,6 +235,80 @@ var Request = function (_Routes) {
             }
 
             return this.buildRequest('delete', urlParams);
+        }
+
+        /**
+         * Custom Routes
+         *
+         * These can be defined and passed via the customRoutes config attribute.
+         * This allows you to completely override Rapid's usual functionality
+         * and use this more like a router.
+         */
+
+        /**
+         * Make a request to a route via a given route name
+         * The request type depends on the type of request defined in the route
+         *
+         * @param {string} name
+         * @param {object} routeParams
+         * @param {object} requestParams
+         */
+
+    }, {
+        key: 'route',
+        value: function route() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+            var routeParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+            var requestParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+            var route = this.getCustomRoute(name, routeParams);
+
+            // if there are request params, set them
+            if (Object.keys(requestParams).length !== 0) {
+                this.withParams(requestParams);
+            }
+
+            return this.request(route.type, route.url);
+        }
+
+        /**
+         * Get a CustomRoute via given name
+         *
+         * @param {string} name
+         * @param {object} routeParams
+         */
+
+    }, {
+        key: 'getCustomRoute',
+        value: function getCustomRoute() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+            var routeParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            // if a route exists, return a new instance of CustomRoute
+            if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
+                return new _CustomRoute2.default(this.customRoutes[name], {
+                    routeParams: routeParams
+                });
+            }
+
+            // to prevent having undefined
+            return new _CustomRoute2.default();
+        }
+
+        /**
+         * Generate a url to a custom defined route
+         * 
+         * @param {string} name 
+         * @param {object} routeParams 
+         */
+
+    }, {
+        key: 'generate',
+        value: function generate() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+            var routeParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            return this.getCustomRoute(name, routeParams).url;
         }
 
         /**

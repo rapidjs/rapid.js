@@ -1,4 +1,3 @@
-import test from 'ava';
 import Rapid from './../src/rapid';
 
 class GalleryWrapper extends Rapid {
@@ -32,31 +31,31 @@ class GalleryWrapper extends Rapid {
     }
 }
 
-test('extending and creating a wrapper works', t => {
-    var wrapper = new GalleryWrapper({
+describe('Extending and creating a wrapper', () => {
+    const wrapper = new GalleryWrapper({
         globalParameters: {
-          key: 'YOUR_API_KEY'
+            key: 'YOUR_API_KEY',
         },
-        debug: true
+        debug: true,
     });
     wrapper.debugger.logEnabled = false;
 
-    wrapper.tagSearch('orange').json().get();
-    t.is('https://mysite.com/api/gallery/tagsearch/json?query=orange&key=YOUR_API_KEY', wrapper.debugger.data.lastUrl);
+    it('should generate proper urls from the wrapper methods', () => {
+        wrapper.tagSearch('orange').json().get();
+        expect(wrapper.debugger.data.lastUrl).toBe('https://mysite.com/api/gallery/tagsearch/json?query=orange&key=YOUR_API_KEY');
+
+        wrapper.categorySearch('nature').xml().get();
+        expect(wrapper.debugger.data.lastUrl).toBe('https://mysite.com/api/gallery/categorysearch/xml?query=nature&key=YOUR_API_KEY');
 
 
-    wrapper.categorySearch('nature').xml().get();
-    t.is('https://mysite.com/api/gallery/categorysearch/xml?query=nature&key=YOUR_API_KEY', wrapper.debugger.data.lastUrl);
+        wrapper.id(45).taxonomy('tags').json().get();
+        expect(wrapper.debugger.data.lastUrl).toBe('https://mysite.com/api/gallery/45/tags/json?key=YOUR_API_KEY');
 
 
-    wrapper.id(45).taxonomy('tags').json().get();
-    t.is('https://mysite.com/api/gallery/45/tags/json?key=YOUR_API_KEY', wrapper.debugger.data.lastUrl);
+        wrapper.id(45).taxonomy('categories').xml().get();
+        expect(wrapper.debugger.data.lastUrl).toBe('https://mysite.com/api/gallery/45/categories/xml?key=YOUR_API_KEY');
 
-
-    wrapper.id(45).taxonomy('categories').xml().get();
-    t.is('https://mysite.com/api/gallery/45/categories/xml?key=YOUR_API_KEY', wrapper.debugger.data.lastUrl);
-
-    wrapper.id(45).paginate({ page: 1, perPage: 20 }).xml().get();
-    t.is('https://mysite.com/api/gallery/45/xml?page=1&perPage=20&key=YOUR_API_KEY', wrapper.debugger.data.lastUrl);
-
+        wrapper.id(45).paginate({ page: 1, perPage: 20 }).xml().get();
+        expect(wrapper.debugger.data.lastUrl).toBe('https://mysite.com/api/gallery/45/xml?page=1&perPage=20&key=YOUR_API_KEY');
+    });
 });

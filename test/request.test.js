@@ -1,133 +1,132 @@
-import test from 'ava';
-import sinon from 'sinon';
-import Rapid from './../src/rapid';
+import { createModel } from './helpers';
 
-var lobster = new Rapid({ debug: true, modelName: 'Lobster', baseURL: 'http://maine.com/ocean/' });
+const lobster = createModel({ modelName: 'Lobster', baseURL: 'http://maine.com/ocean/' });
 
-test('get() works', t => {
+describe('The request functionality should work as expected', () => {
 
-    lobster.get('butter');
+    it('get() works', () => {
 
-    t.true((lobster.debugger.data.lastRequest.type == 'get'));
+        lobster.get('butter');
 
-    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
+        expect((lobster.debugger.data.lastRequest.type === 'get')).toBeTruthy();
 
-    lobster.collection.get('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter');
 
-    lobster.get('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
+        lobster.collection.get('butter', 'salt');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobsters/butter/salt');
 
-});
+        lobster.get('butter', 'salt', 'crackers');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
 
-test('post() works', t => {
-
-    lobster.post('butter');
-
-    t.true((lobster.debugger.data.lastRequest.type == 'post'));
-
-    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
-
-    lobster.collection.post('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
-
-    lobster.post('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
-
-});
-
-test('head() works', t => {
-
-    lobster.head('butter');
-
-    t.true((lobster.debugger.data.lastRequest.type == 'head'));
-
-    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
-
-    lobster.collection.head('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
-
-    lobster.head('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
-
-});
-
-test('put() works', t => {
-
-    lobster.put('butter');
-
-    t.true((lobster.debugger.data.lastRequest.type == 'put'));
-
-    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
-
-    lobster.collection.put('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
-
-    lobster.put('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
-
-});
-
-test('patch() works', t => {
-
-    lobster.patch('butter');
-
-    t.true((lobster.debugger.data.lastRequest.type == 'patch'));
-
-    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
-
-    lobster.collection.patch('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
-
-    lobster.patch('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
-
-});
-
-test('delete() works', t => {
-
-    lobster.delete('butter');
-
-    t.true((lobster.debugger.data.lastRequest.type == 'delete'));
-
-    t.is('http://maine.com/ocean/lobster/butter', lobster.debugger.data.lastUrl);
-
-    lobster.collection.delete('butter', 'salt');
-    t.is('http://maine.com/ocean/lobsters/butter/salt', lobster.debugger.data.lastUrl);
-
-    lobster.delete('butter', 'salt', 'crackers');
-    t.is('http://maine.com/ocean/lobster/butter/salt/crackers', lobster.debugger.data.lastUrl);
-
-});
-
-test('afterRequest gets fired', t => {
-    let callback = sinon.spy();
-    let Crab = new Rapid({
-        debug: true,
-        modelName: 'Crab',
-        baseURL: 'http://maryland.com/bay/',
-        afterRequest() {
-            callback();
-        }
     });
 
-    Crab.find(1);
+    it('post() works', () => {
 
-    t.truthy(callback.called);
-});
+        lobster.post('butter');
 
-test('beforeRequest gets fired', t => {
-    let callback = sinon.spy();
-    let Crab = new Rapid({
-        debug: true,
-        modelName: 'Crab',
-        baseURL: 'http://maryland.com/bay/',
-        beforeRequest() {
-            callback();
-        }
+        expect((lobster.debugger.data.lastRequest.type === 'post')).toBeTruthy();
+
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter');
+
+        lobster.collection.post('butter', 'salt');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobsters/butter/salt');
+
+        lobster.post('butter', 'salt', 'crackers');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
+
     });
 
-    Crab.find(1);
+    it('head() works', () => {
 
-    t.truthy(callback.called);
+        lobster.head('butter');
+
+        expect((lobster.debugger.data.lastRequest.type === 'head')).toBeTruthy();
+
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter');
+
+        lobster.collection.head('butter', 'salt');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobsters/butter/salt');
+
+        lobster.head('butter', 'salt', 'crackers');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
+
+    });
+
+    it('put() works', () => {
+
+        lobster.put('butter');
+
+        expect((lobster.debugger.data.lastRequest.type === 'put')).toBeTruthy();
+
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter');
+
+        lobster.collection.put('butter', 'salt');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobsters/butter/salt');
+
+        lobster.put('butter', 'salt', 'crackers');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
+
+    });
+
+    it('patch() works', () => {
+
+        lobster.patch('butter');
+
+        expect((lobster.debugger.data.lastRequest.type === 'patch')).toBeTruthy();
+
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter');
+
+        lobster.collection.patch('butter', 'salt');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobsters/butter/salt');
+
+        lobster.patch('butter', 'salt', 'crackers');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
+
+    });
+
+    it('delete() works', () => {
+
+        lobster.delete('butter');
+
+        expect((lobster.debugger.data.lastRequest.type === 'delete')).toBeTruthy();
+
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter');
+
+        lobster.collection.delete('butter', 'salt');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobsters/butter/salt');
+
+        lobster.delete('butter', 'salt', 'crackers');
+        expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
+
+    });
+
+    it('afterRequest gets fired', () => {
+        const callback = jest.fn();
+        const Crab = createModel({
+            modelName: 'Crab',
+            baseURL: 'http://maryland.com/bay/',
+            afterRequest() {
+                callback();
+            },
+        });
+
+        Crab.find(1);
+
+        expect(callback.mock.calls.length).toBe(1);
+    });
+
+    it('beforeRequest gets fired', () => {
+        const callback = jest.fn();
+        const Crab = createModel({
+            modelName: 'Crab',
+            baseURL: 'http://maryland.com/bay/',
+            beforeRequest() {
+                callback();
+            },
+        });
+
+        Crab.find(1);
+
+        expect(callback.mock.calls.length).toBe(1);
+    });
 });

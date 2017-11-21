@@ -2,8 +2,9 @@
 <img src="https://rapidjs.io/images/rapid-logo-gh-readme.png" />
 </p>
 
-[![npm](https://img.shields.io/npm/v/rapid.js.svg)](https://www.npmjs.com/package/rapid.js)
-[![npm](https://img.shields.io/npm/dt/rapid.js.svg)](https://www.npmjs.com/package/rapid.js)
+[![npm](https://img.shields.io/npm/v/rapid.js.svg?style=flat-square)](https://www.npmjs.com/package/rapid.js)
+[![npm](https://img.shields.io/npm/dt/rapid.js.svg?style=flat-square)](https://www.npmjs.com/package/rapid.js)
+[![npm](https://img.shields.io/travis/rapidjs/rapid.js.svg?branch=master&style=flat-square)](https://www.npmjs.com/package/rapid.js)
 
 An ORM-like Interface For Your Frontend Requests
 Create simple, resusable, and cleaner wrappers and interfaces for your API requests.

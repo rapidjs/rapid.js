@@ -12,6 +12,8 @@ var _Core2 = require('./Core');
 
 var _Core3 = _interopRequireDefault(_Core2);
 
+var _url = require('../common/url');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -75,13 +77,7 @@ var Url = function (_Core) {
     }, {
         key: 'sanitizeUrl',
         value: function sanitizeUrl(url) {
-            url = url.replace(/([^:]\/)\/+/g, '$1').replace(/\?$/, '');
-
-            if (!this.config.trailingSlash) {
-                url = url.replace(/\/$/, '');
-            }
-
-            return url;
+            return (0, _url.sanitizeUrl)(url, this.config.trailingSlash);
         }
 
         /**
