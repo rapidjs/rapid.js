@@ -40,6 +40,7 @@ post.update(25, { title: 'Rapid JS Is Awesome!' })
 post.destroy(9)
     // POST => /api/posts/9/destroy
 ```
+Read more about [Rapid Basics](https://rapidjs.io/docs#usage).
 
 ### Easily Customize Your API Requests
 ```js
@@ -61,6 +62,7 @@ post.update(25, { title: 'Rapid JS Is Awesome!' })
 post.destroy(9)
     // DELETE => /api/posts/9/
 ```
+Read more about [Customizing Your Requests](https://rapidjs.io/docs#config-builder).
 
 ### Create Reusable Base Models
 ```js
@@ -84,6 +86,7 @@ tag.collection.findBy('color', 'red')
 gallery.id(23).get('tags', 'nature')
     // GET => https://myapp.com/api/gallery/23/tag/nature?key=MY_API_KEY
 ```
+Read more about [Base Models](https://rapidjs.io/docs#extending-base-models).
 
 ### Write API Wrappers For Your Endpoints
 ```js
@@ -110,6 +113,7 @@ gallery.tagSearch('nature').json().get().then(...);
     // GET https://myapp.com/gallery/api/tagsearch/json?query=nature&key=MY_API_KEY
     // GET https://myapp.com/gallery/api/tagsearch/json?query=nature&key=MY_API_KEY
 ```    
+Read more about [Making a Wrapper](https://rapidjs.io/docs#extending-making-a-wrapper).
 
 ### Define Custom Routes
 
@@ -161,5 +165,6 @@ rapid.generate('web_login')
 // use your own service
 http.post(rapid.generate('api_save_user_preferences'), { id: 1 }).then()...
 ```
+Read more about [Custom Routes](https://rapidjs.io/docs#custom-routes).
 
 Read the official docs at [https://rapidjs.io](https://rapidjs.io).
