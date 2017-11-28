@@ -6,12 +6,17 @@
 [![npm](https://img.shields.io/npm/dt/rapid.js.svg?style=flat-square)](https://www.npmjs.com/package/rapid.js)
 [![npm](https://img.shields.io/travis/rapidjs/rapid.js.svg?branch=master&style=flat-square)](https://www.npmjs.com/package/rapid.js)
 
-An ORM-like Interface For Your Frontend Requests
-Create simple, resusable, and cleaner wrappers and interfaces for your API requests.
-
-*This is the first release of rapid and it is still in development. Please report any bugs to the github page.*
+##### An ORM-like Interface and a Router For Your API Requests
+###### Create simple, resusable, and cleaner wrappers, define custom routes, and more for your API requests.
 
 Read the official docs at [https://rapidjs.io](https://rapidjs.io).
+
+## Overview
+ - [Define Simple Models](#define-simple-models)
+ - [Easily Customize Your API Requests](#easily-customize-your-api-requests)
+ - [Create Reusable Base Models](#create-reusable-base-models)
+ - [Write API Wrappers For Your Endpoints](#write-api-wrappers-for-your-endpoints)
+ - [Define Custom Routes (New!)](#define-custom-routes)
 
 ### Define Simple Models
 ```js
@@ -105,5 +110,56 @@ gallery.tagSearch('nature').json().get().then(...);
     // GET https://myapp.com/gallery/api/tagsearch/json?query=nature&key=MY_API_KEY
     // GET https://myapp.com/gallery/api/tagsearch/json?query=nature&key=MY_API_KEY
 ```    
+
+### Define Custom Routes
+
+```js
+const customRoutes = [
+    {
+        name: 'web_get_user_preferences',
+        type: 'get',
+        url: '/user/preferences',
+    },
+
+    {
+        name: 'web_save_user_preferences',
+        type: 'post',
+        url: '/user/{id}/save/preferences'
+    }
+];
+
+const router = new Rapid({ customRoutes, baseURL: '/api' });
+
+router.route('web_get_user_preferences').then((response) => {}); 
+// GET => /api/user/preferences
+
+router.route('web_save_user_preferences', { id: 12 }, /* { request data } */).then((response) => {}); 
+// POST => /api/user/12/save/preferences
+```
+
+#### Using Your Own HTTP Service
+```js
+import http from 'some-http-service';
+
+const customRoutes = [
+    {
+        name: 'web_login',
+        url: '/login'
+    },
+
+    {
+        name: 'api_save_user_preferences',,
+        url: '/user/{id}/save/preferences'
+    }
+];
+
+const rapid = new Rapid({ customRoutes, baseURL: '' });
+
+rapid.generate('web_login')
+// returns '/login'
+
+// use your own service
+http.post(rapid.generate('api_save_user_preferences'), { id: 1 }).then()...
+```
 
 Read the official docs at [https://rapidjs.io](https://rapidjs.io).
