@@ -12,7 +12,9 @@ var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _lodash = require('lodash');
+var _defaultsDeep = require('lodash/defaultsDeep');
+
+var _defaultsDeep2 = _interopRequireDefault(_defaultsDeep);
 
 var _defaults = require('./defaults');
 
@@ -36,7 +38,7 @@ var Core = function () {
 
         config = config || {};
 
-        config = (0, _lodash.defaultsDeep)(config, _defaults2.default);
+        config = (0, _defaultsDeep2.default)(config, _defaults2.default);
 
         this.initialize(config);
     }
@@ -122,7 +124,7 @@ var Core = function () {
     }, {
         key: 'initializeAPI',
         value: function initializeAPI() {
-            this.api = _axios2.default.create((0, _lodash.defaultsDeep)({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+            this.api = _axios2.default.create((0, _defaultsDeep2.default)({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
         }
 
         /**

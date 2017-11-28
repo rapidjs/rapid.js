@@ -57,8 +57,8 @@ describe('Custom Routes should work as designed', () => {
 
     it('should replace interpolated variables', () => {
         expect(model.generate('user_save_friends3')).toBe('');
-        expect(model.generate('user_save_friends', { id: 1 })).toBe('/user/1/save/friends');
-        expect(model.generate('multiple_same_values', { id: 1, username: 'drew' })).toBe('/user/1/drew/save/1');
+        expect(model.generate('user_save_friends', { id: 1 })).toBe('/api/user/1/save/friends');
+        expect(model.generate('multiple_same_values', { id: 1, username: 'drew' })).toBe('/api/user/1/drew/save/1');
     });
 
     it('should fire the proper request type and url', () => {
@@ -78,5 +78,17 @@ describe('Custom Routes should work as designed', () => {
         model.route('multiple_same_values', { id: 563, username: 'drewjbartlett' });
         expect(model.debugger.data.lastUrl).toBe('api/user/563/drewjbartlett/save/563');
         expect(model.debugger.data.lastRequest.type).toBe('delete');
+    });
+
+    const newModel = createModel({ baseURL: '/water', customRoutes: routes });
+
+    it('should append the baseURL in the custom route', () => {
+        expect(newModel.generate('get_user_forget_name')).toBe('/water/user/forget/name');
+    });
+
+    const anotherModel = createModel({ baseURL: '', customRoutes: routes });
+
+    it('should append the baseURL in the custom route', () => {
+        expect(anotherModel.generate('get_user_forget_name')).toBe('/user/forget/name');
     });
 });

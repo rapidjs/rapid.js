@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _lodash = require('lodash');
+var _kebabCase = require('lodash/kebabCase');
+
+var _kebabCase2 = _interopRequireDefault(_kebabCase);
 
 var _pluralize = require('pluralize');
 
@@ -70,7 +72,7 @@ var Routes = function (_Url) {
             if (this.config.routes[route] !== '') {
                 newRoute = this.config.routes[route];
             } else {
-                newRoute = (0, _lodash.kebabCase)(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);
+                newRoute = (0, _kebabCase2.default)(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);
 
                 if (this.config.caseSensitive) {
                     newRoute = formattedRoute[route];
