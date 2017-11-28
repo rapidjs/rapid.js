@@ -2,7 +2,9 @@
  * The Re-Quest to find the API
  */
 
-import { isArray, defaultsDeep, set } from 'lodash';
+import isArray from 'lodash/isArray';
+import defaultsDeep from 'lodash/defaultsDeep';
+import set from 'lodash/set';
 import Routes from './routes';
 import CustomRoute from './custom-route';
 
@@ -200,12 +202,16 @@ class Request extends Routes {
 
     /**
      * Generate a url to a custom defined route
+     * This applies the baseURL and the trailing slash config
+     * as well
      *
      * @param {string} name
      * @param {object} routeParams
      */
     generate (name = '', routeParams = {}) {
-        return this.getCustomRoute(name, routeParams).url;
+        const { url } = this.getCustomRoute(name, routeParams);
+        
+        return url !== '' ? this.makeUrl(this.config.baseURL, url) : '';
     }
 
     /**

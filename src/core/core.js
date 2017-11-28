@@ -3,7 +3,7 @@
  */
 
 import axios from 'axios';
-import { defaultsDeep } from 'lodash';
+import defaultsDeep from 'lodash/defaultsDeep';
 
 import Defaults from './defaults';
 import Debugger from './../debug/debugger';

@@ -1,4 +1,4 @@
-import { defaultsDeep } from 'lodash';
+import defaultsDeep from 'lodash/defaultsDeep';
 import Rapid from './core/rapid';
 
 const authConfig = {
