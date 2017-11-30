@@ -1,2 +1,7 @@
 /demo
 demo
+.nyc_output
+src
+test
+.eslintrc.js
+.travis.yml
