@@ -20,7 +20,7 @@ Read the official docs at [https://rapidjs.io](https://rapidjs.io).
 
 ### Define Simple Models
 ```js
-var post = new Rapid({ modelName: 'Post' });
+const post = new Rapid({ modelName: 'Post' });
 
 post.find(1).then((response) => {
     // GET => /api/post/1
@@ -44,7 +44,7 @@ Read more about [Rapid Basics](https://rapidjs.io/docs#usage).
 
 ### Easily Customize Your API Requests
 ```js
-var post = new Rapid({
+const post = new Rapid({
     modelName: 'Post',
     suffixes: {
         destroy: '',
@@ -73,9 +73,9 @@ class Base extends Rapid {
     }
 }
 
-var photo = new Base({ modelName: 'Photo' });
-var gallery = new Base({ modelName: 'Gallery' });
-var tag = new Base({ modelName: 'Tag' });
+const photo = new Base({ modelName: 'Photo' });
+const gallery = new Base({ modelName: 'Gallery' });
+const tag = new Base({ modelName: 'Tag' });
 
 photo.find(1)
     // GET => https://myapp.com/api/photo/1?key=MY_API_KEY
@@ -105,7 +105,7 @@ class GalleryWrapper extends Rapid {
     }
 }
 
-var gallery = new GalleryWrapper({
+const gallery = new GalleryWrapper({
     globalParameters: { key: 'MY_API_KEY' }
 });
 
@@ -163,7 +163,7 @@ rapid.generate('web_login')
 // returns '/login'
 
 // use your own service
-http.post(rapid.generate('api_save_user_preferences'), { id: 1 }).then()...
+http.post(rapid.generate('api_save_user_preferences', { id: 1 }), { data }).then()...
 ```
 Read more about [Custom Routes](https://rapidjs.io/docs#custom-routes).
 
