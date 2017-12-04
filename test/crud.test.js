@@ -60,4 +60,10 @@ describe('The basic CRUD methods should work', () => {
     testModel.destroy(12345, {});
     expect(testModel.debugger.data.lastUrl).toBe('api/test-model/12345/delete');
   });
+
+  it('that restore should work', () => {
+    testModel.restore(12345, {});
+    expect(testModel.debugger.data.lastUrl).toBe('api/test-model/12345/restore');
+  });
+
 });
