@@ -11,6 +11,16 @@
 
 Read the official docs at [https://rapidjs.io](https://rapidjs.io).
 
+## Installation
+
+Pick your poison:
+
+```
+yarn add rapid.js
+npm i -S rapid.js
+npm install --save rapid.js
+```
+
 ## Overview
  - [Define Simple Models](#define-simple-models)
  - [Easily Customize Your API Requests](#easily-customize-your-api-requests)
