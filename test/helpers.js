@@ -6,10 +6,10 @@ import Auth from './../src/auth';
  * @param {Object} config
  */
 export function createAuthModel (config) {
-    const auth = new Auth(Object.assign(config, { debug: true }));
-    auth.debugger.logEnabled = false;
+  const auth = new Auth(Object.assign(config, { debug: true }));
+  auth.debugger.logEnabled = false;
 
-    return auth;
+  return auth;
 }
 
 /**
@@ -17,13 +17,13 @@ export function createAuthModel (config) {
  * @param {Object} config
  */
 export function createModel(config) {
-    const auth = new Rapid(Object.assign(config, { debug: true }));
-    auth.debugger.logEnabled = false;
+  const auth = new Rapid(Object.assign(config, { debug: true }));
+  auth.debugger.logEnabled = false;
 
-    return auth;
+  return auth;
 }
 
 export default {
-    createAuthModel,
-    createModel,
+  createAuthModel,
+  createModel,
 };
