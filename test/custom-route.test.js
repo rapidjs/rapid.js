@@ -31,7 +31,7 @@ describe('Custom Routes should work as designed', () => {
   it('should create an empty object if no routes are defined', () => {
     const model = createModel({ name: 'Drew' });
 
-    expect(model.customRoutes).toEqual({});
+    expect(model.customRoutes).toEqual([]);
   });
 
   it('should load the custom routes into the config', () => {
