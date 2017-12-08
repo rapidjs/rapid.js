@@ -71,6 +71,7 @@ export default {
     create: 'post',
     update: 'post',
     destroy: 'post',
+    restore: 'post',
   },
 
   /**
@@ -123,6 +124,7 @@ export default {
     create: 'create',
     update: 'update',
     destroy: 'destroy',
+    restore: 'restore',
   },
 
   /**
@@ -133,17 +135,11 @@ export default {
   trailingSlash: false,
 
   // eslint-disable-next-line no-unused-vars
-  beforeRequest (type, url) {
-
-  },
+  beforeRequest(type, url) {},
 
   // eslint-disable-next-line no-unused-vars
-  afterRequest (response) {
-
-  },
+  afterRequest(response) {},
 
   // eslint-disable-next-line no-unused-vars
-  onError (response) {
-
-  },
+  onError(response) {}
 };
