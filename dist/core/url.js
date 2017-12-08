@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -27,129 +27,159 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
 var Url = function (_Core) {
-    _inherits(Url, _Core);
+  _inherits(Url, _Core);
 
-    function Url(config) {
-        _classCallCheck(this, Url);
+  function Url(config) {
+    _classCallCheck(this, Url);
 
-        return _possibleConstructorReturn(this, (Url.__proto__ || Object.getPrototypeOf(Url)).call(this, config));
+    return _possibleConstructorReturn(this, (Url.__proto__ || Object.getPrototypeOf(Url)).call(this, config));
+  }
+
+  /**
+   * Based off the current route that's set this will take a set of params
+   * and split it into a URL. This will then reset the route to the default
+   * route after building the URL.
+   *
+   * @param {Spread} params Can be any length of params that will be joined by /
+   * @return {String}
+   */
+
+
+  _createClass(Url, [{
+    key: 'makeUrl',
+    value: function makeUrl() {
+      for (var _len = arguments.length, params = Array(_len), _key = 0; _key < _len; _key++) {
+        params[_key] = arguments[_key];
+      }
+
+      if (this.config.trailingSlash) {
+        params.push('');
+      }
+
+      var url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
+
+      // strip the extra .
+      // make sure routes don't need to regenerate
+      if (this.config.extension) {
+        url += '.' + this.config.extension;
+      }
+
+      // reset currentRoute
+      this.setCurrentRoute(this.config.defaultRoute);
+
+      return url;
     }
 
     /**
-     * Based off the current route that's set this will take a set of params
-     * and split it into a URL. This will then reset the route to the default
-     * route after building the URL.
+     * This just makes sure there are no double slashes and no trailing
+     * slash unless the config for it is set.
      *
-     * @param ...params Can be any length of params that will be joined by /
+     * @param {String} url a url to sanitize
+     * @return {String}
      */
 
+  }, {
+    key: 'sanitizeUrl',
+    value: function sanitizeUrl(url) {
+      return (0, _url.sanitizeUrl)(url, this.config.trailingSlash);
+    }
 
-    _createClass(Url, [{
-        key: 'makeUrl',
-        value: function makeUrl() {
-            for (var _len = arguments.length, params = Array(_len), _key = 0; _key < _len; _key++) {
-                params[_key] = arguments[_key];
-            }
+    /**
+     * Reset an URL params set from a relationship
+     */
 
-            if (this.config.trailingSlash) {
-                params.push('');
-            }
+  }, {
+    key: 'resetURLParams',
+    value: function resetURLParams() {
+      this.urlParams = false;
+    }
 
-            var url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
+    /**
+     * Set the URL params
+     *
+     * @param {Array} urlParams
+     * @param {Boolean} prepend
+     * @param {Boolean} overwrite
+     * @return {Rapid}
+     */
 
-            // strip the extra .
-            // make sure routes don't need to regenerate
-            if (this.config.extension) {
-                url += '.' + this.config.extension;
-            }
+  }, {
+    key: 'setURLParams',
+    value: function setURLParams() {
+      var urlParams = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var prepend = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var overwrite = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-            // reset currentRoute
-            this.setCurrentRoute(this.config.defaultRoute);
+      this.urlParams = this.urlParams || [];
 
-            return url;
-        }
+      if (!(0, _isArray2.default)(urlParams)) {
+        urlParams = [urlParams];
+      }
 
-        /**
-         * This just makes sure there are no double slashes and no trailing
-         * slash unless the config for it is set.
-         *
-         * @param url a url to sanitize
-         */
+      if (overwrite) {
+        this.urlParams = urlParams;
 
-    }, {
-        key: 'sanitizeUrl',
-        value: function sanitizeUrl(url) {
-            return (0, _url.sanitizeUrl)(url, this.config.trailingSlash);
-        }
+        return this;
+      }
 
-        /**
-         * Reset an URL params set from a relationship
-         */
+      if (prepend) {
+        this.urlParams = urlParams.concat(this.urlParams);
+      } else {
+        this.urlParams = this.urlParams.concat(urlParams);
+      }
 
-    }, {
-        key: 'resetURLParams',
-        value: function resetURLParams() {
-            this.urlParams = false;
-        }
+      return this;
+    }
 
-        /**
-         * Set the URL params
-         */
+    // consider making a .url() alias of the above method?
 
-    }, {
-        key: 'setURLParams',
-        value: function setURLParams() {
-            var urlParams = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-            var prepend = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-            var overwrite = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    /**
+     * Set the URL params normally
+     *
+     * @param {Spread} params
+     * @return {Rapid}
+     */
 
-            this.urlParams = this.urlParams || [];
+  }, {
+    key: 'url',
+    value: function url() {
+      this.setURLParams.apply(this, arguments);
 
-            if (!(0, _isArray2.default)(urlParams)) {
-                urlParams = [urlParams];
-            }
+      return this;
+    }
 
-            if (overwrite) {
-                this.urlParams = urlParams;
+    /**
+     * Set the URL params, but prepending
+     *
+     * @param {Array} params
+     * @return {Rapid}
+     */
 
-                return this;
-            }
+  }, {
+    key: 'prepend',
+    value: function prepend(params) {
+      this.setURLParams(params, true);
 
-            if (prepend) {
-                this.urlParams = urlParams.concat(this.urlParams);
-            } else {
-                this.urlParams = this.urlParams.concat(urlParams);
-            }
+      return this;
+    }
 
-            return this;
-        }
+    /**
+     * Set the URL params, but appending them
+     *
+     * @param {Array} params
+     * @return {Rapid}
+     */
 
-        // consider making a .url() alias of the above method?
+  }, {
+    key: 'append',
+    value: function append(params) {
+      this.setURLParams(params);
 
-    }, {
-        key: 'url',
-        value: function url() {
-            this.setURLParams.apply(this, arguments);
+      return this;
+    }
+  }]);
 
-            return this;
-        }
-    }, {
-        key: 'prepend',
-        value: function prepend(params) {
-            this.setURLParams(params, true);
-
-            return this;
-        }
-    }, {
-        key: 'append',
-        value: function append(params) {
-            this.setURLParams(params);
-
-            return this;
-        }
-    }]);
-
-    return Url;
+  return Url;
 }(_core2.default);
 
 exports.default = Url;

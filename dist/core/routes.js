@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -29,75 +29,75 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
 var Routes = function (_Url) {
-    _inherits(Routes, _Url);
+  _inherits(Routes, _Url);
 
-    function Routes(config) {
-        _classCallCheck(this, Routes);
+  function Routes(config) {
+    _classCallCheck(this, Routes);
 
-        return _possibleConstructorReturn(this, (Routes.__proto__ || Object.getPrototypeOf(Routes)).call(this, config));
+    return _possibleConstructorReturn(this, (Routes.__proto__ || Object.getPrototypeOf(Routes)).call(this, config));
+  }
+
+  /**
+   * Set the current route.
+   * This will set the current route to either model, collection,
+   * or any to make appropriate requests
+   * Can also be changed by calling rapid.model.func() or rapid.collection.func()
+   *
+   * @param {String} route The route to set
+   */
+
+
+  _createClass(Routes, [{
+    key: 'setCurrentRoute',
+    value: function setCurrentRoute(route) {
+      this.currentRoute = route;
     }
 
     /**
-     * Set the current route.
-     * This will set the current route to either model, collection,
-     * or any to make appropriate requests
-     * Can also be changed by calling rapid.model.func() or rapid.collection.func()
+     * Set the routes for the URL based off model/collection and config
      *
-     * @param route The route to set
+     * @param {String} route The key of the route to be set
      */
 
+  }, {
+    key: 'setRoute',
+    value: function setRoute(route) {
+      var newRoute = '';
+      var formattedRoute = {
+        model: this.config.modelName,
+        collection: (0, _pluralize2.default)(this.config.modelName),
+        any: ''
+      };
 
-    _createClass(Routes, [{
-        key: 'setCurrentRoute',
-        value: function setCurrentRoute(route) {
-            this.currentRoute = route;
+      if (this.config.routes[route] !== '') {
+        newRoute = this.config.routes[route];
+      } else {
+        newRoute = (0, _kebabCase2.default)(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);
+
+        if (this.config.caseSensitive) {
+          newRoute = formattedRoute[route];
         }
+      }
 
-        /**
-         * Set the routes for the URL based off model/collection and config
-         *
-         * @param route The key of the route to be set
-         */
+      this.routes[route] = newRoute;
+    }
 
-    }, {
-        key: 'setRoute',
-        value: function setRoute(route) {
-            var newRoute = '';
-            var formattedRoute = {
-                model: this.config.modelName,
-                collection: (0, _pluralize2.default)(this.config.modelName),
-                any: ''
-            };
+    /**
+     * Loop through the routes and set them
+     */
 
-            if (this.config.routes[route] !== '') {
-                newRoute = this.config.routes[route];
-            } else {
-                newRoute = (0, _kebabCase2.default)(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);
+  }, {
+    key: 'setRoutes',
+    value: function setRoutes() {
+      var _this2 = this;
 
-                if (this.config.caseSensitive) {
-                    newRoute = formattedRoute[route];
-                }
-            }
+      ['model', 'collection'].forEach(function (route) {
+        return _this2.setRoute(route);
+      });
+    }
+  }]);
 
-            this.routes[route] = newRoute;
-        }
-
-        /**
-         * Loop through the routes and set them
-         */
-
-    }, {
-        key: 'setRoutes',
-        value: function setRoutes() {
-            var _this2 = this;
-
-            ['model', 'collection'].forEach(function (route) {
-                return _this2.setRoute(route);
-            });
-        }
-    }]);
-
-    return Routes;
+  return Routes;
 }(_url2.default);
 
 exports.default = Routes;

@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _crud = require('./crud');
@@ -33,15 +33,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  */
 
 var Rapid = function (_Crud) {
-    _inherits(Rapid, _Crud);
+  _inherits(Rapid, _Crud);
 
-    function Rapid(config) {
-        _classCallCheck(this, Rapid);
+  function Rapid(config) {
+    _classCallCheck(this, Rapid);
 
-        return _possibleConstructorReturn(this, (Rapid.__proto__ || Object.getPrototypeOf(Rapid)).call(this, config));
-    }
+    return _possibleConstructorReturn(this, (Rapid.__proto__ || Object.getPrototypeOf(Rapid)).call(this, config));
+  }
 
-    return Rapid;
+  return Rapid;
 }(_crud2.default);
 
 exports.default = Rapid;
