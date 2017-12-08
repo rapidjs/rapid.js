@@ -7,15 +7,15 @@
  * @return {String}
  */
 export function sanitizeUrl (url = '', keepTrailingSlash = false) {
-    url = url.replace(/([^:]\/)\/+/g, '$1').replace(/\?$/, '').replace(/^(\/\/)/, '/');
+  url = url.replace(/([^:]\/)\/+/g, '$1').replace(/\?$/, '').replace(/^(\/\/)/, '/');
 
-    if (!keepTrailingSlash) {
-        url = url.replace(/\/$/, '');
-    }
+  if (!keepTrailingSlash) {
+    url = url.replace(/\/$/, '');
+  }
 
-    return url;
+  return url;
 }
 
 export default {
-    sanitizeUrl,
+  sanitizeUrl,
 };
