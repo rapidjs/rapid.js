@@ -16,7 +16,7 @@ class CustomRoute {
   /**
    * This replaces any interpolated params with items passed in via the routeParams object
    *
-   * @return {string}
+   * @return {String}
    */
   replaceURLParams () {
     let url = this.rawURL;
@@ -35,7 +35,7 @@ class CustomRoute {
   /**
    * Check if the url has interpolated {} in them
    *
-   * @return {array}
+   * @return {Array}
    */
   get urlParams () {
     // eslint-disable-next-line
@@ -54,7 +54,7 @@ class CustomRoute {
   /**
    * Returns the properly prepared URL
    *
-   * @return {string}
+   * @return {String}
    */
   get url () {
     return this.replaceURLParams();
@@ -64,7 +64,7 @@ class CustomRoute {
    * Returns the raw url from the route which would
    * contain any interpolations
    *
-   * @return {string}
+   * @return {String}
    */
   get rawURL () {
     return this.route.url;
@@ -73,7 +73,7 @@ class CustomRoute {
   /**
    * Returns the route name
    *
-   * @return {string}
+   * @return {String}
    */
   get name () {
     return this.route.name;
@@ -82,7 +82,7 @@ class CustomRoute {
   /**
    * Returns the request type
    *
-   * @return {string}
+   * @return {String}
    */
   get type () {
     return this.route.type;

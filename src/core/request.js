@@ -14,10 +14,11 @@ class Request extends Routes {
   }
 
   /**
-     * Parse the request data prior to passing it to axios
-     *
-     * @param type The request type
-     */
+   * Parse the request data prior to passing it to axios
+   *
+   * @param {String} type The request type
+   * @return {Object}
+   */
   parseRequestData (type) {
     const requestData = [];
     const { options } = this.requestData;
@@ -37,11 +38,12 @@ class Request extends Routes {
   }
 
   /**
-     * Make the request
-     *
-     * @param type The Request type
-     * @param url The url
-     */
+   * Make the request
+   *
+   * @param {String} type The Request type
+   * @param {String} url The url
+   * @return {Promise}
+   */
   request (type, url) {
     type = type.toLowerCase();
 
@@ -71,10 +73,11 @@ class Request extends Routes {
   }
 
   /**
-     * Checks if is a valid request type
-     *
-     * @param type The request type
-     */
+   * Checks if is a valid request type
+   *
+   * @param {String} type The request type
+   * @return {Boolean}
+   */
   isAllowedRequestType (type) {
     if (!this.config.allowedRequestTypes.includes(type)) {
       if (this.config.debug) {
@@ -88,8 +91,12 @@ class Request extends Routes {
   }
 
   /**
-     * to build a request url
-     */
+   * Build a request URL
+   *
+   * @param {String} type
+   * @param {Array} urlParams
+   * @return {Promise}
+   */
   buildRequest (type, urlParams) {
     if (this.urlParams) {
       urlParams = this.urlParams.concat(urlParams);
@@ -102,55 +109,61 @@ class Request extends Routes {
   }
 
   /**
-     * Make a GET request
-     *
-     * @param urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     */
+   * Make a GET request
+   *
+   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @return {Promise}
+   */
   get (...urlParams) {
     return this.buildRequest('get', urlParams);
   }
 
   /**
-     * Make a POST request
-     *
-     * @param urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     */
+   * Make a POST request
+   *
+   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @return {Promise}
+   */
   post (...urlParams) {
     return this.buildRequest('post', urlParams);
   }
 
   /**
-     * Make a PUT request
-     *
-     * @param urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     */
+   * Make a PUT request
+   *
+   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @return {Promise}
+   */
   put (...urlParams) {
     return this.buildRequest('put', urlParams);
   }
 
   /**
-     * Make a PATCH request
-     *
-     * @param urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     */
+   * Make a PATCH request
+   *
+   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @return {Promise}
+   */
   patch (...urlParams) {
     return this.buildRequest('patch', urlParams);
   }
 
   /**
-     * Make a HEAD request
-     *
-     * @param urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     */
+   * Make a HEAD request
+   *
+   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @return {Promise}
+   */
   head (...urlParams) {
     return this.buildRequest('head', urlParams);
   }
 
   /**
-     * Make a DELETE request
-     *
-     * @param urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     */
+   * Make a DELETE request
+   *
+   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @return {Promise}
+   */
   delete (...urlParams) {
     return this.buildRequest('delete', urlParams);
   }
@@ -164,13 +177,14 @@ class Request extends Routes {
      */
 
   /**
-     * Make a request to a route via a given route name
-     * The request type depends on the type of request defined in the route
-     *
-     * @param {string} name
-     * @param {object} routeParams
-     * @param {object} requestParams
-     */
+   * Make a request to a route via a given route name
+   * The request type depends on the type of request defined in the route
+   *
+   * @param {String} name
+   * @param {Object} routeParams
+   * @param {Object} requestParams
+   * @return {Promise}
+   */
   route (name = '', routeParams = {}, requestParams = {}) {
     const route = this.getCustomRoute(name, routeParams);
 
@@ -185,8 +199,9 @@ class Request extends Routes {
   /**
      * Get a CustomRoute via given name
      *
-     * @param {string} name
-     * @param {object} routeParams
+     * @param {String} name
+     * @param {Object} routeParams
+    * @return {CustomRoute}
      */
   getCustomRoute (name = '', routeParams = {}) {
     // if a route exists, return a new instance of CustomRoute
@@ -201,13 +216,14 @@ class Request extends Routes {
   }
 
   /**
-     * Generate a url to a custom defined route
-     * This applies the baseURL and the trailing slash config
-     * as well
-     *
-     * @param {string} name
-     * @param {object} routeParams
-     */
+   * Generate a url to a custom defined route
+   * This applies the baseURL and the trailing slash config
+   * as well
+   *
+   * @param {String} name
+   * @param {Object} routeParams
+   * @return {String}
+   */
   generate (name = '', routeParams = {}) {
     const { url } = this.getCustomRoute(name, routeParams);
 
@@ -215,27 +231,32 @@ class Request extends Routes {
   }
 
   /**
-     * Before, after, and error
-     */
+   * Before, after, and error
+   */
 
   /**
-     * This is fired before the request
-     */
+   * This is fired before the request
+   * @param {String} type
+   * @param {String} url
+   * @return {Function}
+   */
   beforeRequest (type, url) {
     return this.config.beforeRequest(type, url);
   }
 
   /**
-     * This is fired after each request
-     */
+   * This is fired after each request
+   * @param {Object} response
+   */
   afterRequest (response) {
     this.resetRequestData();
     this.config.afterRequest(response);
   }
 
   /**
-     * This is fired on a request error
-     */
+   * This is fired on a request error
+   * @param {Object} error
+   */
   onError (error) {
     this.resetRequestData();
     this.config.onError(error);
@@ -246,10 +267,11 @@ class Request extends Routes {
      */
 
   /**
-     * Send data and options with the request
-     *
-     * @param data An object of params: {}, options: {}
-     */
+   * Send data and options with the request
+   *
+   * @param {Object} data An object of params: {}, options: {}
+   * @return {Rapid}
+   */
   withData (data = {}) {
     this.requestData = defaultsDeep(data, this.requestData);
 
@@ -257,10 +279,11 @@ class Request extends Routes {
   }
 
   /**
-     * Send params with the request
-     *
-     * @param params An object of params
-     */
+   * Send params with the request
+   *
+   * @param {Object} params An object of params
+   * @return {Rapid}
+   */
   withParams (params = {}) {
     set(this.requestData, 'params', params);
 
@@ -268,11 +291,12 @@ class Request extends Routes {
   }
 
   /**
-     * Send a single param with the request
-     *
-     * @param key The key name
-     * @param value The value
-     */
+   * Send a single param with the request
+   *
+   * @param {Number|String} key The key name
+   * @param {Number|String} value The value
+   * @return {Rapid}
+   */
   withParam (key, value) {
     set(this.requestData, `params.${key}`, value);
 
@@ -280,10 +304,11 @@ class Request extends Routes {
   }
 
   /**
-     * Send options with the request
-     *
-     * @param options An object of options
-     */
+   * Send options with the request
+   *
+   * @param {Object} options An object of options
+   * @return {Rapid}
+   */
   withOptions (options = {}) {
     set(this.requestData, 'options', options);
 
@@ -291,11 +316,12 @@ class Request extends Routes {
   }
 
   /**
-     * Send a single option with the request
-     *
-     * @param key The key name
-     * @param value The value
-     */
+   * Send a single option with the request
+   *
+   * @param {Number|String} key The key name
+   * @param {Number|String} value The value
+   * @return {Rapid}
+   */
   withOption (key, value) {
     set(this.requestData, `options.${key}`, value);
 

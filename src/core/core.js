@@ -4,7 +4,6 @@
 
 import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
-
 import Defaults from './defaults';
 import Debugger from './../debug/debugger';
 import Logger from './../debug/logger';
@@ -27,6 +26,7 @@ class Core {
 
   /**
    * Setup the all of properties.
+   * @param {Object} config
    */
   initialize (config) {
     this.config = config;
@@ -75,8 +75,8 @@ class Core {
   }
 
   /**
-     * Initialize the API.
-     */
+   * Initialize the API.
+   */
   initializeAPI () {
     this.api = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
   }
@@ -85,18 +85,14 @@ class Core {
    * Initialize the routes.
    */
   initializeRoutes () {
-    this.routes = {
-      model: '',
-      collection: '',
-      any: '',
-    };
+    this.routes = this.config.routes;
   }
 
   /**
    * Set up the custom routes if we have any
    */
   defineCustomRoutes () {
-    this.customRoutes = {};
+    this.customRoutes = [];
 
     // if we have custom routes, set up a name:route mapping
     if (this.config.customRoutes.length) {

@@ -19,11 +19,9 @@
 import Crud from './crud';
 
 class Rapid extends Crud {
-
   constructor (config) {
     super(config);
   }
-
 }
 
 export default Rapid;

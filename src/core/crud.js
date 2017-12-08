@@ -13,7 +13,8 @@ class Crud extends Request {
    * Make a GET request to a url that would retrieve a single model.
    * Prepends primaryKey if set
    *
-   * @param id The model's id
+   * @param {Number} id The model's id
+   * @return {Promise}
    */
   find (id) {
     return this.model.id(id).get();
@@ -22,8 +23,9 @@ class Crud extends Request {
   /**
    * Make a request to update or destroy a model
    *
-   * @param method The method (update or destroy)
-   * @param ...params Can be either (id, data) OR (data)
+   * @param {String} method The method (update or destroy)
+   * @param {Spread} params Can be either (id, data) OR (data)
+   * @return {Promise}
    */
   updateOrDestroy (method, ...params) {
     const urlParams = [];
@@ -49,6 +51,9 @@ class Crud extends Request {
 
   /**
    * See updateOrDestroy
+   *
+   * @param {Spread} params
+   * @return {Promise}
    */
   update (...params) {
     return this.updateOrDestroy('update', ...params);
@@ -57,6 +62,9 @@ class Crud extends Request {
   /**
    * Alias of update
    * See updateOrDestroy
+   *
+   * @param {Spread} params
+   * @return {Promise}
    */
   save (...params) {
     return this.update(...params);
@@ -64,6 +72,9 @@ class Crud extends Request {
 
   /**
    * See updateOrDestroy
+   *
+   * @param {Spread} params
+   * @return {Promise}
    */
   destroy (...params) {
     return this.updateOrDestroy('destroy', ...params);
@@ -72,7 +83,8 @@ class Crud extends Request {
   /**
    * Makes a request to create a new model based off the method and suffix for create
    *
-   * @param data The data to be sent over for creation of model
+   * @param {Object} data The data to be sent over for creation of model
+   * @return {Promise}
    */
   create (data) {
     return this.withParams(data)
@@ -84,7 +96,8 @@ class Crud extends Request {
    * currently it doens't work with any of the CRUD methods.
    * It should work with this.
    *
-   * @param id The id of the model
+   * @param {Number} id The id of the model
+   * @return {Promise}
    */
   id (id) {
     let params = [];
@@ -108,6 +121,8 @@ class Crud extends Request {
 
   /**
    * Makes a GET request on a collection route
+   *
+   * @return {Promise}
    */
   all () {
     return this.collection.get();
@@ -120,8 +135,9 @@ class Crud extends Request {
   /**
    * Makes a GET request to find a model/collection by key, value
    *
-   * @param key The key to search by
-   * @param value The value to search by
+   * @param {String|Number} key The key to search by
+   * @param {String|Number} value The value to search by
+   * @return {Promise}
    */
   findBy (key, value) {
     const urlParams = [key];
