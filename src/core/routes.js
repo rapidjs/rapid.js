@@ -13,22 +13,22 @@ class Routes extends Url {
   }
 
   /**
-     * Set the current route.
-     * This will set the current route to either model, collection,
-     * or any to make appropriate requests
-     * Can also be changed by calling rapid.model.func() or rapid.collection.func()
-     *
-     * @param route The route to set
-     */
+   * Set the current route.
+   * This will set the current route to either model, collection,
+   * or any to make appropriate requests
+   * Can also be changed by calling rapid.model.func() or rapid.collection.func()
+   *
+   * @param {String} route The route to set
+   */
   setCurrentRoute (route) {
     this.currentRoute = route;
   }
 
   /**
-     * Set the routes for the URL based off model/collection and config
-     *
-     * @param route The key of the route to be set
-     */
+   * Set the routes for the URL based off model/collection and config
+   *
+   * @param {String} route The key of the route to be set
+   */
   setRoute (route) {
     let newRoute = '';
     const formattedRoute = {
@@ -51,8 +51,8 @@ class Routes extends Url {
   }
 
   /**
-     * Loop through the routes and set them
-     */
+   * Loop through the routes and set them
+   */
   setRoutes () {
     ['model', 'collection'].forEach(route => this.setRoute(route));
   }
