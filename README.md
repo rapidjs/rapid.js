@@ -7,7 +7,7 @@
 [![npm](https://img.shields.io/travis/rapidjs/rapid.js.svg?branch=master&style=flat-square)](https://www.npmjs.com/package/rapid.js)
 
 ##### An ORM-like Interface and a Router For Your API Requests
-###### Create simple, resusable, and cleaner wrappers, define custom routes, and more for your API requests.
+###### Create simple, reusable, and cleaner wrappers, define custom routes, and more for your API requests.
 
 Read the official docs at [https://rapidjs.io](https://rapidjs.io).
 
