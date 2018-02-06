@@ -62,8 +62,33 @@ describe('The basic CRUD methods should work', () => {
   });
 
   it('that restore should work', () => {
-    testModel.restore(12345, {});
+    testModel.restore(12345);
     expect(testModel.debugger.data.lastUrl).toBe('api/test-model/12345/restore');
+
+    testModel.restore('');
+    expect(testModel.debugger.data.lastUrl).toBe('api/test-model/restore');
+    expect((testModel.debugger.data.lastRequest.type === 'post')).toBeTruthy();
+    
+  });
+
+  const anotherTestModel = createModel({
+    modelName: 'testModel',
+    methods: {
+      restore: 'get',
+    },
+    suffixes: {
+      restore: 'undelete',
+    },
+  });
+
+  it('that restore suffix and request type should work', () => {
+    anotherTestModel.restore(12345);
+    expect(anotherTestModel.debugger.data.lastUrl).toBe('api/test-model/12345/undelete');
+
+    anotherTestModel.restore('');
+    expect(anotherTestModel.debugger.data.lastUrl).toBe('api/test-model/undelete');
+
+    expect((anotherTestModel.debugger.data.lastRequest.type === 'get')).toBeTruthy();
   });
 
 });

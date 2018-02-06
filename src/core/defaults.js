@@ -141,5 +141,5 @@ export default {
   afterRequest(response) {},
 
   // eslint-disable-next-line no-unused-vars
-  onError(response) {}
+  onError(response) {},
 };
