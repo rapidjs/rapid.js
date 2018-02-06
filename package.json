@@ -1,6 +1,6 @@
 {
   "name": "rapid.js",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/rapid.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "compile": "babel --presets=es2015 -d dist src",
     "copy-dev": "npm run compile && rm -rf ./demo/rapid && cp -R ./dist ./demo/rapid",
     "prepublish": "npm run compile",
-    "lint": "eslint src/**/*.js test/**/*.js",
+    "lint": "eslint --ext .js src test",
     "unit": "jest --maxWorkers 2",
     "unit:watch": "jest test/**/*.test.js --watch"
   },

@@ -81,6 +81,27 @@ class Crud extends Request {
   }
 
   /**
+   * Sends a config.suffixes.restore request to emulate a
+   * restore request
+   *
+   * @param {Number} id
+   * @return {Promise}
+   */
+  restore (id) {
+    const urlParams = [];
+
+    if (Number.isInteger(id)) {
+      this.id(id);
+    }
+
+    if (Object.prototype.hasOwnProperty.call(this.config.suffixes, 'restore')) {
+      urlParams.push(this.config.suffixes.restore);
+    }
+
+    return this.model.buildRequest(this.config.methods.restore, urlParams);
+  }
+
+  /**
    * Makes a request to create a new model based off the method and suffix for create
    *
    * @param {Object} data The data to be sent over for creation of model

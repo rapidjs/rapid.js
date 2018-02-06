@@ -92,7 +92,7 @@ var Request = function (_Routes) {
       type = type.toLowerCase();
 
       if (!this.isAllowedRequestType(type)) {
-        return;
+        throw new Error('This request type is not allowed.');
       }
 
       this.beforeRequest(type, url);

@@ -75,7 +75,8 @@ exports.default = {
   methods: {
     create: 'post',
     update: 'post',
-    destroy: 'post'
+    destroy: 'post',
+    restore: 'post'
   },
 
   /**
@@ -127,7 +128,8 @@ exports.default = {
   suffixes: {
     create: 'create',
     update: 'update',
-    destroy: 'destroy'
+    destroy: 'destroy',
+    restore: 'restore'
   },
 
   /**
