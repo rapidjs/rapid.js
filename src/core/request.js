@@ -250,6 +250,7 @@ class Request extends Routes {
    */
   afterRequest (response) {
     this.resetRequestData();
+    this.resetURLParams();
     this.config.afterRequest(response);
   }
 
@@ -259,6 +260,7 @@ class Request extends Routes {
    */
   onError (error) {
     this.resetRequestData();
+    this.resetURLParams();
     this.config.onError(error);
   }
 
