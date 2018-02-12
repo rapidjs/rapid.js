@@ -49,6 +49,9 @@ post.update(25, { title: 'Rapid JS Is Awesome!' })
 
 post.destroy(9)
     // POST => /api/posts/9/destroy
+
+post.restore(9)
+    // POST => /api/posts/9/restore    
 ```
 Read more about [Rapid Basics](https://rapidjs.io/docs#usage).
 
