@@ -368,6 +368,7 @@ var Request = function (_Routes) {
     key: 'afterRequest',
     value: function afterRequest(response) {
       this.resetRequestData();
+      this.resetURLParams();
       this.config.afterRequest(response);
     }
 
@@ -380,6 +381,7 @@ var Request = function (_Routes) {
     key: 'onError',
     value: function onError(error) {
       this.resetRequestData();
+      this.resetURLParams();
       this.config.onError(error);
     }
 
