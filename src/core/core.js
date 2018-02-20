@@ -79,6 +79,7 @@ class Core {
    */
   initializeAPI () {
     this.api = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+    this.writeInterceptorsToAPI();
   }
 
   /**
@@ -99,6 +100,16 @@ class Core {
       this.config.customRoutes.forEach((route) => {
         this.customRoutes[route.name] = route;
       });
+    }
+  }
+
+  writeInterceptorsToAPI () {
+    const interceptors = this.config.interceptors;
+
+    for (const type in interceptors) {
+      for (const interceptor of interceptors[type]) {
+        this.api.interceptors[type].use(interceptor);
+      }
     }
   }
 
@@ -138,6 +149,10 @@ class Core {
     this.setCurrentRoute('any');
 
     return this;
+  }
+
+  get interceptors () {
+    return this.config.interceptors;
   }
 
   set baseURL (url) {
