@@ -66,6 +66,7 @@ export default {
    * An optional collection of interceptors for requests and responses.
    *
    * @type {Object}
+   * @see https://github.com/axios/axios#interceptors
    */
   interceptors: {
     request: [],

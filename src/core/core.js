@@ -103,6 +103,9 @@ class Core {
     }
   }
 
+  /**
+   * Set the interceptors to the api object
+   */
   writeInterceptorsToAPI () {
     const interceptors = this.config.interceptors;
 
