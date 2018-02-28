@@ -5,10 +5,10 @@ export default {
    * or any to make appropriate requests
    * Can also be changed by calling rapid.model.func() or rapid.collection.func()
    *
-   * @param {Object} state The store states
+   * @param {Object} state The store state
    * @param {String} route The route to set
    */
-  setCurrentRoute(state, route) {
+  setCurrentRoute(state: Store.State, route: string) {
     state.currentRoute = route;
   },
 };

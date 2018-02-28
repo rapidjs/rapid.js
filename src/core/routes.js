@@ -9,18 +9,6 @@ class Routes extends Url {
   }
 
   /**
-   * Set the current route.
-   * This will set the current route to either model, collection,
-   * or any to make appropriate requests
-   * Can also be changed by calling rapid.model.func() or rapid.collection.func()
-   *
-   * @param {String} route The route to set
-   */
-  setCurrentRoute (route) {
-    this.currentRoute = route;
-  }
-
-  /**
    * Set the routes for the URL based off model/collection and config
    *
    * @param {String} route The key of the route to be set

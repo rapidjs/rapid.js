@@ -3,6 +3,7 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import Defaults from './defaults';
 import Debugger from './../debug/debugger';
 import Logger from './../debug/logger';
+import store from '../store/index.ts';
 
 class Core {
   constructor (config) {
@@ -37,7 +38,7 @@ class Core {
 
     this.initializeAPI();
 
-    this.setCurrentRoute(this.config.defaultRoute);
+    store.commit('setCurrentRoute', this.config.defaultRoute);
 
     this.initializeDebugger();
 
@@ -119,19 +120,19 @@ class Core {
   }
 
   get collection () {
-    this.setCurrentRoute('collection');
+    store.commit('setCurrentRoute', 'collection');
 
     return this;
   }
 
   get model () {
-    this.setCurrentRoute('model');
+    store.commit('setCurrentRoute', 'model');
 
     return this;
   }
 
   get any () {
-    this.setCurrentRoute('any');
+    store.commit('setCurrentRoute', 'any');
 
     return this;
   }
