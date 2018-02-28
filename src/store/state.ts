@@ -1,4 +1,4 @@
-const state: StoreState = {
+const state: Store.State = {
   currentRoute: '',
 };
 
