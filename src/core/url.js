@@ -1,7 +1,3 @@
-/**
- * URL Methods
- */
-
 import isArray from 'lodash/isArray';
 import Core from './core';
 import { sanitizeUrl } from '../common/url';

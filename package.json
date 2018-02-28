@@ -41,6 +41,7 @@
   "dependencies": {
     "axios": "^0.16.0",
     "lodash": "^4.17.4",
+    "picostore": "^0.4.2",
     "pluralize": "^4.0.0",
     "qs": "^6.4.0"
   },

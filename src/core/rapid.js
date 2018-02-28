@@ -1,6 +1,6 @@
 /*!
-  * Rapid.js v0.0.14
-  * (c) 2017 Drew J Bartlett (https://drewjbartlett.com)
+  * Rapid.js
+  * (c) 2018 Drew J Bartlett (https://drewjbartlett.com)
   * Released under the MIT License.
   */
 
@@ -10,8 +10,7 @@
  * Core            ---> Url
  * Url             ---> Routes
  * Routes          ---> Request
- * Request         ---> Relationships
- * Relationships   ---> Crud
+ * Request         ---> Crud
  * Crud            ---> Rapid
  *
  */

@@ -5,6 +5,7 @@ module.exports = {
     'indent': ['error', 2],
     'padded-blocks': 0,
     'class-methods-use-this': ['error', { 'exceptMethods': ['boot'] }],
+    'import/prefer-default-export': 0,
     'no-useless-constructor': 0,
     'no-param-reassign': 0,
     'no-console': 0,

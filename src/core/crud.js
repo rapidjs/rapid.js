@@ -1,7 +1,3 @@
-/**
- * All the CRUD
- */
-
 import Request from './request';
 
 class Crud extends Request {

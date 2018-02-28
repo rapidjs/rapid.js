@@ -1,7 +1,3 @@
-/**
- * The Re-Quest to find the API
- */
-
 import isArray from 'lodash/isArray';
 import defaultsDeep from 'lodash/defaultsDeep';
 import set from 'lodash/set';
