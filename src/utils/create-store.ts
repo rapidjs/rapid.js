@@ -1,8 +1,8 @@
-export const createStore = (store: Store.Store): object => {
+export const createStore = (store: Store.StoreData): Store.Store => {
   const { state } = store;
 
-  const commit = (mutation: string, ...params) => {
-    return store.mutations[mutation].call(null, state, ...params);
+  const commit = (mutation: string, param: any) => {
+    return store.mutations[mutation].call(null, state, param);
   };
 
   const getFrozenState = (): object => {

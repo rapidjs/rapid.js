@@ -3,94 +3,80 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import Defaults from './defaults';
 import Debugger from './../debug/debugger';
 import Logger from './../debug/logger';
-import store from '../store/index.ts';
+import store from '../store/index';
 
 class Core {
-  constructor (config) {
-    config = config || {};
+  protected config: Config;
+  protected customRoutes: any[];
+  protected requestData: RequestData;
+  protected routes: Config['routes'];
+  protected urlParams: any[];
 
-    config = defaultsDeep(config, Defaults);
+  constructor(config: Config) {
+    this.config = Object.assign({}, defaultsDeep(config, Defaults));
+    this.routes = this.config.routes;
+    this.urlParams = [];
+    this.customRoutes = [];
+    this.requestData = {
+      params: {},
+      options: {},
+    };
 
-    this.initialize(config);
+    this.initialize();
   }
 
   /**
    * Set any config overrides in this method when extending
    */
-  boot () {
-
-  }
+  boot() {}
 
   /**
    * Setup the all of properties.
-   * @param {Object} config
    */
-  initialize (config) {
-    this.config = config;
-
-    this.initializeRoutes();
-
+  initialize() {
     this.boot();
-
-    this.resetURLParams();
 
     this.fireSetters();
 
-    this.initializeAPI();
-
     store.commit('setCurrentRoute', this.config.defaultRoute);
+
+    this.defineCustomRoutes();
+
+    // these can be called via 
+    // this.use('api', {})
+    this.initializeAPI();
 
     this.initializeDebugger();
 
     this.initializeLogger();
-
-    this.resetRequestData();
-
-    this.defineCustomRoutes();
   }
 
   /**
    * Fire the setters. This will make sure the routes are generated properly.
    * Consider if this is really even necessary
    */
-  fireSetters () {
-    ['baseURL', 'modelName', 'routeDelimeter', 'caseSensitive'].forEach(setter => this[setter] = this.config[setter]);
+  fireSetters() {
+    ['baseURL', 'modelName', 'routeDelimeter', 'caseSensitive'].forEach(setter => (this[setter] = this.config[setter]));
   }
 
   /**
    * Initialze the debugger if debug is set to true.
    */
-  initializeDebugger () {
+  initializeDebugger() {
     this.debugger = this.config.debug ? new Debugger(this) : false;
-  }
-
-  /**
-   * Initialze the debugger if debug is set to true.
-   */
-  initializeLogger () {
-    this.logger = this.config.debug ? Logger : false;
   }
 
   /**
    * Initialize the API.
    */
-  initializeAPI () {
+  initializeAPI() {
     this.api = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
-  }
-
-  /**
-   * Initialize the routes.
-   */
-  initializeRoutes () {
-    this.routes = this.config.routes;
   }
 
   /**
    * Set up the custom routes if we have any
    */
-  defineCustomRoutes () {
-    this.customRoutes = [];
-
+  defineCustomRoutes() {
     // if we have custom routes, set up a name:route mapping
     if (this.config.customRoutes.length) {
       this.config.customRoutes.forEach((route) => {
@@ -102,7 +88,7 @@ class Core {
   /**
    * Resets the request data
    */
-  resetRequestData () {
+  resetRequestData() {
     this.requestData = {
       params: {},
       options: {},
@@ -110,49 +96,50 @@ class Core {
   }
 
   /**
+   * Reset an URL params set from a relationship
+   */
+  resetURLParams() {
+    this.urlParams = [];
+  }
+
+  /**
    * Setters and Getters
    */
 
-  set debug (val) {
-    if (this.config.debug) {
-      this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
-    }
-  }
-
-  get collection () {
+  get collection() {
     store.commit('setCurrentRoute', 'collection');
 
     return this;
   }
 
-  get model () {
+  get model() {
     store.commit('setCurrentRoute', 'model');
 
     return this;
   }
 
-  get any () {
+  get any() {
     store.commit('setCurrentRoute', 'any');
 
     return this;
   }
 
-  set baseURL (url) {
+  set baseURL(url: string) {
     this.config.baseURL = this.sanitizeUrl(url);
     this.initializeAPI();
   }
 
-  set modelName (val) {
+  set modelName(val: string) {
     this.config.modelName = val;
     this.setRoutes();
   }
 
-  set routeDelimeter (val) {
+  set routeDelimeter(val: string) {
     this.config.routeDelimeter = val;
     this.setRoutes();
   }
 
-  set caseSensitive (val) {
+  set caseSensitive(val: string) {
     this.config.caseSensitive = val;
     this.setRoutes();
   }

@@ -12,7 +12,7 @@ class Crud extends Request {
    * @param {Number} id The model's id
    * @return {Promise}
    */
-  find (id) {
+  find (id: number|string) {
     return this.model.id(id).get();
   }
 
@@ -23,7 +23,7 @@ class Crud extends Request {
    * @param {Spread} params Can be either (id, data) OR (data)
    * @return {Promise}
    */
-  updateOrDestroy (method, ...params) {
+  updateOrDestroy (method: string, ...params) {
     const urlParams = [];
     const id = params[0];
     let data = params[1];

@@ -1,7 +1,7 @@
 import isArray from 'lodash/isArray';
 import Core from './core';
 import { sanitizeUrl } from '../utils/url';
-import store from '../store/index.ts';
+import store from '../store/index';
 
 class Url extends Core {
   constructor(config) {
@@ -21,7 +21,7 @@ class Url extends Core {
       params.push('');
     }
 
-    let url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
+    let url = this.sanitizeUrl([this.routes[store.state.currentRoute]].concat(params).join('/'));
 
     // strip the extra .
     // make sure routes don't need to regenerate
@@ -42,15 +42,8 @@ class Url extends Core {
    * @param {String} url a url to sanitize
    * @return {String}
    */
-  sanitizeUrl(url) {
+  sanitizeUrl(url: string) {
     return sanitizeUrl(url, this.config.trailingSlash);
-  }
-
-  /**
-   * Reset an URL params set from a relationship
-   */
-  resetURLParams() {
-    this.urlParams = false;
   }
 
   /**

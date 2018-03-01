@@ -77,7 +77,7 @@ class Request extends Routes {
   isAllowedRequestType (type) {
     if (!this.config.allowedRequestTypes.includes(type)) {
       if (this.config.debug) {
-        this.logger.warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
+        warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
       }
 
       return false;
