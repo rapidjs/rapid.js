@@ -9,6 +9,7 @@
     "copy-dev": "npm run compile && rm -rf ./demo/rapid && cp -R ./dist ./demo/rapid",
     "prepublish": "npm run compile",
     "lint": "eslint --ext .js,.ts src test",
+    "lint:fix": "eslint --ext .js,.ts src test --fix",
     "unit": "jest --maxWorkers 2",
     "unit:watch": "jest test/**/*.test.js --watch",
     "build": "babel src --out-dir lib --extensions \".ts,.tsx\"",
@@ -52,6 +53,7 @@
     "eslint-plugin-import": "^2.8.0",
     "jest": "^21.2.1",
     "ts-jest": "^22.4.0",
+    "tslint-config-airbnb": "^5.7.0",
     "typescript": "^2.7.2",
     "typescript-eslint-parser": "^14.0.0"
   },

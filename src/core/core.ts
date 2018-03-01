@@ -1,11 +1,15 @@
-import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
+import { Config } from '../declarations/config';
+import { CustomRoute } from '../declarations/custom-routes';
+import { RequestData } from '../declarations/request';
+import { Route } from '../declarations/routes';
+import { sanitizeUrl } from '../utils/url';
 import Defaults from './defaults';
 import Debugger from './../debug/debugger';
 
 class Core {
   protected config: Config;
-  protected customRoutes: CustomRouteData[];
+  protected customRoutes: CustomRoute[];
   protected currentRoute: Route;
   protected http: HttpAdapterInterface;
   protected requestData: RequestData;
@@ -32,16 +36,25 @@ class Core {
   boot() {}
 
   /**
-   * Setup the all of properties.
+   * The order of these are important.
+   *
+   * boot() will allow overriding any config before we set up
+   * the http service and routes.
+   *
+   * sanitizeBaseURL() will sanitize the baseURL prior to setting up
+   * the http service and routes.
+   *
+   * setRoutes() will set up the current routes (model, collection) and their paths
    */
-  initialize() {
+  initialize(): void {
     this.boot();
 
-    this.fireSetters();
+    this.sanitizeBaseURL();
+    this.setRoutes();
 
     this.defineCustomRoutes();
 
-    // these can be called via 
+    // these can be called via
     // this.use('api', {})
     this.initializeAPI();
 
@@ -49,17 +62,9 @@ class Core {
   }
 
   /**
-   * Fire the setters. This will make sure the routes are generated properly.
-   * Consider if this is really even necessary
-   */
-  private fireSetters() {
-    ['baseURL', 'modelName', 'routeDelimeter', 'caseSensitive'].forEach(setter => (this[setter] = this.config[setter]));
-  }
-
-  /**
    * Initialze the debugger if debug is set to true.
    */
-  private initializeDebugger() {
+  private initializeDebugger(): void {
     this.debugger = this.config.debug ? new Debugger(this) : false;
   }
 
@@ -67,21 +72,23 @@ class Core {
    * Initialize the API.
    * consider making an adatper interface to talk to http methods
    */
-  private initializeAPI() {
+  private initializeAPI(): void {
     const httpConfig = defaultsDeep({
-      baseURL: this.config.baseURL.replace(/\/$/, '') 
-    }, this.config.apiConfig);
+      baseURL: this.config.baseURL.replace(/\/$/, ''),
+    }, this.config.httpConfig);
 
-    this.http = new this.config.http(httpConfig);
+    const http = this.config.http;
+
+    this.http = new http(httpConfig);
   }
 
   /**
    * Set up the custom routes if we have any
    */
-  private defineCustomRoutes() {
+  private defineCustomRoutes(): void {
     // if we have custom routes, set up a name:route mapping
     if (this.config.customRoutes.length) {
-      this.config.customRoutes.forEach((route: CustomRouteData) => {
+      this.config.customRoutes.forEach((route: CustomRoute) => {
         this.customRoutes[route.name] = route;
       });
     }
@@ -90,7 +97,7 @@ class Core {
   /**
    * Resets the request data
    */
-  protected resetRequestData() {
+  protected resetRequestData(): void {
     this.requestData = {
       params: {},
       options: {},
@@ -100,8 +107,48 @@ class Core {
   /**
    * Reset an URL params set from a relationship
    */
-  protected resetURLParams() {
+  protected resetURLParams(): void {
     this.urlParams = [];
+  }
+
+  /**
+   * Set the routes for the URL based off model/collection and config
+   *
+   * @param {Route} route The key of the route to be set
+   */
+  private setRoute (route: Route) {
+    let newRoute = '';
+    const formattedRoute: Config['routes'] = {
+      model: this.config.modelName,
+      collection: pluralize(this.config.modelName),
+      any: '',
+    };
+
+    if (this.config.routes[route] !== '') {
+      newRoute = this.config.routes[route];
+    } else {
+      newRoute = kebabCase(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);
+
+      if (this.config.caseSensitive) {
+        newRoute = formattedRoute[route];
+      }
+    }
+
+    this.config.routes[route] = newRoute;
+  }
+
+  /**
+   * Loop through the routes and set them
+   */
+  private setRoutes () {
+    [Route.MODEL, Route.COLLECTION].forEach(route => this.setRoute(route));
+  }
+
+  /**
+   * Sanitize the baseURL before sending it to the http service
+   */
+  private sanitizeBaseURL(): void {
+    this.config.baseURL = sanitizeUrl(this.config.baseURL, this.config.trailingSlash);
   }
 
   /**
@@ -124,30 +171,6 @@ class Core {
     this.currentRoute = Route.ANY;
 
     return this;
-  }
-
-  /**
-   * Setters
-   */
-
-  set baseURL(url: string) { // make this an instance variable
-    this.config.baseURL = this.sanitizeUrl(url); // do not modify config
-    this.initializeAPI(); // why is this here?
-  }
-
-  set modelName(val: string) {
-    this.config.modelName = val;
-    this.setRoutes();
-  }
-
-  set routeDelimeter(val: string) {
-    this.config.routeDelimeter = val;
-    this.setRoutes();
-  }
-
-  set caseSensitive(val: string) {
-    this.config.caseSensitive = val;
-    this.setRoutes();
   }
 }
 
