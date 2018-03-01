@@ -2,7 +2,6 @@ import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Defaults from './defaults';
 import Debugger from './../debug/debugger';
-import Logger from './../debug/logger';
 import store from '../store/index';
 
 class Core {
@@ -38,6 +37,7 @@ class Core {
 
     this.fireSetters();
 
+    // consider forgetting the store for the first conversion to TS
     store.commit('setCurrentRoute', this.config.defaultRoute);
 
     this.defineCustomRoutes();
@@ -47,8 +47,6 @@ class Core {
     this.initializeAPI();
 
     this.initializeDebugger();
-
-    this.initializeLogger();
   }
 
   /**

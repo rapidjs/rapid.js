@@ -8,7 +8,7 @@ export default {
    * @param {Object} state The store state
    * @param {String} route The route to set
    */
-  setCurrentRoute(state: Store.State, route: string) {
+  setCurrentRoute(state: Store.State, route: Route) {
     state.currentRoute = route;
   },
 };

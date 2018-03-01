@@ -1,5 +1,5 @@
 const state: Store.State = {
-  currentRoute: '',
+  currentRoute: Route.ANY,
 };
 
 export default state;

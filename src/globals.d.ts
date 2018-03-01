@@ -4,7 +4,7 @@ declare namespace Store {
     state: Store.State;
   }
   interface State {
-    currentRoute: string;
+    currentRoute: Route;
   }
 
   interface Store {
@@ -26,4 +26,10 @@ declare interface Config {
 declare interface RequestData {
   params: object;
   options: object;
+}
+
+declare enum Route {
+  ANY = 'any',
+  MODEL = 'model',
+  COLLECTION = 'collection',
 }
