@@ -6,7 +6,7 @@
  * @param {Boolean} keepTrailingSlash a url to sanitize
  * @return {String}
  */
-export const sanitizeUrl = (url = '', keepTrailingSlash = false) => {
+export const sanitizeUrl = (url: string = '', keepTrailingSlash: boolean = false): string => {
   url = url.replace(/([^:]\/)\/+/g, '$1').replace(/\?$/, '').replace(/^(\/\/)/, '/');
 
   if (!keepTrailingSlash) {
