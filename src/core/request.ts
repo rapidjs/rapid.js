@@ -40,7 +40,7 @@ class Request extends Routes {
    * @param {String} url The url
    * @return {Promise}
    */
-  request (type, url) {
+  request (type: RequestType, url) {
     type = type.toLowerCase();
 
     if (!this.isAllowedRequestType(type)) {
@@ -54,7 +54,7 @@ class Request extends Routes {
     }
 
     return new Promise((resolve, reject) => {
-      this.api[type].call(this, this.sanitizeUrl(url), ...this.parseRequestData(type))
+      this.http[type].call(this, this.sanitizeUrl(url), ...this.parseRequestData(type))
         .then((response) => {
           this.afterRequest(response);
 

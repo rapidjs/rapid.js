@@ -31,7 +31,7 @@ class Routes extends Url {
       }
     }
 
-    this.routes[route] = newRoute;
+    this.config.routes[route] = newRoute;
   }
 
   /**

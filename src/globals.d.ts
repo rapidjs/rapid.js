@@ -14,8 +14,9 @@ declare namespace Store {
 }
 
 declare interface Config {
-  customRoutes: any[];
-  defaultRoute: string;
+  customRoutes: CustomRouteData[];
+  defaultRoute: Route;
+  http: HttpAdapterInterface,
   routes: {
     any?: string;
     model?: string;
@@ -32,4 +33,10 @@ declare enum Route {
   ANY = 'any',
   MODEL = 'model',
   COLLECTION = 'collection',
+}
+
+declare interface CustomRouteData {
+  name: string;
+  type: RequestType;
+  url: string;
 }

@@ -2,24 +2,26 @@ import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Defaults from './defaults';
 import Debugger from './../debug/debugger';
-import store from '../store/index';
 
 class Core {
   protected config: Config;
-  protected customRoutes: any[];
+  protected customRoutes: CustomRouteData[];
+  protected currentRoute: Route;
+  protected http: HttpAdapterInterface;
   protected requestData: RequestData;
   protected routes: Config['routes'];
   protected urlParams: any[];
 
   constructor(config: Config) {
     this.config = Object.assign({}, defaultsDeep(config, Defaults));
-    this.routes = this.config.routes;
-    this.urlParams = [];
+    this.currentRoute = this.config.defaultRoute;
     this.customRoutes = [];
     this.requestData = {
       params: {},
       options: {},
     };
+    this.routes = this.config.routes;
+    this.urlParams = [];
 
     this.initialize();
   }
@@ -37,9 +39,6 @@ class Core {
 
     this.fireSetters();
 
-    // consider forgetting the store for the first conversion to TS
-    store.commit('setCurrentRoute', this.config.defaultRoute);
-
     this.defineCustomRoutes();
 
     // these can be called via 
@@ -53,31 +52,36 @@ class Core {
    * Fire the setters. This will make sure the routes are generated properly.
    * Consider if this is really even necessary
    */
-  fireSetters() {
+  private fireSetters() {
     ['baseURL', 'modelName', 'routeDelimeter', 'caseSensitive'].forEach(setter => (this[setter] = this.config[setter]));
   }
 
   /**
    * Initialze the debugger if debug is set to true.
    */
-  initializeDebugger() {
+  private initializeDebugger() {
     this.debugger = this.config.debug ? new Debugger(this) : false;
   }
 
   /**
    * Initialize the API.
+   * consider making an adatper interface to talk to http methods
    */
-  initializeAPI() {
-    this.api = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+  private initializeAPI() {
+    const httpConfig = defaultsDeep({
+      baseURL: this.config.baseURL.replace(/\/$/, '') 
+    }, this.config.apiConfig);
+
+    this.http = new this.config.http(httpConfig);
   }
 
   /**
    * Set up the custom routes if we have any
    */
-  defineCustomRoutes() {
+  private defineCustomRoutes() {
     // if we have custom routes, set up a name:route mapping
     if (this.config.customRoutes.length) {
-      this.config.customRoutes.forEach((route) => {
+      this.config.customRoutes.forEach((route: CustomRouteData) => {
         this.customRoutes[route.name] = route;
       });
     }
@@ -86,7 +90,7 @@ class Core {
   /**
    * Resets the request data
    */
-  resetRequestData() {
+  protected resetRequestData() {
     this.requestData = {
       params: {},
       options: {},
@@ -96,35 +100,39 @@ class Core {
   /**
    * Reset an URL params set from a relationship
    */
-  resetURLParams() {
+  protected resetURLParams() {
     this.urlParams = [];
   }
 
   /**
-   * Setters and Getters
+   * Getters
    */
 
   get collection() {
-    store.commit('setCurrentRoute', 'collection');
+    this.currentRoute = Route.COLLECTION;
 
     return this;
   }
 
   get model() {
-    store.commit('setCurrentRoute', 'model');
+    this.currentRoute = Route.MODEL;
 
     return this;
   }
 
   get any() {
-    store.commit('setCurrentRoute', 'any');
+    this.currentRoute = Route.ANY;
 
     return this;
   }
 
-  set baseURL(url: string) {
-    this.config.baseURL = this.sanitizeUrl(url);
-    this.initializeAPI();
+  /**
+   * Setters
+   */
+
+  set baseURL(url: string) { // make this an instance variable
+    this.config.baseURL = this.sanitizeUrl(url); // do not modify config
+    this.initializeAPI(); // why is this here?
   }
 
   set modelName(val: string) {

@@ -1,3 +1,5 @@
+import AxiosAdapter from './adapters/axios-adapter';
+
 export default {
   /**
    * The possible allowed request types.
@@ -61,6 +63,8 @@ export default {
    * @type {Object}
    */
   globalParameters: {},
+
+  http: AxiosAdapter,
 
   /**
    * The default request methods for the CRUD methods.

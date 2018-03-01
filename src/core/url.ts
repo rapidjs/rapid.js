@@ -21,7 +21,7 @@ class Url extends Core {
       params.push('');
     }
 
-    let url = this.sanitizeUrl([this.routes[store.state.currentRoute]].concat(params).join('/'));
+    let url = this.sanitizeUrl([this.config.routes[store.state.currentRoute]].concat(params).join('/'));
 
     // strip the extra .
     // make sure routes don't need to regenerate
