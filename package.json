@@ -10,8 +10,8 @@
     "prepublish": "npm run compile",
     "lint": "eslint --ext .js,.ts src test",
     "lint:fix": "eslint --ext .js,.ts src test --fix",
-    "unit": "jest --maxWorkers 2",
-    "unit:watch": "jest test/**/*.test.js --watch",
+    "unit": "jest test/auth.test.ts --maxWorkers 2",
+    "unit:watch": "jest test/**/*.test.ts --watch",
     "build": "babel src --out-dir dist --extensions \".ts,.tsx\"",
     "type-check": "tsc"
   },
@@ -43,14 +43,14 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.32",
     "@babel/preset-env": "^7.0.0-beta.32",
     "@babel/preset-typescript": "^7.0.0-beta.32",
-    "@types/jest": "^22.1.3",
+    "@types/jest": "^22.1.4",
     "babel-eslint": "^8.0.2",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-airbnb-standard": "^1.6.5",
     "eslint-plugin-import": "^2.8.0",
     "jest": "^21.2.1",
-    "ts-jest": "^22.4.0",
+    "ts-jest": "^22.4.1",
     "tslint-config-airbnb": "^5.7.0",
     "typescript": "^2.7.2",
     "typescript-eslint-parser": "^14.0.0"
@@ -66,9 +66,9 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.tsx?$": "ts-jest"
+      "^.+\\.ts?$": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "(/__test__/.*|(\\.|/)(test|spec))\\.(tsx?|ts?)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",

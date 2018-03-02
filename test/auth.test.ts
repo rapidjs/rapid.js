@@ -1,86 +1,93 @@
-import { createAuthModel } from './helpers';
+// import { createAuthModel } from './helpers';
 
-const user = createAuthModel({ modelName: 'user' });
+// const user = createAuthModel({ modelName: 'user' });
+import Core from '../src/core/core';
 
 describe('Rapid Auth Model', () => {
 
-  it('should generate the login url', () => {
-    user.login();
-    expect(user.debugger.data.lastUrl).toBe('api/login');
-  });
+   it('should generate the login url', () => {
+    const foo = new Core({});
 
-  it('should generate the logout url', () => {
-    user.logout();
-    expect(user.debugger.data.lastUrl).toBe('api/logout');
-  });
+    console.log(foo.http.get('ham'));
+   });
 
-  it('should generate a route to auth check', () => {
-    user.check();
-    expect(user.debugger.data.lastUrl).toBe('api/auth');
-  });
+  // it('should generate the login url', () => {
+  //   user.login();
+  //   expect(user.debugger.data.lastUrl).toBe('api/login');
+  // });
 
-  it('should generate a route to auth register', () => {
-    user.register();
-    expect(user.debugger.data.lastUrl).toBe('api/register');
-  });
+  // it('should generate the logout url', () => {
+  //   user.logout();
+  //   expect(user.debugger.data.lastUrl).toBe('api/logout');
+  // });
 
-  const userTwo = createAuthModel({ modelName: 'User', auth: { modelPrefix: true } });
+  // it('should generate a route to auth check', () => {
+  //   user.check();
+  //   expect(user.debugger.data.lastUrl).toBe('api/auth');
+  // });
 
-  it('should contain a model prefix when set in config', () => {
-    userTwo.register();
-    expect(userTwo.debugger.data.lastUrl).toBe('api/user/register');
-  });
+  // it('should generate a route to auth register', () => {
+  //   user.register();
+  //   expect(user.debugger.data.lastUrl).toBe('api/register');
+  // });
 
-  const userFour = createAuthModel({
-    modelName: 'User',
-    auth: {
-      routes: {
-        login: 'login-user',
-        logout: ['logout', 'user'],
-        auth: 'authenticate',
-        register: 'new',
-      },
-    },
-  });
+  // const userTwo = createAuthModel({ modelName: 'User', auth: { modelPrefix: true } });
 
-  it('should allow overriding in the auth routes', () => {
-    userFour.login();
-    expect(userFour.debugger.data.lastUrl).toBe('api/login-user');
+  // it('should contain a model prefix when set in config', () => {
+  //   userTwo.register();
+  //   expect(userTwo.debugger.data.lastUrl).toBe('api/user/register');
+  // });
 
-    userFour.logout();
-    expect(userFour.debugger.data.lastUrl).toBe('api/logout/user');
+  // const userFour = createAuthModel({
+  //   modelName: 'User',
+  //   auth: {
+  //     routes: {
+  //       login: 'login-user',
+  //       logout: ['logout', 'user'],
+  //       auth: 'authenticate',
+  //       register: 'new',
+  //     },
+  //   },
+  // });
 
-    userFour.check();
-    expect(userFour.debugger.data.lastUrl).toBe('api/authenticate');
+  // it('should allow overriding in the auth routes', () => {
+  //   userFour.login();
+  //   expect(userFour.debugger.data.lastUrl).toBe('api/login-user');
 
-    userFour.register();
-    expect(userFour.debugger.data.lastUrl).toBe('api/new');
-  });
+  //   userFour.logout();
+  //   expect(userFour.debugger.data.lastUrl).toBe('api/logout/user');
 
-  const userFive = createAuthModel({
-    modelName: 'User',
-    auth: {
-      methods: {
-        login: 'get',
-        logout: 'delete',
-        auth: 'get',
-        register: 'patch',
-      },
-    },
-  });
+  //   userFour.check();
+  //   expect(userFour.debugger.data.lastUrl).toBe('api/authenticate');
 
-  it('should allow overriding the method types', () => {
-    userFive.login();
-    expect(userFive.debugger.data.lastRequest.type).toBe('get');
+  //   userFour.register();
+  //   expect(userFour.debugger.data.lastUrl).toBe('api/new');
+  // });
 
-    userFive.logout();
-    expect(userFive.debugger.data.lastRequest.type).toBe('delete');
+  // const userFive = createAuthModel({
+  //   modelName: 'User',
+  //   auth: {
+  //     methods: {
+  //       login: 'get',
+  //       logout: 'delete',
+  //       auth: 'get',
+  //       register: 'patch',
+  //     },
+  //   },
+  // });
 
-    userFive.check();
-    expect(userFive.debugger.data.lastRequest.type).toBe('get');
+  // it('should allow overriding the method types', () => {
+  //   userFive.login();
+  //   expect(userFive.debugger.data.lastRequest.type).toBe('get');
 
-    userFive.register();
-    expect(userFive.debugger.data.lastRequest.type).toBe('patch');
-  });
+  //   userFive.logout();
+  //   expect(userFive.debugger.data.lastRequest.type).toBe('delete');
+
+  //   userFive.check();
+  //   expect(userFive.debugger.data.lastRequest.type).toBe('get');
+
+  //   userFive.register();
+  //   expect(userFive.debugger.data.lastRequest.type).toBe('patch');
+  // });
 
 });
