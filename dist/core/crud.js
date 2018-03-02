@@ -1,26 +1,29 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _request = require('./request');
-
-var _request2 = _interopRequireDefault(_request);
+var _request = _interopRequireDefault(require("./request"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * All the CRUD
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var Crud = function (_Request) {
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Crud =
+/*#__PURE__*/
+function (_Request) {
   _inherits(Crud, _Request);
 
   function Crud() {
@@ -30,7 +33,7 @@ var Crud = function (_Request) {
   }
 
   _createClass(Crud, [{
-    key: 'find',
+    key: "find",
 
     /**
      * Model Only Functions
@@ -46,7 +49,6 @@ var Crud = function (_Request) {
     value: function find(id) {
       return this.model.id(id).get();
     }
-
     /**
      * Make a request to update or destroy a model
      *
@@ -56,11 +58,11 @@ var Crud = function (_Request) {
      */
 
   }, {
-    key: 'updateOrDestroy',
+    key: "updateOrDestroy",
     value: function updateOrDestroy(method) {
       var urlParams = [];
 
-      for (var _len = arguments.length, params = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         params[_key - 1] = arguments[_key];
       }
 
@@ -83,7 +85,6 @@ var Crud = function (_Request) {
 
       return this.model.buildRequest(this.config.methods[method], urlParams);
     }
-
     /**
      * See updateOrDestroy
      *
@@ -92,15 +93,14 @@ var Crud = function (_Request) {
      */
 
   }, {
-    key: 'update',
+    key: "update",
     value: function update() {
-      for (var _len2 = arguments.length, params = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      for (var _len2 = arguments.length, params = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         params[_key2] = arguments[_key2];
       }
 
       return this.updateOrDestroy.apply(this, ['update'].concat(params));
     }
-
     /**
      * Alias of update
      * See updateOrDestroy
@@ -110,11 +110,10 @@ var Crud = function (_Request) {
      */
 
   }, {
-    key: 'save',
+    key: "save",
     value: function save() {
       return this.update.apply(this, arguments);
     }
-
     /**
      * See updateOrDestroy
      *
@@ -123,15 +122,14 @@ var Crud = function (_Request) {
      */
 
   }, {
-    key: 'destroy',
+    key: "destroy",
     value: function destroy() {
-      for (var _len3 = arguments.length, params = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      for (var _len3 = arguments.length, params = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
         params[_key3] = arguments[_key3];
       }
 
       return this.updateOrDestroy.apply(this, ['destroy'].concat(params));
     }
-
     /**
      * Sends a config.suffixes.restore request to emulate a
      * restore request
@@ -141,7 +139,7 @@ var Crud = function (_Request) {
      */
 
   }, {
-    key: 'restore',
+    key: "restore",
     value: function restore(id) {
       var urlParams = [];
 
@@ -155,7 +153,6 @@ var Crud = function (_Request) {
 
       return this.model.buildRequest(this.config.methods.restore, urlParams);
     }
-
     /**
      * Makes a request to create a new model based off the method and suffix for create
      *
@@ -164,11 +161,10 @@ var Crud = function (_Request) {
      */
 
   }, {
-    key: 'create',
+    key: "create",
     value: function create(data) {
       return this.withParams(data).buildRequest(this.config.methods.create, this.config.suffixes.create);
     }
-
     /**
      * This sets an id for a request
      * currently it doens't work with any of the CRUD methods.
@@ -179,23 +175,20 @@ var Crud = function (_Request) {
      */
 
   }, {
-    key: 'id',
+    key: "id",
     value: function id(_id) {
-      var params = [];
+      var params = []; // this is checking if primaryKey is true, not if it exists
 
-      // this is checking if primaryKey is true, not if it exists
       if (this.config.primaryKey) {
         params = [this.config.primaryKey, _id];
       } else {
         params = [_id];
-      }
+      } // needs to prepend
 
-      // needs to prepend
+
       this.prepend(params);
-
       return this;
     }
-
     /**
      * Collection Only Functions
      */
@@ -207,11 +200,10 @@ var Crud = function (_Request) {
      */
 
   }, {
-    key: 'all',
+    key: "all",
     value: function all() {
       return this.collection.get();
     }
-
     /**
      * Collection and Model functions
      */
@@ -225,7 +217,7 @@ var Crud = function (_Request) {
      */
 
   }, {
-    key: 'findBy',
+    key: "findBy",
     value: function findBy(key, value) {
       var urlParams = [key];
 
@@ -238,6 +230,7 @@ var Crud = function (_Request) {
   }]);
 
   return Crud;
-}(_request2.default);
+}(_request.default);
 
-exports.default = Crud;
+var _default = Crud;
+exports.default = _default;

@@ -1,14 +1,19 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.default = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var CustomRoute = function () {
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var CustomRoute =
+/*#__PURE__*/
+function () {
   function CustomRoute() {
     var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -20,14 +25,12 @@ var CustomRoute = function () {
       url: '',
       type: 'get',
       name: ''
-    }, route);
+    }, route); // setup the default config
 
-    // setup the default config
     this.config = Object.assign({
       routeParams: {}
     }, config);
   }
-
   /**
    * This replaces any interpolated params with items passed in via the routeParams object
    *
@@ -36,23 +39,21 @@ var CustomRoute = function () {
 
 
   _createClass(CustomRoute, [{
-    key: 'replaceURLParams',
+    key: "replaceURLParams",
     value: function replaceURLParams() {
       var _this = this;
 
-      var url = this.rawURL;
+      var url = this.rawURL; // only do this if we have route params && params to replace
 
-      // only do this if we have route params && params to replace
       if (this.urlParams.length && Object.keys(this.config.routeParams).length !== 0) {
         // replace each occurrence of the param with the value passed in
         this.urlParams.forEach(function (param) {
-          url = url.replace('{' + param + '}', _this.config.routeParams[param]);
+          url = url.replace("{".concat(param, "}"), _this.config.routeParams[param]);
         });
       }
 
       return url;
     }
-
     /**
      * Check if the url has interpolated {} in them
      *
@@ -60,16 +61,14 @@ var CustomRoute = function () {
      */
 
   }, {
-    key: 'urlParams',
+    key: "urlParams",
     get: function get() {
       // eslint-disable-next-line
-      var params = this.rawURL.match(/{\s*[\w\.]+\s*}/g);
+      var params = this.rawURL.match(/{\s*[\w\.]+\s*}/g); // if we have params, strip off the {}
 
-      // if we have params, strip off the {}
       if (params !== null) {
         return params.map(function (x) {
-          return (
-            // eslint-disable-next-line
+          return (// eslint-disable-next-line
             x.match(/[\w\.]+/)[0]
           );
         });
@@ -77,7 +76,6 @@ var CustomRoute = function () {
 
       return [];
     }
-
     /**
      * Returns the properly prepared URL
      *
@@ -85,11 +83,10 @@ var CustomRoute = function () {
      */
 
   }, {
-    key: 'url',
+    key: "url",
     get: function get() {
       return this.replaceURLParams();
     }
-
     /**
      * Returns the raw url from the route which would
      * contain any interpolations
@@ -98,11 +95,10 @@ var CustomRoute = function () {
      */
 
   }, {
-    key: 'rawURL',
+    key: "rawURL",
     get: function get() {
       return this.route.url;
     }
-
     /**
      * Returns the route name
      *
@@ -110,11 +106,10 @@ var CustomRoute = function () {
      */
 
   }, {
-    key: 'name',
+    key: "name",
     get: function get() {
       return this.route.name;
     }
-
     /**
      * Returns the request type
      *
@@ -122,7 +117,7 @@ var CustomRoute = function () {
      */
 
   }, {
-    key: 'type',
+    key: "type",
     get: function get() {
       return this.route.type;
     }
@@ -131,4 +126,5 @@ var CustomRoute = function () {
   return CustomRoute;
 }();
 
-exports.default = CustomRoute;
+var _default = CustomRoute;
+exports.default = _default;

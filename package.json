@@ -12,12 +12,11 @@
     "lint:fix": "eslint --ext .js,.ts src test --fix",
     "unit": "jest --maxWorkers 2",
     "unit:watch": "jest test/**/*.test.js --watch",
-    "build": "babel src --out-dir lib --extensions \".ts,.tsx\"",
+    "build": "babel src --out-dir dist --extensions \".ts,.tsx\"",
     "type-check": "tsc"
   },
   "babel": {
     "presets": [
-      "es2015",
       "@babel/env",
       "@babel/typescript"
     ],
@@ -46,7 +45,6 @@
     "@babel/preset-typescript": "^7.0.0-beta.32",
     "@types/jest": "^22.1.3",
     "babel-eslint": "^8.0.2",
-    "babel-preset-es2015": "^6.24.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-airbnb-standard": "^1.6.5",

@@ -1,44 +1,39 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _isArray = _interopRequireDefault(require("lodash/isArray"));
 
-var _isArray = require('lodash/isArray');
+var _defaultsDeep = _interopRequireDefault(require("lodash/defaultsDeep"));
 
-var _isArray2 = _interopRequireDefault(_isArray);
+var _set = _interopRequireDefault(require("lodash/set"));
 
-var _defaultsDeep = require('lodash/defaultsDeep');
+var _routes = _interopRequireDefault(require("./routes"));
 
-var _defaultsDeep2 = _interopRequireDefault(_defaultsDeep);
-
-var _set = require('lodash/set');
-
-var _set2 = _interopRequireDefault(_set);
-
-var _routes = require('./routes');
-
-var _routes2 = _interopRequireDefault(_routes);
-
-var _customRoute = require('./custom-route');
-
-var _customRoute2 = _interopRequireDefault(_customRoute);
+var _customRoute = _interopRequireDefault(require("./custom-route"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * The Re-Quest to find the API
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var Request = function (_Routes) {
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Request =
+/*#__PURE__*/
+function (_Routes) {
   _inherits(Request, _Routes);
 
   function Request(config) {
@@ -46,7 +41,6 @@ var Request = function (_Routes) {
 
     return _possibleConstructorReturn(this, (Request.__proto__ || Object.getPrototypeOf(Request)).call(this, config));
   }
-
   /**
    * Parse the request data prior to passing it to axios
    *
@@ -56,26 +50,23 @@ var Request = function (_Routes) {
 
 
   _createClass(Request, [{
-    key: 'parseRequestData',
+    key: "parseRequestData",
     value: function parseRequestData(type) {
       var requestData = [];
       var options = this.requestData.options;
-      var params = this.requestData.params;
-
-      // axios handles the options differently for the request type
+      var params = this.requestData.params; // axios handles the options differently for the request type
 
       if (['put', 'post', 'patch'].includes(type)) {
-        params = (0, _defaultsDeep2.default)(params, this.config.globalParameters);
+        params = (0, _defaultsDeep.default)(params, this.config.globalParameters);
         requestData.push(params);
         requestData.push(options);
       } else {
-        options.params = (0, _defaultsDeep2.default)(params, this.config.globalParameters);
+        options.params = (0, _defaultsDeep.default)(params, this.config.globalParameters);
         requestData.push(options);
       }
 
       return requestData;
     }
-
     /**
      * Make the request
      *
@@ -85,9 +76,9 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'request',
+    key: "request",
     value: function request(type, url) {
-      var _this2 = this;
+      var _this = this;
 
       type = type.toLowerCase();
 
@@ -102,20 +93,19 @@ var Request = function (_Routes) {
       }
 
       return new Promise(function (resolve, reject) {
-        var _api$type;
+        var _this$http$type;
 
-        (_api$type = _this2.api[type]).call.apply(_api$type, [_this2, _this2.sanitizeUrl(url)].concat(_toConsumableArray(_this2.parseRequestData(type)))).then(function (response) {
-          _this2.afterRequest(response);
+        (_this$http$type = _this.http[type]).call.apply(_this$http$type, [_this, _this.sanitizeUrl(url)].concat(_toConsumableArray(_this.parseRequestData(type)))).then(function (response) {
+          _this.afterRequest(response);
 
           resolve(response);
         }).catch(function (error) {
-          _this2.onError(error);
+          _this.onError(error);
 
           reject(error);
         });
       });
     }
-
     /**
      * Checks if is a valid request type
      *
@@ -124,11 +114,11 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'isAllowedRequestType',
+    key: "isAllowedRequestType",
     value: function isAllowedRequestType(type) {
       if (!this.config.allowedRequestTypes.includes(type)) {
         if (this.config.debug) {
-          this.logger.warn('\'' + type + '\' is not included in allowedRequestTypes: [' + this.config.allowedRequestTypes.join(', ') + ']');
+          warn("'".concat(type, "' is not included in allowedRequestTypes: [").concat(this.config.allowedRequestTypes.join(', '), "]"));
         }
 
         return false;
@@ -136,7 +126,6 @@ var Request = function (_Routes) {
 
       return true;
     }
-
     /**
      * Build a request URL
      *
@@ -146,18 +135,16 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'buildRequest',
+    key: "buildRequest",
     value: function buildRequest(type, urlParams) {
       if (this.urlParams) {
         urlParams = this.urlParams.concat(urlParams);
         this.resetURLParams();
       }
 
-      var url = (0, _isArray2.default)(urlParams) ? this.makeUrl.apply(this, _toConsumableArray(urlParams)) : this.makeUrl(urlParams);
-
+      var url = (0, _isArray.default)(urlParams) ? this.makeUrl.apply(this, _toConsumableArray(urlParams)) : this.makeUrl(urlParams);
       return this.request(type, url);
     }
-
     /**
      * Make a GET request
      *
@@ -166,15 +153,14 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'get',
+    key: "get",
     value: function get() {
-      for (var _len = arguments.length, urlParams = Array(_len), _key = 0; _key < _len; _key++) {
+      for (var _len = arguments.length, urlParams = new Array(_len), _key = 0; _key < _len; _key++) {
         urlParams[_key] = arguments[_key];
       }
 
       return this.buildRequest('get', urlParams);
     }
-
     /**
      * Make a POST request
      *
@@ -183,15 +169,14 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'post',
+    key: "post",
     value: function post() {
-      for (var _len2 = arguments.length, urlParams = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      for (var _len2 = arguments.length, urlParams = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         urlParams[_key2] = arguments[_key2];
       }
 
       return this.buildRequest('post', urlParams);
     }
-
     /**
      * Make a PUT request
      *
@@ -200,15 +185,14 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'put',
+    key: "put",
     value: function put() {
-      for (var _len3 = arguments.length, urlParams = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      for (var _len3 = arguments.length, urlParams = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
         urlParams[_key3] = arguments[_key3];
       }
 
       return this.buildRequest('put', urlParams);
     }
-
     /**
      * Make a PATCH request
      *
@@ -217,15 +201,14 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'patch',
+    key: "patch",
     value: function patch() {
-      for (var _len4 = arguments.length, urlParams = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+      for (var _len4 = arguments.length, urlParams = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
         urlParams[_key4] = arguments[_key4];
       }
 
       return this.buildRequest('patch', urlParams);
     }
-
     /**
      * Make a HEAD request
      *
@@ -234,15 +217,14 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'head',
+    key: "head",
     value: function head() {
-      for (var _len5 = arguments.length, urlParams = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+      for (var _len5 = arguments.length, urlParams = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
         urlParams[_key5] = arguments[_key5];
       }
 
       return this.buildRequest('head', urlParams);
     }
-
     /**
      * Make a DELETE request
      *
@@ -251,15 +233,14 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'delete',
+    key: "delete",
     value: function _delete() {
-      for (var _len6 = arguments.length, urlParams = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+      for (var _len6 = arguments.length, urlParams = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
         urlParams[_key6] = arguments[_key6];
       }
 
       return this.buildRequest('delete', urlParams);
     }
-
     /**
        * Custom Routes
        *
@@ -279,22 +260,19 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'route',
+    key: "route",
     value: function route() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       var routeParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var requestParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      var route = this.getCustomRoute(name, routeParams); // if there are request params, set them
 
-      var route = this.getCustomRoute(name, routeParams);
-
-      // if there are request params, set them
       if (Object.keys(requestParams).length !== 0) {
         this.withParams(requestParams);
       }
 
       return this.request(route.type, route.url);
     }
-
     /**
        * Get a CustomRoute via given name
        *
@@ -304,22 +282,21 @@ var Request = function (_Routes) {
        */
 
   }, {
-    key: 'getCustomRoute',
+    key: "getCustomRoute",
     value: function getCustomRoute() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       var routeParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       // if a route exists, return a new instance of CustomRoute
       if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
-        return new _customRoute2.default(this.customRoutes[name], {
+        return new _customRoute.default(this.customRoutes[name], {
           routeParams: routeParams
         });
-      }
+      } // to prevent having undefined
 
-      // to prevent having undefined
-      return new _customRoute2.default();
+
+      return new _customRoute.default();
     }
-
     /**
      * Generate a url to a custom defined route
      * This applies the baseURL and the trailing slash config
@@ -331,7 +308,7 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'generate',
+    key: "generate",
     value: function generate() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       var routeParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -341,7 +318,6 @@ var Request = function (_Routes) {
 
       return url !== '' ? this.makeUrl(this.config.baseURL, url) : '';
     }
-
     /**
      * Before, after, and error
      */
@@ -354,37 +330,34 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'beforeRequest',
+    key: "beforeRequest",
     value: function beforeRequest(type, url) {
       return this.config.beforeRequest(type, url);
     }
-
     /**
      * This is fired after each request
      * @param {Object} response
      */
 
   }, {
-    key: 'afterRequest',
+    key: "afterRequest",
     value: function afterRequest(response) {
       this.resetRequestData();
       this.resetURLParams();
       this.config.afterRequest(response);
     }
-
     /**
      * This is fired on a request error
      * @param {Object} error
      */
 
   }, {
-    key: 'onError',
+    key: "onError",
     value: function onError(error) {
       this.resetRequestData();
       this.resetURLParams();
       this.config.onError(error);
     }
-
     /**
        * Params and Options
        */
@@ -397,15 +370,12 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'withData',
+    key: "withData",
     value: function withData() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      this.requestData = (0, _defaultsDeep2.default)(data, this.requestData);
-
+      this.requestData = (0, _defaultsDeep.default)(data, this.requestData);
       return this;
     }
-
     /**
      * Send params with the request
      *
@@ -414,15 +384,12 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'withParams',
+    key: "withParams",
     value: function withParams() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      (0, _set2.default)(this.requestData, 'params', params);
-
+      (0, _set.default)(this.requestData, 'params', params);
       return this;
     }
-
     /**
      * Send a single param with the request
      *
@@ -432,13 +399,11 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'withParam',
+    key: "withParam",
     value: function withParam(key, value) {
-      (0, _set2.default)(this.requestData, 'params.' + key, value);
-
+      (0, _set.default)(this.requestData, "params.".concat(key), value);
       return this;
     }
-
     /**
      * Send options with the request
      *
@@ -447,15 +412,12 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'withOptions',
+    key: "withOptions",
     value: function withOptions() {
       var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      (0, _set2.default)(this.requestData, 'options', options);
-
+      (0, _set.default)(this.requestData, 'options', options);
       return this;
     }
-
     /**
      * Send a single option with the request
      *
@@ -465,15 +427,15 @@ var Request = function (_Routes) {
      */
 
   }, {
-    key: 'withOption',
+    key: "withOption",
     value: function withOption(key, value) {
-      (0, _set2.default)(this.requestData, 'options.' + key, value);
-
+      (0, _set.default)(this.requestData, "options.".concat(key), value);
       return this;
     }
   }]);
 
   return Request;
-}(_routes2.default);
+}(_routes.default);
 
-exports.default = Request;
+var _default = Request;
+exports.default = _default;

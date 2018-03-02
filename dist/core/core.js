@@ -1,234 +1,257 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The Caramel Core functionality of Rapid
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+var _defaultsDeep = _interopRequireDefault(require("lodash/defaultsDeep"));
 
-var _axios = require('axios');
+var _kebabCase = _interopRequireDefault(require("lodash/kebabCase"));
 
-var _axios2 = _interopRequireDefault(_axios);
+var _pluralize = _interopRequireDefault(require("pluralize"));
 
-var _defaultsDeep = require('lodash/defaultsDeep');
+var _routes = require("../declarations/routes");
 
-var _defaultsDeep2 = _interopRequireDefault(_defaultsDeep);
+var _url = require("../utils/url");
 
-var _defaults = require('./defaults');
+var _defaults = _interopRequireDefault(require("./defaults"));
 
-var _defaults2 = _interopRequireDefault(_defaults);
-
-var _debugger = require('./../debug/debugger');
-
-var _debugger2 = _interopRequireDefault(_debugger);
-
-var _logger = require('./../debug/logger');
-
-var _logger2 = _interopRequireDefault(_logger);
+var _debugger = _interopRequireDefault(require("./../debug/debugger"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Core = function () {
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Core =
+/*#__PURE__*/
+function () {
   function Core(config) {
     _classCallCheck(this, Core);
 
-    config = config || {};
-
-    config = (0, _defaultsDeep2.default)(config, _defaults2.default);
-
-    this.initialize(config);
+    Object.defineProperty(this, "config", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: void 0
+    });
+    Object.defineProperty(this, "customRoutes", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: void 0
+    });
+    Object.defineProperty(this, "currentRoute", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: void 0
+    });
+    Object.defineProperty(this, "http", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: void 0
+    });
+    Object.defineProperty(this, "requestData", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: void 0
+    });
+    Object.defineProperty(this, "routes", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: void 0
+    });
+    Object.defineProperty(this, "urlParams", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: void 0
+    });
+    this.config = Object.assign({}, (0, _defaultsDeep.default)(config, _defaults.default));
+    this.currentRoute = this.config.defaultRoute;
+    this.customRoutes = [];
+    this.requestData = {
+      params: {},
+      options: {}
+    };
+    this.routes = this.config.routes;
+    this.urlParams = [];
+    this.initialize();
   }
-
   /**
    * Set any config overrides in this method when extending
    */
 
 
   _createClass(Core, [{
-    key: 'boot',
+    key: "boot",
     value: function boot() {}
-
     /**
-     * Setup the all of properties.
-     * @param {Object} config
+     * The order of these are important.
+     *
+     * boot() will allow overriding any config before we set up
+     * the http service and routes.
+     *
+     * sanitizeBaseURL() will sanitize the baseURL prior to setting up
+     * the http service and routes.
+     *
+     * setRoutes() will set up the current routes (model, collection) and their paths
      */
 
   }, {
-    key: 'initialize',
-    value: function initialize(config) {
-      this.config = config;
-
-      this.initializeRoutes();
-
+    key: "initialize",
+    value: function initialize() {
       this.boot();
-
-      this.resetURLParams();
-
-      this.fireSetters();
-
-      this.initializeAPI();
-
-      this.setCurrentRoute(this.config.defaultRoute);
-
-      this.initializeDebugger();
-
-      this.initializeLogger();
-
-      this.resetRequestData();
-
+      this.sanitizeBaseURL();
+      this.setRoutes();
       this.defineCustomRoutes();
+      this.initializeHttp();
+      this.initializeDebugger();
     }
-
-    /**
-     * Fire the setters. This will make sure the routes are generated properly.
-     * Consider if this is really even necessary
-     */
-
-  }, {
-    key: 'fireSetters',
-    value: function fireSetters() {
-      var _this = this;
-
-      ['baseURL', 'modelName', 'routeDelimeter', 'caseSensitive'].forEach(function (setter) {
-        return _this[setter] = _this.config[setter];
-      });
-    }
-
     /**
      * Initialze the debugger if debug is set to true.
      */
 
   }, {
-    key: 'initializeDebugger',
+    key: "initializeDebugger",
     value: function initializeDebugger() {
-      this.debugger = this.config.debug ? new _debugger2.default(this) : false;
+      this.debugger = this.config.debug ? new _debugger.default(this) : false;
     }
-
-    /**
-     * Initialze the debugger if debug is set to true.
-     */
-
-  }, {
-    key: 'initializeLogger',
-    value: function initializeLogger() {
-      this.logger = this.config.debug ? _logger2.default : false;
-    }
-
     /**
      * Initialize the API.
+     * consider making an adatper interface to talk to http methods
      */
 
   }, {
-    key: 'initializeAPI',
-    value: function initializeAPI() {
-      this.api = _axios2.default.create((0, _defaultsDeep2.default)({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+    key: "initializeHttp",
+    value: function initializeHttp() {
+      var httpConfig = (0, _defaultsDeep.default)({
+        baseURL: this.config.baseURL.replace(/\/$/, '')
+      }, this.config.httpConfig);
+      var http = this.config.http;
+      this.http = new http(httpConfig);
     }
-
-    /**
-     * Initialize the routes.
-     */
-
-  }, {
-    key: 'initializeRoutes',
-    value: function initializeRoutes() {
-      this.routes = this.config.routes;
-    }
-
     /**
      * Set up the custom routes if we have any
      */
 
   }, {
-    key: 'defineCustomRoutes',
+    key: "defineCustomRoutes",
     value: function defineCustomRoutes() {
-      var _this2 = this;
-
-      this.customRoutes = [];
+      var _this = this;
 
       // if we have custom routes, set up a name:route mapping
       if (this.config.customRoutes.length) {
         this.config.customRoutes.forEach(function (route) {
-          _this2.customRoutes[route.name] = route;
+          _this.customRoutes[route.name] = route;
         });
       }
     }
-
     /**
      * Resets the request data
      */
 
   }, {
-    key: 'resetRequestData',
+    key: "resetRequestData",
     value: function resetRequestData() {
       this.requestData = {
         params: {},
         options: {}
       };
     }
-
     /**
-     * Setters and Getters
+     * Reset an URL params set from a relationship
      */
 
   }, {
-    key: 'debug',
-    set: function set(val) {
-      if (this.config.debug) {
-        this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
+    key: "resetURLParams",
+    value: function resetURLParams() {
+      this.urlParams = [];
+    }
+    /**
+     * Set the routes for the URL based off model/collection and config
+     *
+     * @param {Route} route The key of the route to be set
+     */
+
+  }, {
+    key: "setRoute",
+    value: function setRoute(route) {
+      var newRoute = '';
+      var formattedRoute = {
+        model: this.config.modelName,
+        collection: (0, _pluralize.default)(this.config.modelName),
+        any: ''
+      };
+
+      if (this.config.routes[route] !== '') {
+        newRoute = this.config.routes[route];
+      } else {
+        newRoute = (0, _kebabCase.default)(formattedRoute[route]).replace(/-/g, this.config.routeDelimeter);
+
+        if (this.config.caseSensitive) {
+          newRoute = formattedRoute[route];
+        }
       }
-    }
-  }, {
-    key: 'collection',
-    get: function get() {
-      this.setCurrentRoute('collection');
 
+      this.routes[route] = newRoute;
+    }
+    /**
+     * Loop through the routes and set them
+     */
+
+  }, {
+    key: "setRoutes",
+    value: function setRoutes() {
+      var _this2 = this;
+
+      [_routes.Route.MODEL, _routes.Route.COLLECTION].forEach(function (route) {
+        return _this2.setRoute(route);
+      });
+    }
+    /**
+     * Sanitize the baseURL before sending it to the http service
+     */
+
+  }, {
+    key: "sanitizeBaseURL",
+    value: function sanitizeBaseURL() {
+      this.config.baseURL = (0, _url.sanitizeUrl)(this.config.baseURL, this.config.trailingSlash);
+    }
+    /**
+     * Getters
+     */
+
+  }, {
+    key: "collection",
+    get: function get() {
+      this.currentRoute = _routes.Route.COLLECTION;
       return this;
     }
   }, {
-    key: 'model',
+    key: "model",
     get: function get() {
-      this.setCurrentRoute('model');
-
+      this.currentRoute = _routes.Route.MODEL;
       return this;
     }
   }, {
-    key: 'any',
+    key: "any",
     get: function get() {
-      this.setCurrentRoute('any');
-
+      this.currentRoute = _routes.Route.ANY;
       return this;
-    }
-  }, {
-    key: 'baseURL',
-    set: function set(url) {
-      this.config.baseURL = this.sanitizeUrl(url);
-      this.initializeAPI();
-    }
-  }, {
-    key: 'modelName',
-    set: function set(val) {
-      this.config.modelName = val;
-      this.setRoutes();
-    }
-  }, {
-    key: 'routeDelimeter',
-    set: function set(val) {
-      this.config.routeDelimeter = val;
-      this.setRoutes();
-    }
-  }, {
-    key: 'caseSensitive',
-    set: function set(val) {
-      this.config.caseSensitive = val;
-      this.setRoutes();
     }
   }]);
 
   return Core;
 }();
 
-exports.default = Core;
+var _default = Core;
+exports.default = _default;

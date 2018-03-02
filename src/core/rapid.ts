@@ -8,17 +8,16 @@
  * The inheritance of the classes
  *
  * Core            ---> Url
- * Url             ---> Routes
- * Routes          ---> Request
+ * Url             ---> Request
  * Request         ---> Crud
  * Crud            ---> Rapid
  *
  */
-
+import { Config } from '../declarations/config.d';
 import Crud from './crud';
 
 class Rapid extends Crud {
-  constructor (config: Config) {
+  constructor(config: Config) {
     super(config);
   }
 }

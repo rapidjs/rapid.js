@@ -1,9 +1,15 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = {
+exports.default = void 0;
+
+var _axiosAdapter = _interopRequireDefault(require("./adapters/axios-adapter"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = {
   /**
    * The possible allowed request types.
    *
@@ -66,6 +72,7 @@ exports.default = {
    * @type {Object}
    */
   globalParameters: {},
+  http: _axiosAdapter.default,
 
   /**
    * The default request methods for the CRUD methods.
@@ -138,15 +145,11 @@ exports.default = {
    * @type {Boolean}
    */
   trailingSlash: false,
-
   // eslint-disable-next-line no-unused-vars
   beforeRequest: function beforeRequest(type, url) {},
-
-
   // eslint-disable-next-line no-unused-vars
   afterRequest: function afterRequest(response) {},
-
-
   // eslint-disable-next-line no-unused-vars
   onError: function onError(response) {}
 };
+exports.default = _default;

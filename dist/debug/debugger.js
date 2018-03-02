@@ -1,22 +1,25 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _qs = require('qs');
-
-var _qs2 = _interopRequireDefault(_qs);
+var _qs = _interopRequireDefault(require("qs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _class = function () {
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var _class =
+/*#__PURE__*/
+function () {
   function _class(caller) {
     _classCallCheck(this, _class);
 
@@ -26,50 +29,43 @@ var _class = function () {
   }
 
   _createClass(_class, [{
-    key: 'fakeRequest',
+    key: "fakeRequest",
     value: function fakeRequest(type, url) {
       var params = this.caller.parseRequestData(type);
       var lastUrl = this.setLastUrl.apply(this, [type, url].concat(_toConsumableArray(params)));
-
       this.setLastRequest.apply(this, arguments);
 
       if (this.logEnabled) {
-        this.caller.logger.debug(this.caller.config.modelName + ' made a ' + type.toUpperCase() + ' request (' + lastUrl + ')');
+        this.caller.logger.debug("".concat(this.caller.config.modelName, " made a ").concat(type.toUpperCase(), " request (").concat(lastUrl, ")"));
         this.caller.logger.log(params);
       }
 
       this.caller.afterRequest({});
-
       return lastUrl;
     }
   }, {
-    key: 'setLastUrl',
+    key: "setLastUrl",
     value: function setLastUrl(type, url) {
       var params = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
       var lastUrl = '';
 
       if (['put', 'post', 'patch'].includes(type)) {
         lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/'));
       } else {
         var urlParams = params.params;
-        var stringified = urlParams ? '?' + _qs2.default.stringify(urlParams) : '';
-
+        var stringified = urlParams ? "?".concat(_qs.default.stringify(urlParams)) : '';
         lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/')) + stringified;
       }
 
       lastUrl = this.caller.sanitizeUrl(lastUrl);
-
       this.data.lastUrl = lastUrl;
-
       return lastUrl;
     }
   }, {
-    key: 'setLastRequest',
+    key: "setLastRequest",
     value: function setLastRequest(type, url) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
       var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-
       this.data.lastRequest = {
         type: type,
         url: url,

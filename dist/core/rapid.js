@@ -1,38 +1,25 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _crud = require('./crud');
-
-var _crud2 = _interopRequireDefault(_crud);
+var _crud = _interopRequireDefault(require("./crud"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*!
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * Rapid.js v0.0.14
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * (c) 2017 Drew J Bartlett (https://drewjbartlett.com)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * Released under the MIT License.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/**
- * The inheritance of the classes
- *
- * Core            ---> Url
- * Url             ---> Routes
- * Routes          ---> Request
- * Request         ---> Relationships
- * Relationships   ---> Crud
- * Crud            ---> Rapid
- *
- */
-
-var Rapid = function (_Crud) {
+var Rapid =
+/*#__PURE__*/
+function (_Crud) {
   _inherits(Rapid, _Crud);
 
   function Rapid(config) {
@@ -42,6 +29,7 @@ var Rapid = function (_Crud) {
   }
 
   return Rapid;
-}(_crud2.default);
+}(_crud.default);
 
-exports.default = Rapid;
+var _default = Rapid;
+exports.default = _default;

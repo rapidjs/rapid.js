@@ -1,8 +1,10 @@
 import defaultsDeep from 'lodash/defaultsDeep';
-import { Config } from '../declarations/config';
-import { CustomRoute } from '../declarations/custom-routes';
-import { RequestData } from '../declarations/request';
-import { Route } from '../declarations/routes';
+import kebabCase from 'lodash/kebabCase';
+import pluralize from 'pluralize';
+import { Config } from '../declarations/config.d';
+import { CustomRoute } from '../declarations/custom-routes.d';
+import { RequestData } from '../declarations/request.d';
+import { Route } from '../declarations/routes.d';
 import { sanitizeUrl } from '../utils/url';
 import Defaults from './defaults';
 import Debugger from './../debug/debugger';
@@ -50,13 +52,12 @@ class Core {
     this.boot();
 
     this.sanitizeBaseURL();
+
     this.setRoutes();
 
     this.defineCustomRoutes();
 
-    // these can be called via
-    // this.use('api', {})
-    this.initializeAPI();
+    this.initializeHttp();
 
     this.initializeDebugger();
   }
@@ -72,10 +73,13 @@ class Core {
    * Initialize the API.
    * consider making an adatper interface to talk to http methods
    */
-  private initializeAPI(): void {
-    const httpConfig = defaultsDeep({
-      baseURL: this.config.baseURL.replace(/\/$/, ''),
-    }, this.config.httpConfig);
+  private initializeHttp(): void {
+    const httpConfig = defaultsDeep(
+      {
+        baseURL: this.config.baseURL.replace(/\/$/, ''),
+      },
+      this.config.httpConfig,
+    );
 
     const http = this.config.http;
 
@@ -116,8 +120,8 @@ class Core {
    *
    * @param {Route} route The key of the route to be set
    */
-  private setRoute (route: Route) {
-    let newRoute = '';
+  private setRoute(route: Route): void {
+    let newRoute: string = '';
     const formattedRoute: Config['routes'] = {
       model: this.config.modelName,
       collection: pluralize(this.config.modelName),
@@ -134,13 +138,13 @@ class Core {
       }
     }
 
-    this.config.routes[route] = newRoute;
+    this.routes[route] = newRoute;
   }
 
   /**
    * Loop through the routes and set them
    */
-  private setRoutes () {
+  private setRoutes(): void {
     [Route.MODEL, Route.COLLECTION].forEach(route => this.setRoute(route));
   }
 

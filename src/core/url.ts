@@ -16,12 +16,12 @@ class Url extends Core {
    * @param {Spread} params Can be any length of params that will be joined by /
    * @return {String}
    */
-  makeUrl(...params) {
+  private makeUrl(...params) {
     if (this.config.trailingSlash) {
       params.push('');
     }
 
-    let url = this.sanitizeUrl([this.config.routes[store.state.currentRoute]].concat(params).join('/'));
+    let url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
 
     // strip the extra .
     // make sure routes don't need to regenerate
@@ -30,7 +30,7 @@ class Url extends Core {
     }
 
     // reset currentRoute
-    store.commit('setCurrentRoute', this.config.defaultRoute);
+    this.currentRoute = this.config.defaultRoute;
 
     return url;
   }
@@ -42,7 +42,7 @@ class Url extends Core {
    * @param {String} url a url to sanitize
    * @return {String}
    */
-  sanitizeUrl(url: string) {
+  protected sanitizeUrl(url: string) {
     return sanitizeUrl(url, this.config.trailingSlash);
   }
 

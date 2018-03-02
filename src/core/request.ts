@@ -1,10 +1,10 @@
 import isArray from 'lodash/isArray';
 import defaultsDeep from 'lodash/defaultsDeep';
 import set from 'lodash/set';
-import Routes from './routes';
+import Url from './url';
 import CustomRoute from './custom-route';
 
-class Request extends Routes {
+class Request extends Url {
   constructor (config) {
     super(config);
   }
