@@ -74,8 +74,8 @@ class Core {
    * Loop through the routes and set them
    */
   private setRoutes(): void {
-    // ['model', 'collection'].forEach(route => this.setRoute(route));
-    [Route.MODEL, Route.COLLECTION].forEach(route => this.setRoute(route));
+    ['model', 'collection'].forEach(route => this.setRoute(route));
+    // [Route.MODEL, Route.COLLECTION].forEach(route => this.setRoute(route));
   }
 
   /**
