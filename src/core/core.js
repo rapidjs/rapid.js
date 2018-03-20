@@ -107,12 +107,15 @@ class Core {
    * Set the interceptors to the api object
    */
   writeInterceptorsToAPI () {
-    const interceptors = this.config.interceptors;
+    const { interceptors } = this.config;
+    const types = Object.keys(interceptors);
 
-    for (const type in interceptors) {
-      for (const interceptor of interceptors[type]) {
-        this.api.interceptors[type].use(interceptor);
-      }
+    if (types.length) {
+      types.forEach((type) => {
+        interceptors[type].forEach((interceptor) => {
+          this.api.interceptors[type].use(interceptor);
+        });
+      });
     }
   }
 

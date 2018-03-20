@@ -70,7 +70,7 @@ export default {
    */
   interceptors: {
     request: [],
-    response: []
+    response: [],
   },
 
   /**

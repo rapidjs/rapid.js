@@ -7,7 +7,7 @@ const request = () => 'request';
 
 const interceptors = {
   response: [response],
-  request: [request]
+  request: [request],
 };
 
 class Resource extends Rapid {
