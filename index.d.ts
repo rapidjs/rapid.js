@@ -16,7 +16,7 @@ declare enum Method {
 }
 
 declare interface Config {
-    afterRequest?: (response: AxiosResponse) => any;
+    afterRequest?: (response: AxiosResponse | any) => any;
     allowedRequestTypes?: RequestType[];
     apiConfig?: AxiosRequestConfig;
     baseURL?: string;
@@ -123,27 +123,27 @@ declare class Routes extends Url {
 
 declare class Request extends Routes {
     parseRequestData(type: RequestType): any[];
-    request(type: RequestType, url: string): Promise<AxiosResponse>;
+    request(type: RequestType, url: string): Promise<AxiosResponse | any>;
     isAllowedRequestType(type: RequestType): boolean;
     buildRequest(
         type: RequestType,
         urlParams: string[]
-    ): Promise<AxiosResponse>;
-    get(...urlParams: string[]): Promise<AxiosResponse>;
-    post(...urlParams: string[]): Promise<AxiosResponse>;
-    put(...urlParams: string[]): Promise<AxiosResponse>;
-    patch(...urlParams: string[]): Promise<AxiosResponse>;
-    head(...urlParams: string[]): Promise<AxiosResponse>;
-    delete(...urlParams: string[]): Promise<AxiosResponse>;
+    ): Promise<AxiosResponse | any>;
+    get(...urlParams: string[]): Promise<AxiosResponse | any>;
+    post(...urlParams: string[]): Promise<AxiosResponse | any>;
+    put(...urlParams: string[]): Promise<AxiosResponse | any>;
+    patch(...urlParams: string[]): Promise<AxiosResponse | any>;
+    head(...urlParams: string[]): Promise<AxiosResponse | any>;
+    delete(...urlParams: string[]): Promise<AxiosResponse | any>;
     route(
         name: string,
         routeParams: object,
         requestParams: object
-    ): Promise<AxiosResponse>;
+    ): Promise<AxiosResponse | any>;
     getCustomRoute(name: string, routeParams: object): CustomRoute;
     generate(name: string, routeParams: object): string;
     beforeRequest(type: RequestType, url: string): any;
-    afterRequest(response: AxiosResponse): void;
+    afterRequest(response: AxiosResponse | any): void;
     onError(error: Error): void;
     withData(data: object): this;
     withParams(params: object): this;
@@ -153,19 +153,19 @@ declare class Request extends Routes {
 }
 
 declare class Crud extends Request {
-    find(id: any): Promise<AxiosResponse>;
+    find(id: any): Promise<AxiosResponse | any>;
     updateOrDestroy(
         method: RequestType,
         ...params: string[]
-    ): Promise<AxiosResponse>;
-    update(...params: string[]): Promise<AxiosResponse>;
-    save(...params: string[]): Promise<AxiosResponse>;
-    destroy(...params: string[]): Promise<AxiosResponse>;
-    create(data: object): Promise<AxiosResponse>;
+    ): Promise<AxiosResponse | any>;
+    update(...params: string[]): Promise<AxiosResponse | any>;
+    save(...params: string[]): Promise<AxiosResponse | any>;
+    destroy(...params: string[]): Promise<AxiosResponse | any>;
+    create(data: object): Promise<AxiosResponse | any>;
     id(id: any): this;
-    destroy(...params: string[]): Promise<AxiosResponse>;
-    all(): Promise<AxiosResponse>;
-    findBy(key: string, value: any): Promise<AxiosResponse>;
+    destroy(...params: string[]): Promise<AxiosResponse | any>;
+    all(): Promise<AxiosResponse | any>;
+    findBy(key: string, value: any): Promise<AxiosResponse | any>;
 }
 
 export declare class Rapid extends Crud {
@@ -174,10 +174,10 @@ export declare class Rapid extends Crud {
 
 export declare class Auth extends Rapid {
     modelPrefix: string;
-    login(credentials: object): Promise<AxiosResponse>;
-    logout(): Promise<AxiosResponse>;
-    check(): Promise<AxiosResponse>;
-    register(credentials: object): Promise<AxiosResponse>;
+    login(credentials: object): Promise<AxiosResponse | any>;
+    logout(): Promise<AxiosResponse | any>;
+    check(): Promise<AxiosResponse | any>;
+    register(credentials: object): Promise<AxiosResponse | any>;
 }
 
 export default Rapid;
