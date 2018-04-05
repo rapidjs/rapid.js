@@ -13,7 +13,7 @@ class Core {
   protected config: Config;
   protected customRoutes: CustomRoute[];
   protected currentRoute: Route;
-  protected http: HttpAdapterInterface;
+  protected http: HttpAdapter;
   protected requestData: RequestData;
   protected routes: Config['routes'];
   protected urlParams: any[];
@@ -61,7 +61,7 @@ class Core {
    /**
    * Set any config overrides in this method when extending
    */
-  boot() {}
+  boot(): void {}
 
   /**
    * Sanitize the baseURL before sending it to the http service

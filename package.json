@@ -13,7 +13,7 @@
     "unit": "jest test/auth.test.ts --maxWorkers 2",
     "unit:watch": "jest test/**/*.test.ts --watch",
     "build": "babel src --out-dir dist --extensions \".ts,.tsx\"",
-    "type-check": "tsc"
+    "ts": "tsc"
   },
   "babel": {
     "presets": [

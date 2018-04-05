@@ -1,4 +1,4 @@
-abstract class HttpAdapterInterface {
+abstract class HttpAdapter {
   public abstract get(url: string, params: object);
   public abstract post(url: string, params: object);
   public abstract put(url: string, params: object);

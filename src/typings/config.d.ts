@@ -8,9 +8,15 @@ export declare interface Config {
   customRoutes: CustomRoute[];
   debug: boolean;
   defaultRoute: Route;
-  http: AxiosAdapter; // HttpAdapterInterface
+  http: HttpAdapter;
   httpConfig: object;
   modelName: string;
+  methods: {
+    create?: string;
+    update?: string;
+    destroy?: string;
+    restore?: string;
+  };
   primaryKey: string;
   routeDelimeter: string;
   routes: {
@@ -18,5 +24,14 @@ export declare interface Config {
     model?: string;
     collection?: string;
   };
+  suffixes: {
+    create?: string;
+    update?: string;
+    destroy?: string;
+    restore?: string;
+  };
   trailingSlash: boolean;
 }
+
+
+

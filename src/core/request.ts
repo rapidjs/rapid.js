@@ -3,6 +3,7 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import set from 'lodash/set';
 import Url from './url';
 import CustomRoute from './custom-route';
+import { warn } from '../utils/debug';
 
 class Request extends Url {
   constructor (config) {

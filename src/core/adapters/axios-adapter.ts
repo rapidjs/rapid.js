@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 
-export default class AxiosAdapter implements HttpAdapterInterface {
+export default class AxiosAdapter implements HttpAdapter {
   private http: AxiosInstance;
 
   constructor(config: object) {

@@ -16,7 +16,7 @@ class Url extends Core {
    * @param {Spread} params Can be any length of params that will be joined by /
    * @return {String}
    */
-  private makeUrl(...params) {
+  protected makeUrl(...params) {
     if (this.config.trailingSlash) {
       params.push('');
     }
