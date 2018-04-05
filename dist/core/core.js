@@ -126,6 +126,7 @@ var Core = function () {
     key: 'initializeAPI',
     value: function initializeAPI() {
       this.api = _axios2.default.create((0, _defaultsDeep2.default)({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+      this.writeInterceptorsToAPI();
     }
 
     /**
@@ -153,6 +154,28 @@ var Core = function () {
       if (this.config.customRoutes.length) {
         this.config.customRoutes.forEach(function (route) {
           _this2.customRoutes[route.name] = route;
+        });
+      }
+    }
+
+    /**
+     * Set the interceptors to the api object
+     */
+
+  }, {
+    key: 'writeInterceptorsToAPI',
+    value: function writeInterceptorsToAPI() {
+      var _this3 = this;
+
+      var interceptors = this.config.interceptors;
+
+      var types = Object.keys(interceptors);
+
+      if (types.length) {
+        types.forEach(function (type) {
+          interceptors[type].forEach(function (interceptor) {
+            _this3.api.interceptors[type].use(interceptor);
+          });
         });
       }
     }
@@ -201,6 +224,11 @@ var Core = function () {
       this.setCurrentRoute('any');
 
       return this;
+    }
+  }, {
+    key: 'interceptors',
+    get: function get() {
+      return this.config.interceptors;
     }
   }, {
     key: 'baseURL',
