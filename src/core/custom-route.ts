@@ -1,4 +1,18 @@
+interface Route {
+  url: string,
+  type: string,
+  name: string
+}
+
+interface CustomRouteConfig {
+  routeParams: object
+}
+
 class CustomRoute {
+  // TODO: Aggressive private until otherwise disproven
+  private route: Route;
+  private config: CustomRouteConfig;
+
   constructor (route = {}, config = {}) {
     // setup the default route object
     this.route = Object.assign({
