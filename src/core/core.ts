@@ -143,7 +143,7 @@ class Core {
   }
 
   /**
-   * Initialze the debugger if debug is set to true.
+   * Initialize the debugger if debug is set to true.
    */
   private initializeDebugger(): void {
     this.debugger = this.config.debug ? new Debugger(this) : null;

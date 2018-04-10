@@ -13,6 +13,7 @@ export declare interface Config {
   customRoutes: CustomRoute[];
   debug: boolean;
   defaultRoute: Route;
+  extension?: string;
   onError(error: () => void);
   globalParameters: object;
   http: AxiosAdapter;
