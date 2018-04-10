@@ -6,8 +6,13 @@
 [![npm](https://img.shields.io/npm/dt/rapid.js.svg?style=flat-square)](https://www.npmjs.com/package/rapid.js)
 [![npm](https://img.shields.io/travis/rapidjs/rapid.js.svg?branch=master&style=flat-square)](https://www.npmjs.com/package/rapid.js)
 
-##### An ORM-like Interface and a Router For Your API Requests
-###### Create simple, reusable, and cleaner wrappers, define custom routes, and more for your API requests.
+# r**api**d.js
+
+An ORM-like Interface and a Router For Your API Requests
+
+Create simple, reusable, and cleaner wrappers, define custom routes, and more for your API requests.
+
+## Documentation
 
 Read the official docs at [https://rapidjs.io](https://rapidjs.io).
 
@@ -15,20 +20,22 @@ Read the official docs at [https://rapidjs.io](https://rapidjs.io).
 
 Pick your poison:
 
-```
+```shell
 yarn add rapid.js
 npm i -S rapid.js
 npm install --save rapid.js
 ```
 
 ## Overview
- - [Define Simple Models](#define-simple-models)
- - [Easily Customize Your API Requests](#easily-customize-your-api-requests)
- - [Create Reusable Base Models](#create-reusable-base-models)
- - [Write API Wrappers For Your Endpoints](#write-api-wrappers-for-your-endpoints)
- - [Define Custom Routes (New!)](#define-custom-routes)
+
+- [Define Simple Models](#define-simple-models)
+- [Easily Customize Your API Requests](#easily-customize-your-api-requests)
+- [Create Reusable Base Models](#create-reusable-base-models)
+- [Write API Wrappers For Your Endpoints](#write-api-wrappers-for-your-endpoints)
+- [Define Custom Routes (New!)](#define-custom-routes)
 
 ### Define Simple Models
+
 ```js
 const post = new Rapid({ modelName: 'Post' });
 
@@ -51,11 +58,13 @@ post.destroy(9)
     // POST => /api/posts/9/destroy
 
 post.restore(9)
-    // POST => /api/posts/9/restore    
+    // POST => /api/posts/9/restore
 ```
+
 Read more about [Rapid Basics](https://rapidjs.io/docs#usage).
 
 ### Easily Customize Your API Requests
+
 ```js
 const post = new Rapid({
     modelName: 'Post',
@@ -75,9 +84,11 @@ post.update(25, { title: 'Rapid JS Is Awesome!' })
 post.destroy(9)
     // DELETE => /api/posts/9/
 ```
+
 Read more about [Customizing Your Requests](https://rapidjs.io/docs#config-builder).
 
 ### Create Reusable Base Models
+
 ```js
 class Base extends Rapid {
     boot () {
@@ -99,9 +110,11 @@ tag.collection.findBy('color', 'red')
 gallery.id(23).get('tags', 'nature')
     // GET => https://myapp.com/api/gallery/23/tag/nature?key=MY_API_KEY
 ```
+
 Read more about [Base Models](https://rapidjs.io/docs#extending-base-models).
 
 ### Write API Wrappers For Your Endpoints
+
 ```js
 class GalleryWrapper extends Rapid {
     boot () {
@@ -125,7 +138,8 @@ const gallery = new GalleryWrapper({
 gallery.tagSearch('nature').json().get().then(...);
     // GET https://myapp.com/gallery/api/tagsearch/json?query=nature&key=MY_API_KEY
     // GET https://myapp.com/gallery/api/tagsearch/json?query=nature&key=MY_API_KEY
-```    
+```
+
 Read more about [Making a Wrapper](https://rapidjs.io/docs#extending-making-a-wrapper).
 
 ### Define Custom Routes
@@ -155,6 +169,7 @@ router.route('web_save_user_preferences', { id: 12 }, /* { request data } */).th
 ```
 
 #### Using Your Own HTTP Service
+
 ```js
 import http from 'some-http-service';
 
@@ -178,6 +193,7 @@ rapid.generate('web_login')
 // use your own service
 http.post(rapid.generate('api_save_user_preferences', { id: 1 }), { data }).then()...
 ```
+
 Read more about [Custom Routes](https://rapidjs.io/docs#custom-routes).
 
 Read the official docs at [https://rapidjs.io](https://rapidjs.io).
