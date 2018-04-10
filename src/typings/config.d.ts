@@ -1,7 +1,7 @@
 import { CustomRoute } from './custom-routes.d';
 import { Route } from './routes.d';
-import AxiosAdapter from '../core/adapters/axios-adapter';
 import AuthConfig from './auth-config.d';
+import AxiosAdapter from './../core/adapters/axios-adapter';
 
 export declare interface Config {
   auth: AuthConfig,
@@ -10,7 +10,7 @@ export declare interface Config {
   customRoutes: CustomRoute[];
   debug: boolean;
   defaultRoute: Route;
-  http: HttpAdapter;
+  http: AxiosAdapter;
   httpConfig: object;
   modelName: string;
   methods: {
