@@ -9,6 +9,7 @@ export declare interface Config {
   allowedRequestTypes: Array<RequestType>;
   auth: AuthConfig;
   baseURL: string;
+  beforeRequest(type: RequestType, url: string);
   caseSensitive: boolean;
   customRoutes: CustomRoute[];
   debug: boolean;
@@ -25,7 +26,6 @@ export declare interface Config {
     destroy?: string;
     restore?: string;
   };
-  beforeRequest(type: RequestType, url: string);
   primaryKey: string;
   routeDelimeter: string;
   routes: {
