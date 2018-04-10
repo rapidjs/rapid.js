@@ -1,8 +1,10 @@
 import { CustomRoute } from './custom-routes.d';
 import { Route } from './routes.d';
 import AxiosAdapter from '../core/adapters/axios-adapter';
+import AuthConfig from './auth-config.d';
 
 export declare interface Config {
+  auth: AuthConfig,
   baseURL: string;
   caseSensitive: boolean;
   customRoutes: CustomRoute[];
