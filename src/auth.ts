@@ -1,30 +1,30 @@
+import { Config } from './typings/config';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Rapid from './core/rapid';
+import AuthConfig from './typings/auth-config.d';
 
-const authConfig = {
-  auth: {
-    routes: {
-      login: 'login',
-      logout: 'logout',
-      auth: 'auth',
-      register: 'register',
-    },
-
-    methods: {
-      login: 'post',
-      logout: 'post',
-      auth: 'get',
-      register: 'post',
-    },
-
-    modelPrefix: false,
+const authConfig: AuthConfig  = {
+  routes: {
+    login: 'login',
+    logout: 'logout',
+    auth: 'auth',
+    register: 'register',
   },
+
+  methods: {
+    login: 'post',
+    logout: 'post',
+    auth: 'get',
+    register: 'post',
+  },
+
+  modelPrefix: false
 };
 
 class Auth extends Rapid {
 
-  constructor (config) {
-    config = defaultsDeep(config, authConfig);
+  constructor (config: Config) {
+    config = defaultsDeep(config, { auth: authConfig });
     config.modelName = config.modelName ? config.modelName : 'auth';
 
     super(config);

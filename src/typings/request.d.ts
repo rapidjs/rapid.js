@@ -9,5 +9,8 @@ export declare enum RequestType {
 
 export declare interface RequestData {
   params: object;
-  options: object;
+  options: {
+    // TODO: this seems fishy...
+    params?: object
+  };
 }

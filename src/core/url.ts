@@ -1,7 +1,6 @@
 import isArray from 'lodash/isArray';
 import Core from './core';
 import { sanitizeUrl } from '../utils/url';
-import store from '../store/index';
 
 class Url extends Core {
   constructor(config) {

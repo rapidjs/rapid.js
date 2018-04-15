@@ -1,9 +1,25 @@
+import { RequestType } from "../typings/request";
+
+interface Route {
+  url: string,
+  type: RequestType,
+  name: string
+}
+
+interface CustomRouteConfig {
+  routeParams: object
+}
+
 class CustomRoute {
+  // TODO: Aggressive private until otherwise disproven
+  private route: Route;
+  private config: CustomRouteConfig;
+
   constructor (route = {}, config = {}) {
     // setup the default route object
     this.route = Object.assign({
       url: '',
-      type: 'get',
+      type: RequestType.GET,
       name: '',
     }, route);
 
@@ -82,10 +98,10 @@ class CustomRoute {
   /**
    * Returns the request type
    *
-   * @return {String}
+   * @return {RequestType}
    */
-  get type () {
-    return this.route.type;
+  get type (): RequestType {
+    return RequestType[this.route.type];
   }
 }
 

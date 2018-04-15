@@ -1,4 +1,4 @@
-import Rapid from './../src/rapid';
+import { Rapid } from './../src/rapid';
 
 class GalleryWrapper extends Rapid {
   boot () {
