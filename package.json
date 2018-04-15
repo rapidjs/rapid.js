@@ -5,15 +5,15 @@
   "main": "dist/rapid.js",
   "scripts": {
     "test": "npm run unit && npm run lint",
-    "compile": "babel --presets=es2015 -d dist src",
+    "compile": "./node_modules/.bin/babel --presets=@babel/preset-es2015 -d dist src",
     "copy-dev": "npm run compile && rm -rf ./demo/rapid && cp -R ./dist ./demo/rapid",
     "prepublish": "npm run compile",
-    "lint": "eslint --ext .js,.ts src test",
-    "lint:fix": "eslint --ext .js,.ts src test --fix",
-    "unit": "jest test/auth.test.ts --maxWorkers 2",
-    "unit:watch": "jest test/**/*.test.ts --watch",
-    "build": "babel src --out-dir dist --extensions \".ts,.tsx\"",
-    "ts": "tsc"
+    "lint": "./node_modules/.bin/eslint --ext .js,.ts src test",
+    "lint:fix": "./node_modules/.bin/eslint --ext .js,.ts src test --fix",
+    "unit": "./node_modules/.bin/jest test/auth.test.ts --maxWorkers 2",
+    "unit:watch": "./node_modules/.bin/jest test/**/*.test.ts --watch",
+    "build": "./node_modules/.bin/babel src --out-dir dist --extensions \".ts,.tsx\"",
+    "ts": "./node_modules/.bin/tsc"
   },
   "babel": {
     "presets": [
@@ -37,11 +37,12 @@
   },
   "homepage": "https://github.com/rapidjs/rapid.js#readme",
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.32",
-    "@babel/core": "^7.0.0-beta.32",
+    "@babel/cli": "^7.0.0-beta.44",
+    "@babel/core": "^7.0.0-beta.44",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.32",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.32",
     "@babel/preset-env": "^7.0.0-beta.32",
+    "@babel/preset-es2015": "^7.0.0-beta.44",
     "@babel/preset-typescript": "^7.0.0-beta.32",
     "@types/jest": "^22.1.4",
     "babel-eslint": "^8.0.2",
