@@ -1,8 +1,7 @@
-import Rapid from './core/rapid';
-import Auth from './auth';
+import CoreRapid from './core/rapid';
+import CoreAuth from './auth';
 
-module.exports = Rapid;
-module.exports.Rapid = Rapid;
-module.exports.Auth = Auth;
+export const Rapid = CoreRapid;
+export const Auth = CoreAuth;
 
-export default Rapid;
+export default CoreRapid;
