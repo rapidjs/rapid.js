@@ -1,6 +1,9 @@
-import AxiosAdapter from './adapters/axios-adapter';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
   /**
    * The possible allowed request types.
    *
@@ -64,8 +67,6 @@ export default {
    */
   globalParameters: {},
 
-  http: AxiosAdapter,
-
   /**
    * An optional collection of interceptors for requests and responses.
    *
@@ -74,7 +75,7 @@ export default {
    */
   interceptors: {
     request: [],
-    response: [],
+    response: []
   },
 
   /**
@@ -86,7 +87,7 @@ export default {
     create: 'post',
     update: 'post',
     destroy: 'post',
-    restore: 'post',
+    restore: 'post'
   },
 
   /**
@@ -127,7 +128,7 @@ export default {
   routes: {
     model: '',
     collection: '',
-    any: '',
+    any: ''
   },
 
   /**
@@ -139,7 +140,7 @@ export default {
     create: 'create',
     update: 'update',
     destroy: 'destroy',
-    restore: 'restore',
+    restore: 'restore'
   },
 
   /**
@@ -150,11 +151,13 @@ export default {
   trailingSlash: false,
 
   // eslint-disable-next-line no-unused-vars
-  beforeRequest(type, url) {},
+  beforeRequest: function beforeRequest(type, url) {},
+
 
   // eslint-disable-next-line no-unused-vars
-  afterRequest(response) {},
+  afterRequest: function afterRequest(response) {},
+
 
   // eslint-disable-next-line no-unused-vars
-  onError(response) {},
+  onError: function onError(response) {}
 };
