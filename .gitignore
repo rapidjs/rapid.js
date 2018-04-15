@@ -1,6 +1,28 @@
-*.DS_Store
-/node_modules
-.nyc_output
-npm-debug.log
+# referece: https://github.com/github/gitignore/blob/master/Node.gitignore
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs config files
+.vscode/
+.idea/
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Others
 demo/node_modules
 /demo
