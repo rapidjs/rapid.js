@@ -4,7 +4,7 @@ describe('The routes are generated properly based off config', () => {
   it('that routeDelimiter will work', () => {
     const postModel = createModel({
       modelName: 'PacificCrestTrail',
-      routeDelimeter: '_',
+      routeDelimiter: '_',
     });
 
     postModel.find(1);
