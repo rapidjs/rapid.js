@@ -4,6 +4,7 @@ import set from 'lodash/set';
 import Url from './url';
 import CustomRoute from './custom-route';
 import { warn } from '../utils/debug';
+import { RequestType } from '../typings/request';
 
 class Request extends Url {
   constructor (config) {
@@ -42,7 +43,8 @@ class Request extends Url {
    * @return {Promise}
    */
   request (type: RequestType, url) {
-    type = type.toLowerCase();
+    // TODO: This line may now be redundant with typing, as well as the following
+    type = <RequestType>type.toLowerCase();
 
     if (!this.isAllowedRequestType(type)) {
       throw new Error('This request type is not allowed.');
@@ -233,11 +235,12 @@ class Request extends Url {
 
   /**
    * This is fired before the request
-   * @param {String} type
+   * // TODO better return definition
+   * @param {RequestType} type
    * @param {String} url
    * @return {Function}
    */
-  beforeRequest (type, url) {
+  beforeRequest (type: RequestType, url: string) {
     return this.config.beforeRequest(type, url);
   }
 

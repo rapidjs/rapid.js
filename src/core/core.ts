@@ -8,6 +8,8 @@ import { Route } from '../typings/routes.d';
 import { sanitizeUrl } from '../utils/url';
 import Debugger from './../debug/debugger';
 import Defaults from './defaults';
+import HttpAdapter from './contracts/http-adapter';
+import AxiosAdapter from './adapters/axios-adapter';
 
 class Core {
   protected config: Config;
@@ -35,7 +37,8 @@ class Core {
 
   /**
    * The order of these are important.
-   *
+   *import AxiosAdapter from './adapters/axios-adapter';
+
    * boot() will allow overriding any config before we set up
    * the http service and routes.
    *
@@ -74,7 +77,7 @@ class Core {
    * Loop through the routes and set them
    */
   private setRoutes(): void {
-    ['model', 'collection'].forEach(route => this.setRoute(route));
+    ['model', 'collection'].forEach((route: Route) => this.setRoute(route));
     // [Route.MODEL, Route.COLLECTION].forEach(route => this.setRoute(route));
   }
 
@@ -118,7 +121,7 @@ class Core {
 
   /**
    * Initialize the API.
-   * consider making an adatper interface to talk to http methods
+   * consider making an adapter interface to talk to http methods
    */
   private initializeHttp(): void {
     const httpConfig = defaultsDeep(
@@ -128,13 +131,19 @@ class Core {
       this.config.httpConfig,
     );
 
-    const http = this.config.http;
+    // const http = this.config.http;
 
-    this.http = new http(httpConfig);
+    // TODO: Code Smell, http doesn't have a constructor.
+    // Should it be Axios instead of HttpAdapter?
+    // Everything was abstract which means this class wouldn't have anything implemented in it 
+    //  even if you were to instantiate it
+    // Also this.config.http most likely wouldn't have a Class stored in it which is also confusing
+    //  since it should be an instance
+    this.http = new AxiosAdapter(httpConfig);
   }
 
   /**
-   * Initialze the debugger if debug is set to true.
+   * Initialize the debugger if debug is set to true.
    */
   private initializeDebugger(): void {
     this.debugger = this.config.debug ? new Debugger(this) : null;

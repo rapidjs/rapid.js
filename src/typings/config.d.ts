@@ -1,14 +1,23 @@
 import { CustomRoute } from './custom-routes.d';
 import { Route } from './routes.d';
-import AxiosAdapter from '../core/adapters/axios-adapter';
+import AuthConfig from './auth-config.d';
+import AxiosAdapter from './../core/adapters/axios-adapter';
+import { RequestType } from './request';
 
 export declare interface Config {
+  afterRequest(response);
+  allowedRequestTypes: Array<RequestType>;
+  auth: AuthConfig;
   baseURL: string;
+  beforeRequest(type: RequestType, url: string);
   caseSensitive: boolean;
   customRoutes: CustomRoute[];
   debug: boolean;
   defaultRoute: Route;
-  http: HttpAdapter;
+  extension?: string;
+  onError(error: () => void);
+  globalParameters: object;
+  http: AxiosAdapter;
   httpConfig: object;
   modelName: string;
   methods: {
