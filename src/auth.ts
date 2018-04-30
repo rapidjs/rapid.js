@@ -1,4 +1,4 @@
-import { AuthConfig, Config } from './typings/config';
+import { AuthConfig, Config } from './core/config';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Rapid from './core/rapid';
 

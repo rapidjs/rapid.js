@@ -1,7 +1,7 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 import kebabCase from 'lodash/kebabCase';
 import pluralize from 'pluralize';
-import { Config } from '../typings/config.d';
+import { Config } from './config';
 import { CustomRouteOptions } from './custom-route';
 import { RequestData } from './request';
 import { Route } from '../typings/routes.d';
