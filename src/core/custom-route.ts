@@ -1,6 +1,6 @@
 import { RequestType } from "../typings/request";
 
-interface Route {
+interface CustomRouteOptions {
   url: string,
   type: RequestType,
   name: string
@@ -12,7 +12,7 @@ interface CustomRouteConfig {
 
 class CustomRoute {
   // TODO: Aggressive private until otherwise disproven
-  private route: Route;
+  private route: CustomRouteOptions;
   private config: CustomRouteConfig;
 
   constructor (route = {}, config = {}) {
@@ -105,4 +105,5 @@ class CustomRoute {
   }
 }
 
+export { CustomRouteOptions };
 export default CustomRoute;

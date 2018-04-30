@@ -2,7 +2,7 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import kebabCase from 'lodash/kebabCase';
 import pluralize from 'pluralize';
 import { Config } from '../typings/config.d';
-import { CustomRoute } from '../typings/custom-routes.d';
+import { CustomRouteOptions } from './custom-route';
 import { RequestData } from '../typings/request.d';
 import { Route } from '../typings/routes.d';
 import { sanitizeUrl } from '../utils/url';
@@ -13,7 +13,7 @@ import AxiosAdapter from './adapters/axios-adapter';
 
 class Core {
   protected config: Config;
-  protected customRoutes: CustomRoute[];
+  protected customRoutes: CustomRouteOptions[];
   protected currentRoute: Route;
   protected http: HttpAdapter;
   protected requestData: RequestData;
@@ -113,7 +113,7 @@ class Core {
   private defineCustomRoutes(): void {
     // if we have custom routes, set up a name:route mapping
     if (this.config.customRoutes.length) {
-      this.config.customRoutes.forEach((route: CustomRoute) => {
+      this.config.customRoutes.forEach((route: CustomRouteOptions) => {
         this.customRoutes[route.name] = route;
       });
     }
