@@ -1,7 +1,7 @@
 import qs from 'qs';
 //import Caller from './caller';
 import Data from './data';
-import { RequestType } from '../typings/request';
+import { RequestType } from '../core/request';
 //import Core from './../core/core';
 
 // TODO: caller should be better typed

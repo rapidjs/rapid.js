@@ -1,7 +1,7 @@
 import { CustomRouteOptions } from './../core/custom-route';
 import { Route } from './routes.d';
 import AxiosAdapter from './../core/adapters/axios-adapter';
-import { RequestType } from './request';
+import { RequestType } from '../core/request';
 
 interface Config {
   afterRequest(response);

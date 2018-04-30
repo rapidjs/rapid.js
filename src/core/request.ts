@@ -4,7 +4,23 @@ import set from 'lodash/set';
 import Url from './url';
 import CustomRoute from './custom-route';
 import { warn } from '../utils/debug';
-import { RequestType } from '../typings/request';
+
+interface RequestData {
+  params: object;
+  options: {
+    // TODO: this seems fishy...
+    params?: object
+  };
+}
+
+enum RequestType {
+  GET = 'get',
+  POST = 'post',
+  PUT = 'put',
+  PATCH = 'patch',
+  HEAD = 'head',
+  DELETE = 'delete',
+}
 
 class Request extends Url {
   constructor (config) {
@@ -331,4 +347,5 @@ class Request extends Url {
   }
 }
 
+export { RequestData, RequestType };
 export default Request;

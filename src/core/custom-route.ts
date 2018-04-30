@@ -1,4 +1,4 @@
-import { RequestType } from "../typings/request";
+import { RequestType } from './request';
 
 interface CustomRouteOptions {
   url: string,

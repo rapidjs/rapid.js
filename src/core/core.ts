@@ -3,7 +3,7 @@ import kebabCase from 'lodash/kebabCase';
 import pluralize from 'pluralize';
 import { Config } from '../typings/config.d';
 import { CustomRouteOptions } from './custom-route';
-import { RequestData } from '../typings/request.d';
+import { RequestData } from './request';
 import { Route } from '../typings/routes.d';
 import { sanitizeUrl } from '../utils/url';
 import Debugger from './../debug/debugger';
