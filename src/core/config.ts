@@ -1,5 +1,5 @@
 import { CustomRouteOptions } from './../core/custom-route';
-import { Route } from '../typings/routes.d';
+import { Route } from './route';
 import AxiosAdapter from './../core/adapters/axios-adapter';
 import { RequestType } from '../core/request';
 

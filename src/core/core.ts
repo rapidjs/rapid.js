@@ -4,7 +4,7 @@ import pluralize from 'pluralize';
 import { Config } from './config';
 import { CustomRouteOptions } from './custom-route';
 import { RequestData } from './request';
-import { Route } from '../typings/routes.d';
+import { Route } from './route';
 import { sanitizeUrl } from '../utils/url';
 import Debugger from './../debug/debugger';
 import Defaults from './defaults';
