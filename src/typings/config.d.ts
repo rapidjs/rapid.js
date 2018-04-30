@@ -1,10 +1,9 @@
 import { CustomRouteOptions } from './../core/custom-route';
 import { Route } from './routes.d';
-import AuthConfig from './auth-config.d';
 import AxiosAdapter from './../core/adapters/axios-adapter';
 import { RequestType } from './request';
 
-export declare interface Config {
+interface Config {
   afterRequest(response);
   allowedRequestTypes: Array<RequestType>;
   auth: AuthConfig;
@@ -43,4 +42,20 @@ export declare interface Config {
 }
 
 
+interface AuthConfig {
+  routes: {
+    login: string,
+    logout: string,
+    auth: string,
+    register: string
+  },
+  methods: {
+    login: string,
+    logout: string,
+    auth: string,
+    register: string,
+  },
+  modelPrefix: boolean
+}
 
+export { AuthConfig, Config };
