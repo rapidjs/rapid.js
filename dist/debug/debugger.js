@@ -1,5 +1,10 @@
-import qs from 'qs';
-export default class {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const qs_1 = __importDefault(require("qs"));
+class default_1 {
     constructor(caller) {
         this.caller = caller;
         this.caller = caller;
@@ -24,7 +29,7 @@ export default class {
         }
         else {
             const urlParams = params.params;
-            const stringified = urlParams ? `?${qs.stringify(urlParams)}` : '';
+            const stringified = urlParams ? `?${qs_1.default.stringify(urlParams)}` : '';
             lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/')) + stringified;
         }
         lastUrl = this.caller.sanitizeUrl(lastUrl);
@@ -40,3 +45,4 @@ export default class {
         };
     }
 }
+exports.default = default_1;

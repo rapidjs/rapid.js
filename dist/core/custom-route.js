@@ -1,9 +1,11 @@
-import { RequestType } from './request';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const request_1 = require("./request");
 class CustomRoute {
     constructor(route = {}, config = {}) {
         this.route = Object.assign({
             url: '',
-            type: RequestType.GET,
+            type: request_1.RequestType.GET,
             name: '',
         }, route);
         this.config = Object.assign({
@@ -36,7 +38,7 @@ class CustomRoute {
         return this.route.name;
     }
     get type() {
-        return RequestType[this.route.type];
+        return request_1.RequestType[this.route.type];
     }
 }
-export default CustomRoute;
+exports.default = CustomRoute;

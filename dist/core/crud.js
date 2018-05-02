@@ -1,5 +1,10 @@
-import Request from './request';
-class Crud extends Request {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const request_1 = __importDefault(require("./request"));
+class Crud extends request_1.default {
     find(id) {
         return this.model.id(id).get();
     }
@@ -66,4 +71,4 @@ class Crud extends Request {
         return this.get(...urlParams);
     }
 }
-export default Crud;
+exports.default = Crud;

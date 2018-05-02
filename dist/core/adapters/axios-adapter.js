@@ -1,7 +1,12 @@
-import axios from 'axios';
-export default class AxiosAdapter {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const axios_1 = __importDefault(require("axios"));
+class AxiosAdapter {
     constructor(config) {
-        this.http = axios.create(config);
+        this.http = axios_1.default.create(config);
     }
     get(url, params) {
         return this.http.get(url, params);
@@ -22,3 +27,4 @@ export default class AxiosAdapter {
         return this.http.delete(url, params);
     }
 }
+exports.default = AxiosAdapter;

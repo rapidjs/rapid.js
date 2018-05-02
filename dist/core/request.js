@@ -1,9 +1,14 @@
-import isArray from 'lodash/isArray';
-import defaultsDeep from 'lodash/defaultsDeep';
-import set from 'lodash/set';
-import Url from './url';
-import CustomRoute from './custom-route';
-import { warn } from '../utils/debug';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const isArray_1 = __importDefault(require("lodash/isArray"));
+const defaultsDeep_1 = __importDefault(require("lodash/defaultsDeep"));
+const set_1 = __importDefault(require("lodash/set"));
+const url_1 = __importDefault(require("./url"));
+const custom_route_1 = __importDefault(require("./custom-route"));
+const debug_1 = require("../utils/debug");
 var RequestType;
 (function (RequestType) {
     RequestType["GET"] = "get";
@@ -13,7 +18,8 @@ var RequestType;
     RequestType["HEAD"] = "head";
     RequestType["DELETE"] = "delete";
 })(RequestType || (RequestType = {}));
-class Request extends Url {
+exports.RequestType = RequestType;
+class Request extends url_1.default {
     constructor(config) {
         super(config);
     }
@@ -22,12 +28,12 @@ class Request extends Url {
         const { options } = this.requestData;
         let { params } = this.requestData;
         if (['put', 'post', 'patch'].includes(type)) {
-            params = defaultsDeep(params, this.config.globalParameters);
+            params = defaultsDeep_1.default(params, this.config.globalParameters);
             requestData.push(params);
             requestData.push(options);
         }
         else {
-            options.params = defaultsDeep(params, this.config.globalParameters);
+            options.params = defaultsDeep_1.default(params, this.config.globalParameters);
             requestData.push(options);
         }
         return requestData;
@@ -56,7 +62,7 @@ class Request extends Url {
     isAllowedRequestType(type) {
         if (!this.config.allowedRequestTypes.includes(type)) {
             if (this.config.debug) {
-                warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
+                debug_1.warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
             }
             return false;
         }
@@ -67,7 +73,7 @@ class Request extends Url {
             urlParams = this.urlParams.concat(urlParams);
             this.resetURLParams();
         }
-        const url = isArray(urlParams) ? this.makeUrl(...urlParams) : this.makeUrl(urlParams);
+        const url = isArray_1.default(urlParams) ? this.makeUrl(...urlParams) : this.makeUrl(urlParams);
         return this.request(type, url);
     }
     get(...urlParams) {
@@ -97,11 +103,11 @@ class Request extends Url {
     }
     getCustomRoute(name = '', routeParams = {}) {
         if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
-            return new CustomRoute(this.customRoutes[name], {
+            return new custom_route_1.default(this.customRoutes[name], {
                 routeParams,
             });
         }
-        return new CustomRoute();
+        return new custom_route_1.default();
     }
     generate(name = '', routeParams = {}) {
         const { url } = this.getCustomRoute(name, routeParams);
@@ -121,25 +127,24 @@ class Request extends Url {
         this.config.onError(error);
     }
     withData(data = {}) {
-        this.requestData = defaultsDeep(data, this.requestData);
+        this.requestData = defaultsDeep_1.default(data, this.requestData);
         return this;
     }
     withParams(params = {}) {
-        set(this.requestData, 'params', params);
+        set_1.default(this.requestData, 'params', params);
         return this;
     }
     withParam(key, value) {
-        set(this.requestData, `params.${key}`, value);
+        set_1.default(this.requestData, `params.${key}`, value);
         return this;
     }
     withOptions(options = {}) {
-        set(this.requestData, 'options', options);
+        set_1.default(this.requestData, 'options', options);
         return this;
     }
     withOption(key, value) {
-        set(this.requestData, `options.${key}`, value);
+        set_1.default(this.requestData, `options.${key}`, value);
         return this;
     }
 }
-export { RequestType };
-export default Request;
+exports.default = Request;

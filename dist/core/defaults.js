@@ -1,5 +1,10 @@
-import AxiosAdapter from './adapters/axios-adapter';
-export default {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const axios_adapter_1 = __importDefault(require("./adapters/axios-adapter"));
+exports.default = {
     allowedRequestTypes: ['get', 'post', 'put', 'patch', 'head', 'delete'],
     apiConfig: {},
     baseURL: 'api',
@@ -9,7 +14,7 @@ export default {
     defaultRoute: 'model',
     extension: '',
     globalParameters: {},
-    http: AxiosAdapter,
+    http: axios_adapter_1.default,
     methods: {
         create: 'post',
         update: 'post',

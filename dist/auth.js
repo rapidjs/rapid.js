@@ -1,5 +1,10 @@
-import defaultsDeep from 'lodash/defaultsDeep';
-import Rapid from './core/rapid';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const defaultsDeep_1 = __importDefault(require("lodash/defaultsDeep"));
+const rapid_1 = __importDefault(require("./core/rapid"));
 const authConfig = {
     routes: {
         login: 'login',
@@ -15,9 +20,9 @@ const authConfig = {
     },
     modelPrefix: false
 };
-class Auth extends Rapid {
+class Auth extends rapid_1.default {
     constructor(config) {
-        config = defaultsDeep(config, { auth: authConfig });
+        config = defaultsDeep_1.default(config, { auth: authConfig });
         config.modelName = config.modelName ? config.modelName : 'auth';
         super(config);
     }
@@ -42,4 +47,4 @@ class Auth extends Rapid {
         return this.config.auth.modelPrefix ? 'model' : 'any';
     }
 }
-export default Auth;
+exports.default = Auth;

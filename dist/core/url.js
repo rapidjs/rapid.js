@@ -1,7 +1,12 @@
-import isArray from 'lodash/isArray';
-import Core from './core';
-import { sanitizeUrl } from '../utils/url';
-class Url extends Core {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const isArray_1 = __importDefault(require("lodash/isArray"));
+const core_1 = __importDefault(require("./core"));
+const url_1 = require("../utils/url");
+class Url extends core_1.default {
     constructor(config) {
         super(config);
     }
@@ -17,11 +22,11 @@ class Url extends Core {
         return url;
     }
     sanitizeUrl(url) {
-        return sanitizeUrl(url, this.config.trailingSlash);
+        return url_1.sanitizeUrl(url, this.config.trailingSlash);
     }
     setURLParams(urlParams = [], prepend = false, overwrite = false) {
         this.urlParams = this.urlParams || [];
-        if (!isArray(urlParams)) {
+        if (!isArray_1.default(urlParams)) {
             urlParams = [urlParams];
         }
         if (overwrite) {
@@ -49,4 +54,4 @@ class Url extends Core {
         return this;
     }
 }
-export default Url;
+exports.default = Url;
