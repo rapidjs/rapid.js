@@ -1,0 +1,37 @@
+import AxiosAdapter from './adapters/axios-adapter';
+export default {
+    allowedRequestTypes: ['get', 'post', 'put', 'patch', 'head', 'delete'],
+    apiConfig: {},
+    baseURL: 'api',
+    caseSensitive: false,
+    customRoutes: [],
+    debug: false,
+    defaultRoute: 'model',
+    extension: '',
+    globalParameters: {},
+    http: AxiosAdapter,
+    methods: {
+        create: 'post',
+        update: 'post',
+        destroy: 'post',
+        restore: 'post',
+    },
+    modelName: '',
+    primaryKey: '',
+    routeDelimeter: '-',
+    routes: {
+        model: '',
+        collection: '',
+        any: '',
+    },
+    suffixes: {
+        create: 'create',
+        update: 'update',
+        destroy: 'destroy',
+        restore: 'restore',
+    },
+    trailingSlash: false,
+    beforeRequest(type, url) { },
+    afterRequest(response) { },
+    onError(response) { },
+};
