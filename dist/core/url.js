@@ -56,7 +56,7 @@ var Url = function (_Core) {
         params.push('');
       }
 
-      var url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).join('/'));
+      var url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).filter(Boolean).join('/'));
 
       // strip the extra .
       // make sure routes don't need to regenerate
