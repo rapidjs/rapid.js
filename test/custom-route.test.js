@@ -57,8 +57,8 @@ describe('Custom Routes should work as designed', () => {
 
   it('should replace interpolated variables', () => {
     expect(model.generate('user_save_friends3')).toBe('');
-    expect(model.generate('user_save_friends', { id: 1 })).toBe('/api/user/1/save/friends');
-    expect(model.generate('multiple_same_values', { id: 1, username: 'drew' })).toBe('/api/user/1/drew/save/1');
+    expect(model.generate('user_save_friends', { id: 1 })).toBe('api/user/1/save/friends');
+    expect(model.generate('multiple_same_values', { id: 1, username: 'drew' })).toBe('api/user/1/drew/save/1');
   });
 
   it('should fire the proper request type and url', () => {
