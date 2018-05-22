@@ -1,4 +1,4 @@
-import qs from 'qs';
+import stringify from 'qs-stringify';
 
 export default class {
   constructor (caller) {
@@ -30,7 +30,7 @@ export default class {
       lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/'));
     } else {
       const urlParams = params.params;
-      const stringified = urlParams ? `?${qs.stringify(urlParams)}` : '';
+      const stringified = urlParams ? `?${stringify(urlParams)}` : '';
 
       lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/')) + stringified;
     }
