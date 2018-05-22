@@ -67,6 +67,17 @@ export default {
   http: AxiosAdapter,
 
   /**
+   * An optional collection of interceptors for requests and responses.
+   *
+   * @type {Object}
+   * @see https://github.com/axios/axios#interceptors
+   */
+  interceptors: {
+    request: [],
+    response: [],
+  },
+
+  /**
    * The default request methods for the CRUD methods.
    *
    * @type {Object}
