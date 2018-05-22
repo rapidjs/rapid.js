@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "description": "",
   "main": "dist/rapid.js",
+  "types": "dist/rapid.d.ts",
   "scripts": {
     "test": "npm run unit && npm run lint",
     "compile": "babel --presets=@babel/preset-env -d dist src",

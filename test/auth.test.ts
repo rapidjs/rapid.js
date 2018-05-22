@@ -5,11 +5,12 @@ import Core from '../src/core/core';
 
 describe('Rapid Auth Model', () => {
 
-   it('should generate the login url', () => {
-    const foo = new Core({});
+    it('should generate the login url', () => {
+      const foo = new Core({});
 
-    console.log(foo.http.get('ham'));
-   });
+      // This will be rejected, because the request fails
+      return expect((<any>foo).http.get('ham')).rejects.toEqual({});
+    });
 
   // it('should generate the login url', () => {
   //   user.login();

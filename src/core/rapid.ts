@@ -13,7 +13,7 @@
  * Crud            ---> Rapid
  *
  */
-import { Config } from '../typings/config.d';
+import { Config } from './config';
 import Crud from './crud';
 
 class Rapid extends Crud {
