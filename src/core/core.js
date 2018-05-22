@@ -1,18 +1,23 @@
-/**
- * The Caramel Core functionality of Rapid
- */
+// @ts-check
 
 import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Defaults from './defaults';
 import Debugger from './../debug/debugger';
 import Logger from './../debug/logger';
+import { routeTypes } from './config';
 
 class Core {
-  constructor (config) {
-    config = config || {};
-
-    config = defaultsDeep(config, Defaults);
+  constructor(config) {
+    this.config = Object.assign(defaultsDeep(config, Defaults));
+    this.currentRoute = this.config.defaultRoute;
+    this.customRoutes = [];
+    this.requestData = {
+      params: {},
+      options: {},
+    };
+    this.routes = this.config.routes;
+    this.urlParams = [];
 
     this.initialize(config);
   }
@@ -20,34 +25,33 @@ class Core {
   /**
    * Set any config overrides in this method when extending
    */
-  boot () {
-
-  }
+  boot() {}
 
   /**
-   * Setup the all of properties.
+   * The order of these are important.
+
+   * boot() will allow overriding any config before we set up
+   * the http service and routes.
+   *
+   * sanitizeBaseURL() will sanitize the baseURL prior to setting up
+   * the http service and routes.
+   *
+   * setRoutes() will set up the current routes (model, collection) and their paths
+   *
    * @param {Object} config
    */
-  initialize (config) {
+  initialize(config) {
     this.config = config;
-
-    this.initializeRoutes();
 
     this.boot();
 
-    this.resetURLParams();
-
     this.fireSetters();
 
-    this.initializeAPI();
-
-    this.setCurrentRoute(this.config.defaultRoute);
+    this.initializeHttp();
 
     this.initializeDebugger();
 
     this.initializeLogger();
-
-    this.resetRequestData();
 
     this.defineCustomRoutes();
   }
@@ -56,45 +60,36 @@ class Core {
    * Fire the setters. This will make sure the routes are generated properly.
    * Consider if this is really even necessary
    */
-  fireSetters () {
+  fireSetters() {
     ['baseURL', 'modelName', 'routeDelimeter', 'caseSensitive'].forEach(setter => this[setter] = this.config[setter]);
   }
 
   /**
    * Initialze the debugger if debug is set to true.
    */
-  initializeDebugger () {
+  initializeDebugger() {
     this.debugger = this.config.debug ? new Debugger(this) : false;
   }
 
   /**
    * Initialze the debugger if debug is set to true.
    */
-  initializeLogger () {
+  initializeLogger() {
     this.logger = this.config.debug ? Logger : false;
   }
 
   /**
    * Initialize the API.
    */
-  initializeAPI () {
-    this.api = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+  initializeHttp() {
+    this.http = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
     this.writeInterceptorsToAPI();
-  }
-
-  /**
-   * Initialize the routes.
-   */
-  initializeRoutes () {
-    this.routes = this.config.routes;
   }
 
   /**
    * Set up the custom routes if we have any
    */
-  defineCustomRoutes () {
-    this.customRoutes = [];
-
+  defineCustomRoutes() {
     // if we have custom routes, set up a name:route mapping
     if (this.config.customRoutes.length) {
       this.config.customRoutes.forEach((route) => {
@@ -106,14 +101,14 @@ class Core {
   /**
    * Set the interceptors to the api object
    */
-  writeInterceptorsToAPI () {
+  writeInterceptorsToAPI() {
     const { interceptors } = this.config;
     const types = Object.keys(interceptors);
 
     if (types.length) {
       types.forEach((type) => {
         interceptors[type].forEach((interceptor) => {
-          this.api.interceptors[type].use(interceptor);
+          this.http.interceptors[type].use(interceptor);
         });
       });
     }
@@ -122,7 +117,7 @@ class Core {
   /**
    * Resets the request data
    */
-  resetRequestData () {
+  resetRequestData() {
     this.requestData = {
       params: {},
       options: {},
@@ -130,53 +125,60 @@ class Core {
   }
 
   /**
+   * Loop through the routes and set them
+   */
+  setRoutes() {
+    [routeTypes.MODEL, routeTypes.COLLECTION].forEach(route => this.setRoute(route));
+  }
+
+  /**
    * Setters and Getters
    */
 
-  set debug (val) {
+  set debug(val) {
     if (this.config.debug) {
       this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
     }
   }
 
-  get collection () {
-    this.setCurrentRoute('collection');
+  get collection() {
+    this.currentRoute = routeTypes.COLLECTION;
 
     return this;
   }
 
-  get model () {
-    this.setCurrentRoute('model');
+  get model() {
+    this.currentRoute = routeTypes.MODEL;
 
     return this;
   }
 
-  get any () {
-    this.setCurrentRoute('any');
+  get any() {
+    this.currentRoute = routeTypes.ANY;
 
     return this;
   }
 
-  get interceptors () {
+  get interceptors() {
     return this.config.interceptors;
   }
 
-  set baseURL (url) {
+  set baseURL(url) {
     this.config.baseURL = this.sanitizeUrl(url);
-    this.initializeAPI();
+    this.initializeHttp();
   }
 
-  set modelName (val) {
+  set modelName(val) {
     this.config.modelName = val;
     this.setRoutes();
   }
 
-  set routeDelimeter (val) {
+  set routeDelimeter(val) {
     this.config.routeDelimeter = val;
     this.setRoutes();
   }
 
-  set caseSensitive (val) {
+  set caseSensitive(val) {
     this.config.caseSensitive = val;
     this.setRoutes();
   }

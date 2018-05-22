@@ -1,13 +1,13 @@
 import stringify from 'qs-stringify';
 
 export default class {
-  constructor (caller) {
+  constructor(caller) {
     this.caller = caller;
     this.data = {};
     this.logEnabled = true;
   }
 
-  fakeRequest (type, url) {
+  fakeRequest(type, url) {
     const params = this.caller.parseRequestData(type);
     const lastUrl = this.setLastUrl(type, url, ...params);
 
@@ -23,7 +23,7 @@ export default class {
     return lastUrl;
   }
 
-  setLastUrl (type, url, params = {}) {
+  setLastUrl(type, url, params = {}) {
     let lastUrl = '';
 
     if (['put', 'post', 'patch'].includes(type)) {
@@ -42,7 +42,7 @@ export default class {
     return lastUrl;
   }
 
-  setLastRequest (type, url, data = {}, options = {}) {
+  setLastRequest(type, url, data = {}, options = {}) {
     this.data.lastRequest = {
       type,
       url,

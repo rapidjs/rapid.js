@@ -23,35 +23,35 @@ const authConfig = {
 
 class Auth extends Rapid {
 
-  constructor (config) {
+  constructor(config) {
     config = defaultsDeep(config, authConfig);
     config.modelName = config.modelName ? config.modelName : 'auth';
 
     super(config);
   }
 
-  login (credentials = {}) {
+  login(credentials = {}) {
     return this[this.modelPrefix].withParams(credentials)
       .withOption('auth', credentials)
       .buildRequest(this.config.auth.methods.login, this.config.auth.routes.login);
   }
 
-  logout () {
+  logout() {
     return this[this.modelPrefix]
       .buildRequest(this.config.auth.methods.logout, this.config.auth.routes.logout);
   }
 
-  check () {
+  check() {
     return this[this.modelPrefix]
       .buildRequest(this.config.auth.methods.auth, this.config.auth.routes.auth);
   }
 
-  register (credentials = {}) {
+  register(credentials = {}) {
     return this[this.modelPrefix].withParams(credentials)
       .buildRequest(this.config.auth.methods.register, this.config.auth.routes.register);
   }
 
-  get modelPrefix () {
+  get modelPrefix() {
     return this.config.auth.modelPrefix ? 'model' : 'any';
   }
 

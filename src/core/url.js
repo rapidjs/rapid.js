@@ -7,7 +7,7 @@ import Core from './core';
 import { sanitizeUrl } from '../common/url';
 
 class Url extends Core {
-  constructor (config) {
+  constructor(config) {
     super(config);
   }
 
@@ -19,7 +19,7 @@ class Url extends Core {
    * @param {Spread} params Can be any length of params that will be joined by /
    * @return {String}
    */
-  makeUrl (...params) {
+  makeUrl(...params) {
 
     if (this.config.trailingSlash) {
       params.push('');
@@ -46,14 +46,14 @@ class Url extends Core {
    * @param {String} url a url to sanitize
    * @return {String}
    */
-  sanitizeUrl (url) {
+  sanitizeUrl(url) {
     return sanitizeUrl(url, this.config.trailingSlash);
   }
 
   /**
    * Reset an URL params set from a relationship
    */
-  resetURLParams () {
+  resetURLParams() {
     this.urlParams = false;
   }
 
@@ -65,7 +65,7 @@ class Url extends Core {
    * @param {Boolean} overwrite
    * @return {Rapid}
    */
-  setURLParams (urlParams = [], prepend = false, overwrite = false) {
+  setURLParams(urlParams = [], prepend = false, overwrite = false) {
     this.urlParams = this.urlParams || [];
 
     if (!isArray(urlParams)) {
@@ -95,7 +95,7 @@ class Url extends Core {
    * @param {Spread} params
    * @return {Rapid}
    */
-  url (...params) {
+  url(...params) {
     this.setURLParams(...params);
 
     return this;
@@ -107,7 +107,7 @@ class Url extends Core {
    * @param {Array} params
    * @return {Rapid}
    */
-  prepend (params) {
+  prepend(params) {
     this.setURLParams(params, true);
 
     return this;
@@ -119,7 +119,7 @@ class Url extends Core {
    * @param {Array} params
    * @return {Rapid}
    */
-  append (params) {
+  append(params) {
     this.setURLParams(params);
 
     return this;

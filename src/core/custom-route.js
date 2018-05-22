@@ -1,5 +1,5 @@
 class CustomRoute {
-  constructor (route = {}, config = {}) {
+  constructor(route = {}, config = {}) {
     // setup the default route object
     this.route = Object.assign({
       url: '',
@@ -18,7 +18,7 @@ class CustomRoute {
    *
    * @return {String}
    */
-  replaceURLParams () {
+  replaceURLParams() {
     let url = this.rawURL;
 
     // only do this if we have route params && params to replace
@@ -37,7 +37,7 @@ class CustomRoute {
    *
    * @return {Array}
    */
-  get urlParams () {
+  get urlParams() {
     // eslint-disable-next-line
         let params = this.rawURL.match(/{\s*[\w\.]+\s*}/g);
 
@@ -56,7 +56,7 @@ class CustomRoute {
    *
    * @return {String}
    */
-  get url () {
+  get url() {
     return this.replaceURLParams();
   }
 
@@ -66,7 +66,7 @@ class CustomRoute {
    *
    * @return {String}
    */
-  get rawURL () {
+  get rawURL() {
     return this.route.url;
   }
 
@@ -75,7 +75,7 @@ class CustomRoute {
    *
    * @return {String}
    */
-  get name () {
+  get name() {
     return this.route.name;
   }
 
@@ -84,7 +84,7 @@ class CustomRoute {
    *
    * @return {String}
    */
-  get type () {
+  get type() {
     return this.route.type;
   }
 }

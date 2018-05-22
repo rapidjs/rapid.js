@@ -9,7 +9,7 @@ import Routes from './routes';
 import CustomRoute from './custom-route';
 
 class Request extends Routes {
-  constructor (config) {
+  constructor(config) {
     super(config);
   }
 
@@ -19,7 +19,7 @@ class Request extends Routes {
    * @param {String} type The request type
    * @return {Object}
    */
-  parseRequestData (type) {
+  parseRequestData(type) {
     const requestData = [];
     const { options } = this.requestData;
     let { params } = this.requestData;
@@ -44,7 +44,7 @@ class Request extends Routes {
    * @param {String} url The url
    * @return {Promise}
    */
-  request (type, url) {
+  request(type, url) {
     type = type.toLowerCase();
 
     if (!this.isAllowedRequestType(type)) {
@@ -58,7 +58,7 @@ class Request extends Routes {
     }
 
     return new Promise((resolve, reject) => {
-      this.api[type].call(this, this.sanitizeUrl(url), ...this.parseRequestData(type))
+      this.http[type].call(this, this.sanitizeUrl(url), ...this.parseRequestData(type))
         .then((response) => {
           this.afterRequest(response);
 
@@ -78,7 +78,7 @@ class Request extends Routes {
    * @param {String} type The request type
    * @return {Boolean}
    */
-  isAllowedRequestType (type) {
+  isAllowedRequestType(type) {
     if (!this.config.allowedRequestTypes.includes(type)) {
       if (this.config.debug) {
         this.logger.warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
@@ -97,7 +97,7 @@ class Request extends Routes {
    * @param {Array} urlParams
    * @return {Promise}
    */
-  buildRequest (type, urlParams) {
+  buildRequest(type, urlParams) {
     if (this.urlParams) {
       urlParams = this.urlParams.concat(urlParams);
       this.resetURLParams();
@@ -114,7 +114,7 @@ class Request extends Routes {
    * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
-  get (...urlParams) {
+  get(...urlParams) {
     return this.buildRequest('get', urlParams);
   }
 
@@ -124,7 +124,7 @@ class Request extends Routes {
    * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
-  post (...urlParams) {
+  post(...urlParams) {
     return this.buildRequest('post', urlParams);
   }
 
@@ -134,7 +134,7 @@ class Request extends Routes {
    * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
-  put (...urlParams) {
+  put(...urlParams) {
     return this.buildRequest('put', urlParams);
   }
 
@@ -144,7 +144,7 @@ class Request extends Routes {
    * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
-  patch (...urlParams) {
+  patch(...urlParams) {
     return this.buildRequest('patch', urlParams);
   }
 
@@ -154,7 +154,7 @@ class Request extends Routes {
    * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
-  head (...urlParams) {
+  head(...urlParams) {
     return this.buildRequest('head', urlParams);
   }
 
@@ -164,7 +164,7 @@ class Request extends Routes {
    * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
-  delete (...urlParams) {
+  delete(...urlParams) {
     return this.buildRequest('delete', urlParams);
   }
 
@@ -185,7 +185,7 @@ class Request extends Routes {
    * @param {Object} requestParams
    * @return {Promise}
    */
-  route (name = '', routeParams = {}, requestParams = {}) {
+  route(name = '', routeParams = {}, requestParams = {}) {
     const route = this.getCustomRoute(name, routeParams);
 
     // if there are request params, set them
@@ -203,7 +203,7 @@ class Request extends Routes {
      * @param {Object} routeParams
     * @return {CustomRoute}
      */
-  getCustomRoute (name = '', routeParams = {}) {
+  getCustomRoute(name = '', routeParams = {}) {
     // if a route exists, return a new instance of CustomRoute
     if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
       return new CustomRoute(this.customRoutes[name], {
@@ -224,7 +224,7 @@ class Request extends Routes {
    * @param {Object} routeParams
    * @return {String}
    */
-  generate (name = '', routeParams = {}) {
+  generate(name = '', routeParams = {}) {
     const { url } = this.getCustomRoute(name, routeParams);
 
     return url !== '' ? this.makeUrl(this.config.baseURL, url) : '';
@@ -240,7 +240,7 @@ class Request extends Routes {
    * @param {String} url
    * @return {Function}
    */
-  beforeRequest (type, url) {
+  beforeRequest(type, url) {
     return this.config.beforeRequest(type, url);
   }
 
@@ -248,7 +248,7 @@ class Request extends Routes {
    * This is fired after each request
    * @param {Object} response
    */
-  afterRequest (response) {
+  afterRequest(response) {
     this.resetRequestData();
     this.resetURLParams();
     this.config.afterRequest(response);
@@ -258,7 +258,7 @@ class Request extends Routes {
    * This is fired on a request error
    * @param {Object} error
    */
-  onError (error) {
+  onError(error) {
     this.resetRequestData();
     this.resetURLParams();
     this.config.onError(error);
@@ -274,7 +274,7 @@ class Request extends Routes {
    * @param {Object} data An object of params: {}, options: {}
    * @return {Rapid}
    */
-  withData (data = {}) {
+  withData(data = {}) {
     this.requestData = defaultsDeep(data, this.requestData);
 
     return this;
@@ -286,7 +286,7 @@ class Request extends Routes {
    * @param {Object} params An object of params
    * @return {Rapid}
    */
-  withParams (params = {}) {
+  withParams(params = {}) {
     set(this.requestData, 'params', params);
 
     return this;
@@ -299,7 +299,7 @@ class Request extends Routes {
    * @param {Number|String} value The value
    * @return {Rapid}
    */
-  withParam (key, value) {
+  withParam(key, value) {
     set(this.requestData, `params.${key}`, value);
 
     return this;
@@ -311,7 +311,7 @@ class Request extends Routes {
    * @param {Object} options An object of options
    * @return {Rapid}
    */
-  withOptions (options = {}) {
+  withOptions(options = {}) {
     set(this.requestData, 'options', options);
 
     return this;
@@ -324,7 +324,7 @@ class Request extends Routes {
    * @param {Number|String} value The value
    * @return {Rapid}
    */
-  withOption (key, value) {
+  withOption(key, value) {
     set(this.requestData, `options.${key}`, value);
 
     return this;

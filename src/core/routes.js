@@ -8,7 +8,7 @@ import Url from './url';
 
 class Routes extends Url {
 
-  constructor (config) {
+  constructor(config) {
     super(config);
   }
 
@@ -20,7 +20,7 @@ class Routes extends Url {
    *
    * @param {String} route The route to set
    */
-  setCurrentRoute (route) {
+  setCurrentRoute(route) {
     this.currentRoute = route;
   }
 
@@ -29,7 +29,7 @@ class Routes extends Url {
    *
    * @param {String} route The key of the route to be set
    */
-  setRoute (route) {
+  setRoute(route) {
     let newRoute = '';
     const formattedRoute = {
       model: this.config.modelName,
@@ -48,13 +48,6 @@ class Routes extends Url {
     }
 
     this.routes[route] = newRoute;
-  }
-
-  /**
-   * Loop through the routes and set them
-   */
-  setRoutes () {
-    ['model', 'collection'].forEach(route => this.setRoute(route));
   }
 }
 

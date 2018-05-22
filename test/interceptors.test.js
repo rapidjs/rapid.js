@@ -11,7 +11,7 @@ const interceptors = {
 };
 
 class Resource extends Rapid {
-  boot () {
+  boot() {
     this.interceptors.response.push(response);
     this.interceptors.request.push(request);
   }
@@ -32,7 +32,7 @@ describe('Interceptors', () => {
   });
 
   it('should load the interceptors defined in the `boot` function', () => {
-    const model = new Resource();
+    const model = new Resource({});
 
     expect(model.interceptors.response[0]()).toEqual('response');
     expect(model.interceptors.request[0]()).toEqual('request');

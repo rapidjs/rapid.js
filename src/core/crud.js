@@ -16,7 +16,7 @@ class Crud extends Request {
    * @param {Number} id The model's id
    * @return {Promise}
    */
-  find (id) {
+  find(id) {
     return this.model.id(id).get();
   }
 
@@ -27,7 +27,7 @@ class Crud extends Request {
    * @param {Spread} params Can be either (id, data) OR (data)
    * @return {Promise}
    */
-  updateOrDestroy (method, ...params) {
+  updateOrDestroy(method, ...params) {
     const urlParams = [];
     const id = params[0];
     let data = params[1];
@@ -55,7 +55,7 @@ class Crud extends Request {
    * @param {Spread} params
    * @return {Promise}
    */
-  update (...params) {
+  update(...params) {
     return this.updateOrDestroy('update', ...params);
   }
 
@@ -66,7 +66,7 @@ class Crud extends Request {
    * @param {Spread} params
    * @return {Promise}
    */
-  save (...params) {
+  save(...params) {
     return this.update(...params);
   }
 
@@ -76,7 +76,7 @@ class Crud extends Request {
    * @param {Spread} params
    * @return {Promise}
    */
-  destroy (...params) {
+  destroy(...params) {
     return this.updateOrDestroy('destroy', ...params);
   }
 
@@ -87,7 +87,7 @@ class Crud extends Request {
    * @param {Number} id
    * @return {Promise}
    */
-  restore (id) {
+  restore(id) {
     const urlParams = [];
 
     if (Number.isInteger(id)) {
@@ -107,7 +107,7 @@ class Crud extends Request {
    * @param {Object} data The data to be sent over for creation of model
    * @return {Promise}
    */
-  create (data) {
+  create(data) {
     return this.withParams(data)
       .buildRequest(this.config.methods.create, this.config.suffixes.create);
   }
@@ -120,7 +120,7 @@ class Crud extends Request {
    * @param {Number} id The id of the model
    * @return {Promise}
    */
-  id (id) {
+  id(id) {
     let params = [];
 
     // this is checking if primaryKey is true, not if it exists
@@ -145,7 +145,7 @@ class Crud extends Request {
    *
    * @return {Promise}
    */
-  all () {
+  all() {
     return this.collection.get();
   }
 
@@ -160,7 +160,7 @@ class Crud extends Request {
    * @param {String|Number} value The value to search by
    * @return {Promise}
    */
-  findBy (key, value) {
+  findBy(key, value) {
     const urlParams = [key];
 
     if (value) {

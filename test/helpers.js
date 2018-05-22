@@ -6,7 +6,7 @@ import Auth from './../src/auth';
  * @param {Object} config
  * @return {Rapid}
  */
-export function createAuthModel (config) {
+export function createAuthModel(config) {
   const auth = new Auth(Object.assign(config, { debug: true }));
   auth.debugger.logEnabled = false;
 
