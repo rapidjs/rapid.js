@@ -3,9 +3,7 @@ import { createModel } from './helpers';
 const lobster = createModel({ modelName: 'Lobster', baseURL: 'http://maine.com/ocean/' });
 
 describe('The request functionality should work as expected', () => {
-
   it('get() works', () => {
-
     lobster.get('butter');
 
     expect((lobster.debugger.data.lastRequest.type === 'get')).toBeTruthy();
@@ -17,11 +15,9 @@ describe('The request functionality should work as expected', () => {
 
     lobster.get('butter', 'salt', 'crackers');
     expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
-
   });
 
   it('post() works', () => {
-
     lobster.post('butter');
 
     expect((lobster.debugger.data.lastRequest.type === 'post')).toBeTruthy();
@@ -33,11 +29,9 @@ describe('The request functionality should work as expected', () => {
 
     lobster.post('butter', 'salt', 'crackers');
     expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
-
   });
 
   it('head() works', () => {
-
     lobster.head('butter');
 
     expect((lobster.debugger.data.lastRequest.type === 'head')).toBeTruthy();
@@ -49,11 +43,9 @@ describe('The request functionality should work as expected', () => {
 
     lobster.head('butter', 'salt', 'crackers');
     expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
-
   });
 
   it('put() works', () => {
-
     lobster.put('butter');
 
     expect((lobster.debugger.data.lastRequest.type === 'put')).toBeTruthy();
@@ -65,11 +57,9 @@ describe('The request functionality should work as expected', () => {
 
     lobster.put('butter', 'salt', 'crackers');
     expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
-
   });
 
   it('patch() works', () => {
-
     lobster.patch('butter');
 
     expect((lobster.debugger.data.lastRequest.type === 'patch')).toBeTruthy();
@@ -81,11 +71,9 @@ describe('The request functionality should work as expected', () => {
 
     lobster.patch('butter', 'salt', 'crackers');
     expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
-
   });
 
   it('delete() works', () => {
-
     lobster.delete('butter');
 
     expect((lobster.debugger.data.lastRequest.type === 'delete')).toBeTruthy();
@@ -97,7 +85,6 @@ describe('The request functionality should work as expected', () => {
 
     lobster.delete('butter', 'salt', 'crackers');
     expect(lobster.debugger.data.lastUrl).toBe('http://maine.com/ocean/lobster/butter/salt/crackers');
-
   });
 
   it('afterRequest gets fired', () => {

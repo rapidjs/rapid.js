@@ -1,5 +1,7 @@
 import stringify from 'qs-stringify';
 import { warn } from '../utils/debug';
+import { sanitizeUrl } from '../utils/url';
+import { parseRequestData } from '../utils/request';
 
 export default class {
   constructor(caller) {
@@ -9,7 +11,7 @@ export default class {
   }
 
   fakeRequest(type, url) {
-    const params = this.caller.parseRequestData(type);
+    const params = parseRequestData(type, this.caller.requestData, this.caller.config);
     const lastUrl = this.setLastUrl(type, url, ...params);
 
     this.setLastRequest(...arguments);
@@ -28,15 +30,15 @@ export default class {
     let lastUrl = '';
 
     if (['put', 'post', 'patch'].includes(type)) {
-      lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/'));
+      lastUrl = sanitizeUrl([this.caller.config.baseURL, url].join('/'), this.caller.config.trailingSlash);
     } else {
       const urlParams = params.params;
       const stringified = urlParams ? `?${stringify(urlParams)}` : '';
 
-      lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/')) + stringified;
+      lastUrl = sanitizeUrl([this.caller.config.baseURL, url].join('/'), this.caller.config.trailingSlash) + stringified;
     }
 
-    lastUrl = this.caller.sanitizeUrl(lastUrl);
+    lastUrl = sanitizeUrl(lastUrl, this.caller.config.trailingSlash);
 
     this.data.lastUrl = lastUrl;
 

@@ -1,5 +1,5 @@
 // @ts-check
-import { requestSuffixes, requestTypes, routeTypes } from './config';
+import { requestSuffixes, requestTypes, routeTypes } from '../config';
 
 export default {
   /**

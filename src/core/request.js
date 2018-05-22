@@ -1,39 +1,16 @@
 // @ts-check
 
-import isArray from 'lodash/isArray';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Url from './url';
 import CustomRoute from './custom-route';
-import { requestTypes } from './config';
+import { requestTypes } from '../config';
 import { warn } from '../utils/debug';
+import { sanitizeUrl } from '../utils/url';
+import { parseRequestData } from '../utils/request';
 
 class Request extends Url {
   constructor(config) {
     super(config);
-  }
-
-  /**
-   * Parse the request data prior to passing it to axios
-   *
-   * @param {String} type The request type
-   * @return {Object}
-   */
-  parseRequestData(type) {
-    const requestData = [];
-    const { options } = this.requestData;
-    let { params } = this.requestData;
-
-    // axios handles the options differently for the request type
-    if ([requestTypes.PUT, requestTypes.POST, requestTypes.PATCH].includes(type)) {
-      params = defaultsDeep(params, this.config.globalParameters);
-      requestData.push(params);
-      requestData.push(options);
-    } else {
-      options.params = defaultsDeep(params, this.config.globalParameters);
-      requestData.push(options);
-    }
-
-    return requestData;
   }
 
   /**
@@ -57,7 +34,11 @@ class Request extends Url {
     }
 
     return new Promise((resolve, reject) => {
-      this.http[type].call(this, this.sanitizeUrl(url), ...this.parseRequestData(type))
+      this.http[type].call(
+        this,
+        sanitizeUrl(url, this.config.trailingSlash),
+        ...parseRequestData(type, this.requestData, this.config),
+      )
         .then((response) => {
           this.afterRequest(response);
 
@@ -102,7 +83,7 @@ class Request extends Url {
       this.resetURLParams();
     }
 
-    const url = isArray(urlParams) ? this.makeUrl(...urlParams) : this.makeUrl(urlParams);
+    const url = Array.isArray(urlParams) ? this.makeUrl(...urlParams) : this.makeUrl(urlParams);
 
     return this.request(type, url);
   }

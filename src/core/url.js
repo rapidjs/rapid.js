@@ -1,6 +1,5 @@
 // @ts-check
 
-import isArray from 'lodash/isArray';
 import Core from './core';
 import { sanitizeUrl } from '../utils/url';
 
@@ -18,12 +17,11 @@ class Url extends Core {
    * @return {String}
    */
   makeUrl(...params) {
-
     if (this.config.trailingSlash) {
       params.push('');
     }
 
-    let url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).filter(Boolean).join('/'));
+    let url = sanitizeUrl([this.routes[this.currentRoute]].concat(params).filter(Boolean).join('/'), this.config.trailingSlash);
 
     // strip the extra .
     // make sure routes don't need to regenerate
@@ -37,21 +35,10 @@ class Url extends Core {
   }
 
   /**
-   * This just makes sure there are no double slashes and no trailing
-   * slash unless the config for it is set.
-   *
-   * @param {String} url a url to sanitize
-   * @return {String}
-   */
-  sanitizeUrl(url) {
-    return sanitizeUrl(url, this.config.trailingSlash);
-  }
-
-  /**
    * Reset an URL params set from a relationship
    */
   resetURLParams() {
-    this.urlParams = false;
+    this.urlParams = [];
   }
 
   /**
@@ -65,7 +52,7 @@ class Url extends Core {
   setURLParams(urlParams = [], prepend = false, overwrite = false) {
     this.urlParams = this.urlParams || [];
 
-    if (!isArray(urlParams)) {
+    if (!Array.isArray(urlParams)) {
       urlParams = [urlParams];
     }
 
@@ -89,8 +76,8 @@ class Url extends Core {
   /**
    * Set the URL params normally
    *
-   * @param {Spread} params
-   * @return {Rapid}
+   * @param {array} params
+   * @return {this}
    */
   url(...params) {
     this.setURLParams(...params);
@@ -102,7 +89,7 @@ class Url extends Core {
    * Set the URL params, but prepending
    *
    * @param {Array} params
-   * @return {Rapid}
+   * @return {this}
    */
   prepend(params) {
     this.setURLParams(params, true);
@@ -114,14 +101,13 @@ class Url extends Core {
    * Set the URL params, but appending them
    *
    * @param {Array} params
-   * @return {Rapid}
+   * @return {this}
    */
   append(params) {
     this.setURLParams(params);
 
     return this;
   }
-
 }
 
 export default Url;

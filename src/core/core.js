@@ -2,9 +2,9 @@
 
 import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
-import Defaults from './defaults';
+import Defaults from '../config/defaults';
 import Debugger from './../debug/debugger';
-import { routeTypes } from './config';
+import { routeTypes } from '../config';
 import { sanitizeUrl } from '../utils/url';
 import { generateRoute } from '../utils/routes';
 
@@ -32,7 +32,7 @@ class Core {
    * sanitizeBaseURL() will sanitize the baseURL prior to setting up
    * the http service and routes.
    *
-   * setRoutes() will set up the current routes (model, collection) and their paths
+   * generateRoutes() will set up the current routes (model, collection) and their paths
    */
   initialize() {
     this.boot();
@@ -120,9 +120,10 @@ class Core {
   /**
    * Loop through the routes and set them
    */
-  setRoutes() {
-    [routeTypes.MODEL, routeTypes.COLLECTION].forEach(route =>
-      this.routes[route] = generateRoute(route, this.config));
+  generateRoutes() {
+    [routeTypes.MODEL, routeTypes.COLLECTION].forEach((route) => {
+      this.routes[route] = generateRoute(route, this.config);
+    });
   }
 
   /**
@@ -146,9 +147,15 @@ class Core {
     return this;
   }
 
+  /**
+   * Set a config key and force routes to be regenerated
+   *
+   * @param {String} configKey
+   * @param {any} val
+   */
   $setConfig(configKey, val) {
     this.config[configKey] = val;
-    this.setRoutes();
+    this.generateRoutes();
   }
 }
 

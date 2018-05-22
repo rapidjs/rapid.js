@@ -1,6 +1,4 @@
-/**
- * All the CRUD
- */
+// @ts-check
 
 import Request from './request';
 

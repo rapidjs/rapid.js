@@ -3,7 +3,6 @@ module.exports = {
   'extends': 'airbnb-base',
   'rules': {
     'indent': ['error', 2],
-    'padded-blocks': 0,
     'class-methods-use-this': ['error', { 'exceptMethods': ['boot'] }],
     'no-useless-constructor': 0,
     'no-param-reassign': 0,

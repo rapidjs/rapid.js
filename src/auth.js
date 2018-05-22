@@ -22,7 +22,6 @@ const authConfig = {
 };
 
 class Auth extends Rapid {
-
   constructor(config) {
     config = defaultsDeep(config, authConfig);
     config.modelName = config.modelName ? config.modelName : 'auth';
@@ -54,7 +53,6 @@ class Auth extends Rapid {
   get modelPrefix() {
     return this.config.auth.modelPrefix ? 'model' : 'any';
   }
-
 }
 
 export default Auth;
