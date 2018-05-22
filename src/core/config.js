@@ -1,3 +1,5 @@
+// @ts-check
+
 export const requestSuffixes = {
   CREATE: 'create',
   DESTROY: 'destroy',

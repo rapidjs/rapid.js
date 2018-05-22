@@ -1,4 +1,5 @@
 import stringify from 'qs-stringify';
+import { warn } from '../utils/debug';
 
 export default class {
   constructor(caller) {
@@ -14,8 +15,8 @@ export default class {
     this.setLastRequest(...arguments);
 
     if (this.logEnabled) {
-      this.caller.logger.debug(`${this.caller.config.modelName} made a ${type.toUpperCase()} request (${lastUrl})`);
-      this.caller.logger.log(params);
+      warn(`${this.caller.config.modelName} made a ${type.toUpperCase()} request (${lastUrl})`);
+      warn(params);
     }
 
     this.caller.afterRequest({});

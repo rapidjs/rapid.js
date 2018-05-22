@@ -72,6 +72,8 @@ export default {
    */
   globalParameters: {},
 
+  http: null,
+
   /**
    * An optional collection of interceptors for requests and responses.
    *

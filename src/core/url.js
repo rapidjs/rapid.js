@@ -1,10 +1,8 @@
-/**
- * URL Methods
- */
+// @ts-check
 
 import isArray from 'lodash/isArray';
 import Core from './core';
-import { sanitizeUrl } from '../common/url';
+import { sanitizeUrl } from '../utils/url';
 
 class Url extends Core {
   constructor(config) {
@@ -16,7 +14,7 @@ class Url extends Core {
    * and split it into a URL. This will then reset the route to the default
    * route after building the URL.
    *
-   * @param {Spread} params Can be any length of params that will be joined by /
+   * @param {array} params Can be any length of params that will be joined by /
    * @return {String}
    */
   makeUrl(...params) {
@@ -33,8 +31,7 @@ class Url extends Core {
       url += `.${this.config.extension}`;
     }
 
-    // reset currentRoute
-    this.setCurrentRoute(this.config.defaultRoute);
+    this.currentRoute = this.config.defaultRoute;
 
     return url;
   }
@@ -63,7 +60,7 @@ class Url extends Core {
    * @param {Array} urlParams
    * @param {Boolean} prepend
    * @param {Boolean} overwrite
-   * @return {Rapid}
+   * @return {this}
    */
   setURLParams(urlParams = [], prepend = false, overwrite = false) {
     this.urlParams = this.urlParams || [];

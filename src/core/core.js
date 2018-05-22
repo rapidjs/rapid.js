@@ -4,8 +4,9 @@ import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Defaults from './defaults';
 import Debugger from './../debug/debugger';
-import Logger from './../debug/logger';
 import { routeTypes } from './config';
+import { sanitizeUrl } from '../utils/url';
+import { generateRoute } from '../utils/routes';
 
 class Core {
   constructor(config) {
@@ -19,13 +20,8 @@ class Core {
     this.routes = this.config.routes;
     this.urlParams = [];
 
-    this.initialize(config);
+    this.initialize();
   }
-
-  /**
-   * Set any config overrides in this method when extending
-   */
-  boot() {}
 
   /**
    * The order of these are important.
@@ -37,31 +33,43 @@ class Core {
    * the http service and routes.
    *
    * setRoutes() will set up the current routes (model, collection) and their paths
-   *
-   * @param {Object} config
    */
-  initialize(config) {
-    this.config = config;
-
+  initialize() {
     this.boot();
 
-    this.fireSetters();
+    this.sanitizeBaseURL();
+
+    this.$setConfig('caseSensitive', this.config.caseSensitive);
 
     this.initializeHttp();
 
     this.initializeDebugger();
 
-    this.initializeLogger();
-
     this.defineCustomRoutes();
   }
 
   /**
-   * Fire the setters. This will make sure the routes are generated properly.
-   * Consider if this is really even necessary
+   * Set any config overrides in this method when extending
    */
-  fireSetters() {
-    ['baseURL', 'modelName', 'routeDelimeter', 'caseSensitive'].forEach(setter => this[setter] = this.config[setter]);
+  boot() {}
+
+  /**
+   * Sanitize the baseURL before sending it to the http service
+   */
+  sanitizeBaseURL() {
+    this.config.baseURL = sanitizeUrl(this.config.baseURL, this.config.trailingSlash);
+  }
+
+  /**
+   * Initialize the API.
+   */
+  initializeHttp() {
+    if (this.config.http) {
+      this.http = this.config.http;
+    } else {
+      this.http = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+      this.writeInterceptorsToAPI();
+    }
   }
 
   /**
@@ -69,21 +77,6 @@ class Core {
    */
   initializeDebugger() {
     this.debugger = this.config.debug ? new Debugger(this) : false;
-  }
-
-  /**
-   * Initialze the debugger if debug is set to true.
-   */
-  initializeLogger() {
-    this.logger = this.config.debug ? Logger : false;
-  }
-
-  /**
-   * Initialize the API.
-   */
-  initializeHttp() {
-    this.http = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
-    this.writeInterceptorsToAPI();
   }
 
   /**
@@ -128,19 +121,13 @@ class Core {
    * Loop through the routes and set them
    */
   setRoutes() {
-    [routeTypes.MODEL, routeTypes.COLLECTION].forEach(route => this.setRoute(route));
+    [routeTypes.MODEL, routeTypes.COLLECTION].forEach(route =>
+      this.routes[route] = generateRoute(route, this.config));
   }
 
   /**
    * Setters and Getters
    */
-
-  set debug(val) {
-    if (this.config.debug) {
-      this.logger.warn('debug mode must explicitly be turned on via the constructor in config.debug');
-    }
-  }
-
   get collection() {
     this.currentRoute = routeTypes.COLLECTION;
 
@@ -159,27 +146,8 @@ class Core {
     return this;
   }
 
-  get interceptors() {
-    return this.config.interceptors;
-  }
-
-  set baseURL(url) {
-    this.config.baseURL = this.sanitizeUrl(url);
-    this.initializeHttp();
-  }
-
-  set modelName(val) {
-    this.config.modelName = val;
-    this.setRoutes();
-  }
-
-  set routeDelimeter(val) {
-    this.config.routeDelimeter = val;
-    this.setRoutes();
-  }
-
-  set caseSensitive(val) {
-    this.config.caseSensitive = val;
+  $setConfig(configKey, val) {
+    this.config[configKey] = val;
     this.setRoutes();
   }
 }

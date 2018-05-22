@@ -2,8 +2,8 @@ import Rapid from './../src/rapid';
 
 class GalleryWrapper extends Rapid {
   boot() {
-    this.baseURL = 'https://mysite.com/api';
-    this.modelName = 'Gallery';
+    this.config.baseURL = 'https://mysite.com/api';
+    this.$setConfig('modelName', 'Gallery');
   }
 
   tagSearch(query) {

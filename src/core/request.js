@@ -1,14 +1,13 @@
-/**
- * The Re-Quest to find the API
- */
+// @ts-check
 
 import isArray from 'lodash/isArray';
 import defaultsDeep from 'lodash/defaultsDeep';
-import set from 'lodash/set';
-import Routes from './routes';
+import Url from './url';
 import CustomRoute from './custom-route';
+import { requestTypes } from './config';
+import { warn } from '../utils/debug';
 
-class Request extends Routes {
+class Request extends Url {
   constructor(config) {
     super(config);
   }
@@ -25,7 +24,7 @@ class Request extends Routes {
     let { params } = this.requestData;
 
     // axios handles the options differently for the request type
-    if (['put', 'post', 'patch'].includes(type)) {
+    if ([requestTypes.PUT, requestTypes.POST, requestTypes.PATCH].includes(type)) {
       params = defaultsDeep(params, this.config.globalParameters);
       requestData.push(params);
       requestData.push(options);
@@ -81,7 +80,7 @@ class Request extends Routes {
   isAllowedRequestType(type) {
     if (!this.config.allowedRequestTypes.includes(type)) {
       if (this.config.debug) {
-        this.logger.warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
+        warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
       }
 
       return false;
@@ -111,70 +110,70 @@ class Request extends Routes {
   /**
    * Make a GET request
    *
-   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
   get(...urlParams) {
-    return this.buildRequest('get', urlParams);
+    return this.buildRequest(requestTypes.GET, urlParams);
   }
 
   /**
    * Make a POST request
    *
-   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
   post(...urlParams) {
-    return this.buildRequest('post', urlParams);
+    return this.buildRequest(requestTypes.POST, urlParams);
   }
 
   /**
    * Make a PUT request
    *
-   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
   put(...urlParams) {
-    return this.buildRequest('put', urlParams);
+    return this.buildRequest(requestTypes.PUT, urlParams);
   }
 
   /**
    * Make a PATCH request
    *
-   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
   patch(...urlParams) {
-    return this.buildRequest('patch', urlParams);
+    return this.buildRequest(requestTypes.PATCH, urlParams);
   }
 
   /**
    * Make a HEAD request
    *
-   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
   head(...urlParams) {
-    return this.buildRequest('head', urlParams);
+    return this.buildRequest(requestTypes.HEAD, urlParams);
   }
 
   /**
    * Make a DELETE request
    *
-   * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
+   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
    * @return {Promise}
    */
   delete(...urlParams) {
-    return this.buildRequest('delete', urlParams);
+    return this.buildRequest(requestTypes.DELETE, urlParams);
   }
 
   /**
-     * Custom Routes
-     *
-     * These can be defined and passed via the customRoutes config attribute.
-     * This allows you to completely override Rapid's usual functionality
-     * and use this more like a router.
-     */
+   * Custom Routes
+   *
+   * These can be defined and passed via the customRoutes config attribute.
+   * This allows you to completely override Rapid's usual functionality
+   * and use this more like a router.
+   */
 
   /**
    * Make a request to a route via a given route name
@@ -272,7 +271,7 @@ class Request extends Routes {
    * Send data and options with the request
    *
    * @param {Object} data An object of params: {}, options: {}
-   * @return {Rapid}
+   * @return {this}
    */
   withData(data = {}) {
     this.requestData = defaultsDeep(data, this.requestData);
@@ -284,10 +283,10 @@ class Request extends Routes {
    * Send params with the request
    *
    * @param {Object} params An object of params
-   * @return {Rapid}
+   * @return {this}
    */
   withParams(params = {}) {
-    set(this.requestData, 'params', params);
+    this.requestData.params = params;
 
     return this;
   }
@@ -297,10 +296,10 @@ class Request extends Routes {
    *
    * @param {Number|String} key The key name
    * @param {Number|String} value The value
-   * @return {Rapid}
+   * @return {this}
    */
   withParam(key, value) {
-    set(this.requestData, `params.${key}`, value);
+    this.requestData.params[key] = value;
 
     return this;
   }
@@ -309,10 +308,10 @@ class Request extends Routes {
    * Send options with the request
    *
    * @param {Object} options An object of options
-   * @return {Rapid}
+   * @return {this}
    */
   withOptions(options = {}) {
-    set(this.requestData, 'options', options);
+    this.requestData.options = options;
 
     return this;
   }
@@ -322,10 +321,10 @@ class Request extends Routes {
    *
    * @param {Number|String} key The key name
    * @param {Number|String} value The value
-   * @return {Rapid}
+   * @return {this}
    */
   withOption(key, value) {
-    set(this.requestData, `options.${key}`, value);
+    this.requestData.options[key] = value;
 
     return this;
   }
