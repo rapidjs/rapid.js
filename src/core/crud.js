@@ -22,7 +22,7 @@ class Crud extends Request {
    * Make a request to update or destroy a model
    *
    * @param {String} method The method (update or destroy)
-   * @param {Spread} params Can be either (id, data) OR (data)
+   * @param {array} params Can be either (id, data) OR (data)
    * @return {Promise}
    */
   updateOrDestroy(method, ...params) {
@@ -50,7 +50,7 @@ class Crud extends Request {
   /**
    * See updateOrDestroy
    *
-   * @param {Spread} params
+   * @param {array} params
    * @return {Promise}
    */
   update(...params) {
@@ -61,7 +61,7 @@ class Crud extends Request {
    * Alias of update
    * See updateOrDestroy
    *
-   * @param {Spread} params
+   * @param {array} params
    * @return {Promise}
    */
   save(...params) {
@@ -71,7 +71,7 @@ class Crud extends Request {
   /**
    * See updateOrDestroy
    *
-   * @param {Spread} params
+   * @param {array} params
    * @return {Promise}
    */
   destroy(...params) {
@@ -116,7 +116,7 @@ class Crud extends Request {
    * It should work with this.
    *
    * @param {Number} id The id of the model
-   * @return {Promise}
+   * @return {this}
    */
   id(id) {
     let params = [];

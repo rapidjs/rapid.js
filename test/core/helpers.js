@@ -1,5 +1,5 @@
-import Rapid from './../src/rapid';
-import Auth from './../src/auth';
+import Rapid from './../../src/rapid';
+import Auth from './../../src/auth';
 
 /**
  * Create an auth model for testing

@@ -1,5 +1,5 @@
 import { createModel } from './helpers';
-import { Rapid } from '../src/rapid';
+import { Rapid } from '../../src/rapid';
 
 const response = () => 'response';
 
