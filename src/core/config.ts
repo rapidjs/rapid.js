@@ -4,41 +4,41 @@ import AxiosAdapter from './../core/adapters/axios-adapter';
 import { RequestType } from '../core/request';
 
 interface Config {
-  afterRequest(response);
-  allowedRequestTypes: Array<RequestType>;
-  auth: AuthConfig;
-  baseURL: string;
-  beforeRequest(type: RequestType, url: string);
-  caseSensitive: boolean;
-  customRoutes: CustomRouteOptions[];
-  debug: boolean;
-  defaultRoute: Route;
+  afterRequest?(response);
+  allowedRequestTypes?: Array<RequestType>;
+  auth?: AuthConfig;
+  baseURL?: string;
+  beforeRequest?(type: RequestType, url: string);
+  caseSensitive?: boolean;
+  customRoutes?: CustomRouteOptions[];
+  debug?: boolean;
+  defaultRoute?: Route;
   extension?: string;
-  onError(error: () => void);
-  globalParameters: object;
-  http: AxiosAdapter;
-  httpConfig: object;
-  modelName: string;
-  methods: {
+  onError?(error: () => void);
+  globalParameters?: object;
+  http?: AxiosAdapter;
+  httpConfig?: object;
+  modelName?: string;
+  methods?: {
     create?: string;
     update?: string;
     destroy?: string;
     restore?: string;
   };
-  primaryKey: string;
-  routeDelimeter: string;
-  routes: {
+  primaryKey?: string;
+  routeDelimeter?: string;
+  routes?: {
     any?: string;
     model?: string;
     collection?: string;
   };
-  suffixes: {
+  suffixes?: {
     create?: string;
     update?: string;
     destroy?: string;
     restore?: string;
   };
-  trailingSlash: boolean;
+  trailingSlash?: boolean;
 }
 
 
