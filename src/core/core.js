@@ -111,10 +111,10 @@ class Core {
    * Resets the request data
    */
   resetRequestData() {
-    this.requestData = {
+    this.requestData = Object.create({
       params: {},
       options: {},
-    };
+    });
   }
 
   /**
@@ -124,6 +124,17 @@ class Core {
     [routeTypes.MODEL, routeTypes.COLLECTION].forEach(route => {
       this.routes[route] = generateRoute(route, this.config);
     });
+  }
+
+  /**
+   * Set a config key and force routes to be regenerated
+   *
+   * @param {String} configKey
+   * @param {any} val
+   */
+  $setConfig(configKey, val) {
+    this.config[configKey] = val;
+    this.generateRoutes();
   }
 
   /**
@@ -145,17 +156,6 @@ class Core {
     this.currentRoute = routeTypes.ANY;
 
     return this;
-  }
-
-  /**
-   * Set a config key and force routes to be regenerated
-   *
-   * @param {String} configKey
-   * @param {any} val
-   */
-  $setConfig(configKey, val) {
-    this.config[configKey] = val;
-    this.generateRoutes();
   }
 }
 

@@ -3,7 +3,6 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 import Url from './url';
 import CustomRoute from './custom-route';
-import { requestTypes } from '../config';
 import { warn } from '../utils/debug';
 import { sanitizeUrl } from '../utils/url';
 import { parseRequestData } from '../utils/request';
@@ -11,6 +10,19 @@ import { parseRequestData } from '../utils/request';
 class Request extends Url {
   constructor(config) {
     super(config);
+
+    this.applyCallableRequestMethods();
+  }
+
+  /**
+   * Apply allowed request methods to the class
+   *
+   * By default this adds: get(), post(), put(), patch(), head(), delete()
+   */
+  applyCallableRequestMethods() {
+    this.config.allowedRequestTypes.forEach(requestType => {
+      this[requestType] = (...urlParams) => this.buildRequest(requestType, urlParams);
+    });
   }
 
   /**
@@ -89,66 +101,6 @@ class Request extends Url {
   }
 
   /**
-   * Make a GET request
-   *
-   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-   * @return {Promise}
-   */
-  get(...urlParams) {
-    return this.buildRequest(requestTypes.GET, urlParams);
-  }
-
-  /**
-   * Make a POST request
-   *
-   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-   * @return {Promise}
-   */
-  post(...urlParams) {
-    return this.buildRequest(requestTypes.POST, urlParams);
-  }
-
-  /**
-   * Make a PUT request
-   *
-   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-   * @return {Promise}
-   */
-  put(...urlParams) {
-    return this.buildRequest(requestTypes.PUT, urlParams);
-  }
-
-  /**
-   * Make a PATCH request
-   *
-   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-   * @return {Promise}
-   */
-  patch(...urlParams) {
-    return this.buildRequest(requestTypes.PATCH, urlParams);
-  }
-
-  /**
-   * Make a HEAD request
-   *
-   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-   * @return {Promise}
-   */
-  head(...urlParams) {
-    return this.buildRequest(requestTypes.HEAD, urlParams);
-  }
-
-  /**
-   * Make a DELETE request
-   *
-   * @param {array} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-   * @return {Promise}
-   */
-  delete(...urlParams) {
-    return this.buildRequest(requestTypes.DELETE, urlParams);
-  }
-
-  /**
    * Custom Routes
    *
    * These can be defined and passed via the customRoutes config attribute.
@@ -177,12 +129,12 @@ class Request extends Url {
   }
 
   /**
-     * Get a CustomRoute via given name
-     *
-     * @param {String} name
-     * @param {Object} routeParams
-    * @return {CustomRoute}
-     */
+   * Get a CustomRoute via given name
+   *
+   * @param {String} name
+   * @param {Object} routeParams
+   * @return {CustomRoute}
+   */
   getCustomRoute(name = '', routeParams = {}) {
     // if a route exists, return a new instance of CustomRoute
     if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
