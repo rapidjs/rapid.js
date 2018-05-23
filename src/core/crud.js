@@ -1,5 +1,6 @@
 // @ts-check
 
+import { requestSuffixes } from '../config';
 import Request from './request';
 
 class Crud extends Request {
@@ -40,7 +41,7 @@ class Crud extends Request {
       urlParams.push(this.config.suffixes[method]);
     }
 
-    if (method === 'update') {
+    if (method === requestSuffixes.UPDATE) {
       this.withParams(data);
     }
 
@@ -54,7 +55,7 @@ class Crud extends Request {
    * @return {Promise}
    */
   update(...params) {
-    return this.updateOrDestroy('update', ...params);
+    return this.updateOrDestroy(requestSuffixes.UPDATE, ...params);
   }
 
   /**
@@ -75,7 +76,7 @@ class Crud extends Request {
    * @return {Promise}
    */
   destroy(...params) {
-    return this.updateOrDestroy('destroy', ...params);
+    return this.updateOrDestroy(requestSuffixes.DESTROY, ...params);
   }
 
   /**
@@ -92,7 +93,7 @@ class Crud extends Request {
       this.id(id);
     }
 
-    if (Object.prototype.hasOwnProperty.call(this.config.suffixes, 'restore')) {
+    if (Object.prototype.hasOwnProperty.call(this.config.suffixes, requestSuffixes.RESTORE)) {
       urlParams.push(this.config.suffixes.restore);
     }
 
