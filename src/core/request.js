@@ -3,9 +3,8 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 import Url from './url';
 import CustomRoute from './custom-route';
-import { warn } from '../utils/debug';
 import { sanitizeUrl } from '../utils/url';
-import { parseRequestData } from '../utils/request';
+import { isAllowedRequestType, parseRequestData } from '../utils/request';
 
 class Request extends Url {
   constructor(config) {
@@ -35,7 +34,7 @@ class Request extends Url {
   request(type, url) {
     type = type.toLowerCase();
 
-    if (!this.isAllowedRequestType(type)) {
+    if (!isAllowedRequestType(type, this.config)) {
       throw new Error('This request type is not allowed.');
     }
 
@@ -62,24 +61,6 @@ class Request extends Url {
           reject(error);
         });
     });
-  }
-
-  /**
-   * Checks if is a valid request type
-   *
-   * @param {String} type The request type
-   * @return {Boolean}
-   */
-  isAllowedRequestType(type) {
-    if (!this.config.allowedRequestTypes.includes(type)) {
-      if (this.config.debug) {
-        warn(`'${type}' is not included in allowedRequestTypes: [${this.config.allowedRequestTypes.join(', ')}]`);
-      }
-
-      return false;
-    }
-
-    return true;
   }
 
   /**

@@ -1,4 +1,4 @@
-import { parseRequestData } from '../../src/utils/request';
+import { parseRequestData, isAllowedRequestType } from '../../src/utils/request';
 
 describe('Request Utils', () => {
   describe('parseRequestData', () => {
@@ -83,6 +83,13 @@ describe('Request Utils', () => {
       }];
 
       expect(parseRequestData('get', requestData, config)).toEqual(expected);
+    });
+  });
+
+  describe('isAllowedRequestType', () => {
+    it('should determine if a given request type is allowed', () => {
+      expect(isAllowedRequestType('post', { allowedRequestTypes: ['post', 'get'] })).toBeTruthy();
+      expect(isAllowedRequestType('delete', { allowedRequestTypes: ['post', 'get'] })).toBeFalsy();
     });
   });
 });

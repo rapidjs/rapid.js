@@ -1,12 +1,13 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 import { requestTypes } from '../config';
+import { warn } from '../utils/debug';
 
 /**
  * Parse the request data prior to passing it to the http service
  *
- * @param {String} requestType The request type
- * @param {Object} requestData The request type
- * @param {Object} config The request type
+ * @param {String} requestType
+ * @param {Object} requestData
+ * @param {Object} config
  * @return {Object}
  */
 export const parseRequestData = (requestType, requestData, config) => {
@@ -26,3 +27,23 @@ export const parseRequestData = (requestType, requestData, config) => {
 
   return parsedRequestData;
 };
+
+/**
+ * Checks if is a valid request type
+ *
+ * @param {String} requestType
+ * @param {Object} config
+ * @return {Boolean}
+ */
+export const isAllowedRequestType = (requestType, config) => {
+  if (!config.allowedRequestTypes.includes(requestType)) {
+    if (config.debug) {
+      warn(`'${requestType}' is not included in allowedRequestTypes: [${config.allowedRequestTypes.join(', ')}]`);
+    }
+
+    return false;
+  }
+
+  return true;
+};
+
