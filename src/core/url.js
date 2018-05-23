@@ -35,13 +35,6 @@ class Url extends Core {
   }
 
   /**
-   * Reset an URL params set from a relationship
-   */
-  resetURLParams() {
-    this.urlParams = [];
-  }
-
-  /**
    * Set the URL params
    *
    * @param {Array} urlParams

@@ -118,6 +118,13 @@ class Core {
   }
 
   /**
+   * Reset an URL params set from a relationship
+   */
+  resetURLParams() {
+    this.urlParams = [];
+  }
+
+  /**
    * Loop through the routes and set them
    */
   generateRoutes() {
