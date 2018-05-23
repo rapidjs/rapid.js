@@ -178,8 +178,8 @@ class Request extends Url {
   }
 
   /**
-     * Params and Options
-     */
+   * Params and Options
+   */
 
   /**
    * Send data and options with the request

@@ -1,5 +1,5 @@
 import defaultsDeep from 'lodash/defaultsDeep';
-import Rapid from './core/rapid';
+import Rapid from './core/index';
 
 const authConfig = {
   auth: {
