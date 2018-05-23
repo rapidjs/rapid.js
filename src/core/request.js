@@ -39,12 +39,12 @@ class Request extends Url {
         sanitizeUrl(url, this.config.trailingSlash),
         ...parseRequestData(type, this.requestData, this.config),
       )
-        .then((response) => {
+        .then(response => {
           this.afterRequest(response);
 
           resolve(response);
         })
-        .catch((error) => {
+        .catch(error => {
           this.onError(error);
 
           reject(error);

@@ -26,7 +26,7 @@ class CustomRoute {
     // only do this if we have route params && params to replace
     if (this.urlParams.length && Object.keys(this.config.routeParams).length !== 0) {
       // replace each occurrence of the param with the value passed in
-      this.urlParams.forEach((param) => {
+      this.urlParams.forEach(param => {
         url = url.replace(`{${param}}`, this.config.routeParams[param]);
       });
     }

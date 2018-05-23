@@ -85,7 +85,7 @@ class Core {
   defineCustomRoutes() {
     // if we have custom routes, set up a name:route mapping
     if (this.config.customRoutes.length) {
-      this.config.customRoutes.forEach((route) => {
+      this.config.customRoutes.forEach(route => {
         this.customRoutes[route.name] = route;
       });
     }
@@ -99,8 +99,8 @@ class Core {
     const types = Object.keys(interceptors);
 
     if (types.length) {
-      types.forEach((type) => {
-        interceptors[type].forEach((interceptor) => {
+      types.forEach(type => {
+        interceptors[type].forEach(interceptor => {
           this.http.interceptors[type].use(interceptor);
         });
       });
@@ -121,7 +121,7 @@ class Core {
    * Loop through the routes and set them
    */
   generateRoutes() {
-    [routeTypes.MODEL, routeTypes.COLLECTION].forEach((route) => {
+    [routeTypes.MODEL, routeTypes.COLLECTION].forEach(route => {
       this.routes[route] = generateRoute(route, this.config);
     });
   }

@@ -1,6 +1,5 @@
 import { parseRequestData } from '../../src/utils/request';
 
-
 describe('Request Utils', () => {
   describe('parseRequestData', () => {
     it('should properly merge options, data, and global parameters for put, patch, and post requests', () => {
