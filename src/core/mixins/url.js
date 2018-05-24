@@ -1,5 +1,4 @@
 // @ts-check
-import { requestSuffixes } from '../../config';
 import { sanitizeUrl } from '../../utils/url';
 
 export function UrlMixin(Rapid) {

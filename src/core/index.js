@@ -1,9 +1,11 @@
 import { UrlMixin } from './mixins/url';
+import { RequestMixin } from './mixins/request';
 import { CrudMixin } from './mixins/crud';
 import { CustomRoutesMixin } from './mixins/custom-routes';
 import Rapid from './request';
 
 UrlMixin(Rapid);
+RequestMixin(Rapid);
 CrudMixin(Rapid);
 CustomRoutesMixin(Rapid);
 
