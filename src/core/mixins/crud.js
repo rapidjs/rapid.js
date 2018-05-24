@@ -1,5 +1,5 @@
 // @ts-check
-import { requestSuffixes } from '../config';
+import { requestSuffixes } from '../../config';
 
 export function CrudMixin(Rapid) {
   /**

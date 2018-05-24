@@ -1,6 +1,7 @@
 import Request from './request';
 
-import { CrudMixin } from './crud-mixin';
+import { UrlMixin } from './mixins/url';
+import { CrudMixin } from './mixins/crud';
 
 class Rapid extends Request {
   constructor(config) {
@@ -8,6 +9,7 @@ class Rapid extends Request {
   }
 }
 
+UrlMixin(Rapid);
 CrudMixin(Rapid);
 
 export default Rapid;

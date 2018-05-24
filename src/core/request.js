@@ -1,12 +1,12 @@
 // @ts-check
 
 import defaultsDeep from 'lodash/defaultsDeep';
-import Url from './url';
+import Core from './core';
 import CustomRoute from './custom-route';
 import { sanitizeUrl } from '../utils/url';
 import { isAllowedRequestType, parseRequestData } from '../utils/request';
 
-class Request extends Url {
+class Request extends Core {
   constructor(config) {
     super(config);
 

@@ -1,13 +1,8 @@
 // @ts-check
+import { requestSuffixes } from '../../config';
+import { sanitizeUrl } from '../../utils/url';
 
-import Core from './core';
-import { sanitizeUrl } from '../utils/url';
-
-class Url extends Core {
-  constructor(config) {
-    super(config);
-  }
-
+export function UrlMixin(Rapid) {
   /**
    * Based off the current route that's set this will take a set of params
    * and split it into a URL. This will then reset the route to the default
@@ -16,7 +11,7 @@ class Url extends Core {
    * @param {array} params Can be any length of params that will be joined by /
    * @return {String}
    */
-  makeUrl(...params) {
+  Rapid.prototype.makeUrl = function makeUrl(...params) {
     if (this.config.trailingSlash) {
       params.push('');
     }
@@ -32,7 +27,7 @@ class Url extends Core {
     this.currentRoute = this.config.defaultRoute;
 
     return url;
-  }
+  };
 
   /**
    * Set the URL params
@@ -42,7 +37,7 @@ class Url extends Core {
    * @param {Boolean} overwrite
    * @return {this}
    */
-  setURLParams(urlParams = [], prepend = false, overwrite = false) {
+  Rapid.prototype.setURLParams = function setURLParams(urlParams = [], prepend = false, overwrite = false) {
     this.urlParams = this.urlParams || [];
 
     if (!Array.isArray(urlParams)) {
@@ -62,9 +57,7 @@ class Url extends Core {
     }
 
     return this;
-  }
-
-  // consider making a .url() alias of the above method?
+  };
 
   /**
    * Set the URL params normally
@@ -72,11 +65,11 @@ class Url extends Core {
    * @param {array} params
    * @return {this}
    */
-  url(...params) {
+  Rapid.prototype.url = function url(...params) {
     this.setURLParams(...params);
 
     return this;
-  }
+  };
 
   /**
    * Set the URL params, but prepending
@@ -84,11 +77,11 @@ class Url extends Core {
    * @param {Array} params
    * @return {this}
    */
-  prepend(params) {
+  Rapid.prototype.prepend = function prepend(params) {
     this.setURLParams(params, true);
 
     return this;
-  }
+  };
 
   /**
    * Set the URL params, but appending them
@@ -96,11 +89,9 @@ class Url extends Core {
    * @param {Array} params
    * @return {this}
    */
-  append(params) {
+  Rapid.prototype.append = function append(params) {
     this.setURLParams(params);
 
     return this;
-  }
+  };
 }
-
-export default Url;
