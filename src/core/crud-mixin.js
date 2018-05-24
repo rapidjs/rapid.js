@@ -1,12 +1,41 @@
 // @ts-check
-
 import { requestSuffixes } from '../config';
-import Request from './request';
 
-class Crud extends Request {
+export function CrudMixin(Rapid) {
   /**
-   * Model Only Functions
+   * This sets an id for a request
+   * currently it doesn't work with any of the CRUD methods.
+   * It should work with this.
+   *
+   * @param {Number} modelId The id of the model
+   * @return {this}
    */
+  Rapid.prototype.id = function id(modelId) {
+    let params = [];
+
+    // this is checking if primaryKey is true, not if it exists
+    if (this.config.primaryKey) {
+      params = [this.config.primaryKey, modelId];
+    } else {
+      params = [modelId];
+    }
+
+    // needs to prepend
+    this.prepend(params);
+
+    return this;
+  };
+
+  /**
+   * Makes a request to create a new model based off the method and suffix for create
+   *
+   * @param {Object} data The data to be sent over for creation of model
+   * @return {Promise}
+   */
+  Rapid.prototype.create = function create(data) {
+    return this.withParams(data)
+      .buildRequest(this.config.methods.create, this.config.suffixes.create);
+  };
 
   /**
    * Make a GET request to a url that would retrieve a single model.
@@ -15,9 +44,9 @@ class Crud extends Request {
    * @param {Number} id The model's id
    * @return {Promise}
    */
-  find(id) {
+  Rapid.prototype.find = function find(id) {
     return this.model.id(id).get();
-  }
+  };
 
   /**
    * Make a request to update or destroy a model
@@ -26,7 +55,7 @@ class Crud extends Request {
    * @param {array} params Can be either (id, data) OR (data)
    * @return {Promise}
    */
-  updateOrDestroy(method, ...params) {
+  Rapid.prototype.updateOrDestroy = function updateOrDestroy(method, ...params) {
     const urlParams = [];
     const id = params[0];
     let data = params[1];
@@ -46,7 +75,7 @@ class Crud extends Request {
     }
 
     return this.model.buildRequest(this.config.methods[method], urlParams);
-  }
+  };
 
   /**
    * See updateOrDestroy
@@ -54,9 +83,19 @@ class Crud extends Request {
    * @param {array} params
    * @return {Promise}
    */
-  update(...params) {
+  Rapid.prototype.update = function update(...params) {
     return this.updateOrDestroy(requestSuffixes.UPDATE, ...params);
-  }
+  };
+
+  /**
+   * See updateOrDestroy
+   *
+   * @param {array} params
+   * @return {Promise}
+   */
+  Rapid.prototype.destroy = function destroy(...params) {
+    return this.updateOrDestroy(requestSuffixes.DESTROY, ...params);
+  };
 
   /**
    * Alias of update
@@ -65,19 +104,9 @@ class Crud extends Request {
    * @param {array} params
    * @return {Promise}
    */
-  save(...params) {
+  Rapid.prototype.save = function save(...params) {
     return this.update(...params);
-  }
-
-  /**
-   * See updateOrDestroy
-   *
-   * @param {array} params
-   * @return {Promise}
-   */
-  destroy(...params) {
-    return this.updateOrDestroy(requestSuffixes.DESTROY, ...params);
-  }
+  };
 
   /**
    * Sends a config.suffixes.restore request to emulate a
@@ -86,7 +115,7 @@ class Crud extends Request {
    * @param {Number} id
    * @return {Promise}
    */
-  restore(id) {
+  Rapid.prototype.restore = function restore(id) {
     const urlParams = [];
 
     if (Number.isInteger(id)) {
@@ -98,59 +127,16 @@ class Crud extends Request {
     }
 
     return this.model.buildRequest(this.config.methods.restore, urlParams);
-  }
-
-  /**
-   * Makes a request to create a new model based off the method and suffix for create
-   *
-   * @param {Object} data The data to be sent over for creation of model
-   * @return {Promise}
-   */
-  create(data) {
-    return this.withParams(data)
-      .buildRequest(this.config.methods.create, this.config.suffixes.create);
-  }
-
-  /**
-   * This sets an id for a request
-   * currently it doens't work with any of the CRUD methods.
-   * It should work with this.
-   *
-   * @param {Number} id The id of the model
-   * @return {this}
-   */
-  id(id) {
-    let params = [];
-
-    // this is checking if primaryKey is true, not if it exists
-    if (this.config.primaryKey) {
-      params = [this.config.primaryKey, id];
-    } else {
-      params = [id];
-    }
-
-    // needs to prepend
-    this.prepend(params);
-
-    return this;
-  }
-
-  /**
-   * Collection Only Functions
-   */
+  };
 
   /**
    * Makes a GET request on a collection route
    *
    * @return {Promise}
    */
-  all() {
+  Rapid.prototype.all = function all() {
     return this.collection.get();
-  }
-
-  /**
-   * Collection and Model functions
-   */
+  };
 
   /**
    * Makes a GET request to find a model/collection by key, value
@@ -159,7 +145,7 @@ class Crud extends Request {
    * @param {String|Number} value The value to search by
    * @return {Promise}
    */
-  findBy(key, value) {
+  Rapid.prototype.findBy = function findBy(key, value) {
     const urlParams = [key];
 
     if (value) {
@@ -167,7 +153,5 @@ class Crud extends Request {
     }
 
     return this.get(...urlParams);
-  }
+  };
 }
-
-export default Crud;
