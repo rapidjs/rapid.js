@@ -82,68 +82,6 @@ class Request extends Core {
   }
 
   /**
-   * Custom Routes
-   *
-   * These can be defined and passed via the customRoutes config attribute.
-   * This allows you to completely override Rapid's usual functionality
-   * and use this more like a router.
-   */
-
-  /**
-   * Make a request to a route via a given route name
-   * The request type depends on the type of request defined in the route
-   *
-   * @param {String} name
-   * @param {Object} routeParams
-   * @param {Object} requestParams
-   * @return {Promise}
-   */
-  route(name = '', routeParams = {}, requestParams = {}) {
-    const route = this.getCustomRoute(name, routeParams);
-
-    // if there are request params, set them
-    if (Object.keys(requestParams).length !== 0) {
-      this.withParams(requestParams);
-    }
-
-    return this.request(route.type, route.url);
-  }
-
-  /**
-   * Get a CustomRoute via given name
-   *
-   * @param {String} name
-   * @param {Object} routeParams
-   * @return {CustomRoute}
-   */
-  getCustomRoute(name = '', routeParams = {}) {
-    // if a route exists, return a new instance of CustomRoute
-    if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
-      return new CustomRoute(this.customRoutes[name], {
-        routeParams,
-      });
-    }
-
-    // to prevent having undefined
-    return new CustomRoute();
-  }
-
-  /**
-   * Generate a url to a custom defined route
-   * This applies the baseURL and the trailing slash config
-   * as well
-   *
-   * @param {String} name
-   * @param {Object} routeParams
-   * @return {String}
-   */
-  generate(name = '', routeParams = {}) {
-    const { url } = this.getCustomRoute(name, routeParams);
-
-    return url !== '' ? this.makeUrl(this.config.baseURL, url) : '';
-  }
-
-  /**
    * Before, after, and error
    */
 
