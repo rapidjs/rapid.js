@@ -6,15 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _qsStringify = require('qs-stringify');
+var _qs = require('qs');
 
-var _qsStringify2 = _interopRequireDefault(_qsStringify);
-
-var _debug = require('../utils/debug');
-
-var _url = require('../utils/url');
-
-var _request = require('../utils/request');
+var _qs2 = _interopRequireDefault(_qs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34,14 +28,14 @@ var _class = function () {
   _createClass(_class, [{
     key: 'fakeRequest',
     value: function fakeRequest(type, url) {
-      var params = (0, _request.parseRequestData)(type, this.caller.requestData, this.caller.config);
+      var params = this.caller.parseRequestData(type);
       var lastUrl = this.setLastUrl.apply(this, [type, url].concat(_toConsumableArray(params)));
 
       this.setLastRequest.apply(this, arguments);
 
       if (this.logEnabled) {
-        (0, _debug.warn)(this.caller.config.modelName + ' made a ' + type.toUpperCase() + ' request (' + lastUrl + ')');
-        (0, _debug.warn)(params);
+        this.caller.logger.debug(this.caller.config.modelName + ' made a ' + type.toUpperCase() + ' request (' + lastUrl + ')');
+        this.caller.logger.log(params);
       }
 
       this.caller.afterRequest({});
@@ -56,15 +50,15 @@ var _class = function () {
       var lastUrl = '';
 
       if (['put', 'post', 'patch'].includes(type)) {
-        lastUrl = (0, _url.sanitizeUrl)([this.caller.config.baseURL, url].join('/'), this.caller.config.trailingSlash);
+        lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/'));
       } else {
         var urlParams = params.params;
-        var stringified = urlParams ? '?' + (0, _qsStringify2.default)(urlParams) : '';
+        var stringified = urlParams ? '?' + _qs2.default.stringify(urlParams) : '';
 
-        lastUrl = (0, _url.sanitizeUrl)([this.caller.config.baseURL, url].join('/'), this.caller.config.trailingSlash) + stringified;
+        lastUrl = this.caller.sanitizeUrl([this.caller.config.baseURL, url].join('/')) + stringified;
       }
 
-      lastUrl = (0, _url.sanitizeUrl)(lastUrl, this.caller.config.trailingSlash);
+      lastUrl = this.caller.sanitizeUrl(lastUrl);
 
       this.data.lastUrl = lastUrl;
 

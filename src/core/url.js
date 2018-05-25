@@ -1,21 +1,31 @@
-// @ts-check
-import { sanitizeUrl } from '../../utils/url';
+/**
+ * URL Methods
+ */
 
-export function UrlMixin(Rapid) {
+import isArray from 'lodash/isArray';
+import Core from './core';
+import { sanitizeUrl } from '../common/url';
+
+class Url extends Core {
+  constructor (config) {
+    super(config);
+  }
+
   /**
    * Based off the current route that's set this will take a set of params
    * and split it into a URL. This will then reset the route to the default
    * route after building the URL.
    *
-   * @param {array} params Can be any length of params that will be joined by /
+   * @param {Spread} params Can be any length of params that will be joined by /
    * @return {String}
    */
-  Rapid.prototype.makeUrl = function makeUrl(...params) {
+  makeUrl (...params) {
+
     if (this.config.trailingSlash) {
       params.push('');
     }
 
-    let url = sanitizeUrl([this.routes[this.currentRoute]].concat(params).filter(Boolean).join('/'), this.config.trailingSlash);
+    let url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).filter(Boolean).join('/'));
 
     // strip the extra .
     // make sure routes don't need to regenerate
@@ -23,10 +33,29 @@ export function UrlMixin(Rapid) {
       url += `.${this.config.extension}`;
     }
 
-    this.currentRoute = this.config.defaultRoute;
+    // reset currentRoute
+    this.setCurrentRoute(this.config.defaultRoute);
 
     return url;
-  };
+  }
+
+  /**
+   * This just makes sure there are no double slashes and no trailing
+   * slash unless the config for it is set.
+   *
+   * @param {String} url a url to sanitize
+   * @return {String}
+   */
+  sanitizeUrl (url) {
+    return sanitizeUrl(url, this.config.trailingSlash);
+  }
+
+  /**
+   * Reset an URL params set from a relationship
+   */
+  resetURLParams () {
+    this.urlParams = false;
+  }
 
   /**
    * Set the URL params
@@ -36,14 +65,10 @@ export function UrlMixin(Rapid) {
    * @param {Boolean} overwrite
    * @return {Rapid}
    */
-  Rapid.prototype.setURLParams = function setURLParams(
-    urlParams = [],
-    prepend = false,
-    overwrite = false,
-  ) {
+  setURLParams (urlParams = [], prepend = false, overwrite = false) {
     this.urlParams = this.urlParams || [];
 
-    if (!Array.isArray(urlParams)) {
+    if (!isArray(urlParams)) {
       urlParams = [urlParams];
     }
 
@@ -60,41 +85,46 @@ export function UrlMixin(Rapid) {
     }
 
     return this;
-  };
+  }
+
+  // consider making a .url() alias of the above method?
 
   /**
    * Set the URL params normally
    *
-   * @param {array} params
-   * @return {this}
+   * @param {Spread} params
+   * @return {Rapid}
    */
-  Rapid.prototype.url = function url(...params) {
+  url (...params) {
     this.setURLParams(...params);
 
     return this;
-  };
+  }
 
   /**
    * Set the URL params, but prepending
    *
    * @param {Array} params
-   * @return {this}
+   * @return {Rapid}
    */
-  Rapid.prototype.prepend = function prepend(params) {
+  prepend (params) {
     this.setURLParams(params, true);
 
     return this;
-  };
+  }
 
   /**
    * Set the URL params, but appending them
    *
    * @param {Array} params
-   * @return {this}
+   * @return {Rapid}
    */
-  Rapid.prototype.append = function append(params) {
+  append (params) {
     this.setURLParams(params);
 
     return this;
-  };
+  }
+
 }
+
+export default Url;

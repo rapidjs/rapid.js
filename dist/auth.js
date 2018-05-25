@@ -10,9 +10,9 @@ var _defaultsDeep = require('lodash/defaultsDeep');
 
 var _defaultsDeep2 = _interopRequireDefault(_defaultsDeep);
 
-var _index = require('./core/index');
+var _rapid = require('./core/rapid');
 
-var _index2 = _interopRequireDefault(_index);
+var _rapid2 = _interopRequireDefault(_rapid);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -86,6 +86,6 @@ var Auth = function (_Rapid) {
   }]);
 
   return Auth;
-}(_index2.default);
+}(_rapid2.default);
 
 exports.default = Auth;

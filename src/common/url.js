@@ -1,4 +1,3 @@
-// @ts-check
 /**
  * This just makes sure there are no double slashes and no trailing
  * slash unless the config for it is set.
@@ -7,7 +6,7 @@
  * @param {Boolean} keepTrailingSlash a url to sanitize
  * @return {String}
  */
-export const sanitizeUrl = (url = '', keepTrailingSlash = false) => {
+export function sanitizeUrl (url = '', keepTrailingSlash = false) {
   url = url.replace(/([^:]\/)\/+/g, '$1').replace(/\?$/, '').replace(/^(\/\/)/, '/');
 
   if (!keepTrailingSlash) {
@@ -15,4 +14,8 @@ export const sanitizeUrl = (url = '', keepTrailingSlash = false) => {
   }
 
   return url;
+}
+
+export default {
+  sanitizeUrl,
 };
