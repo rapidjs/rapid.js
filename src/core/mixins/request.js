@@ -5,17 +5,6 @@ import { isAllowedRequestType, parseRequestData } from '../../utils/request';
 
 export function RequestMixin(Rapid) {
   /**
-   * Apply allowed request methods to the class
-   *
-   * By default this adds: get(), post(), put(), patch(), head(), delete()
-   */
-  Rapid.prototype.applyCallableRequestMethods = function applyCallableRequestMethods() {
-    this.config.allowedRequestTypes.forEach(requestType => {
-      this[requestType] = (...urlParams) => this.buildRequest(requestType, urlParams);
-    });
-  };
-
-  /**
    * Make the request
    *
    * @param {String} type The Request type

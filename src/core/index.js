@@ -13,7 +13,6 @@ function Rapid(config) {
   }
 
   this._init(config);
-  this.applyCallableRequestMethods();
 }
 
 InitMixin(Rapid);

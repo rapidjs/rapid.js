@@ -63,7 +63,11 @@ function initializeHttp(instance) {
   if (instance.config.http) {
     instance.http = instance.config.http;
   } else {
-    instance.http = axios.create(defaultsDeep({ baseURL: instance.config.baseURL.replace(/\/$/, '') }, instance.config.apiConfig));
+    instance.http = axios.create(defaultsDeep(
+      { baseURL: instance.config.baseURL },
+      instance.config.apiConfig,
+    ));
+
     writeInterceptorsToAPI(instance);
   }
 }
@@ -80,6 +84,19 @@ function defineCustomRoutes(instance) {
       instance.customRoutes[route.name] = route;
     });
   }
+}
+
+/**
+ * Apply allowed request methods to the class
+ *
+ * By default this adds: get(), post(), put(), patch(), head(), delete()
+ *
+ * @param {Rapid} instance
+ */
+function applyCallableRequestMethods(instance) {
+  instance.config.allowedRequestTypes.forEach(requestType => {
+    instance[requestType] = (...urlParams) => instance.buildRequest(requestType, urlParams);
+  });
 }
 
 /**
@@ -106,6 +123,8 @@ function setup(instance) {
   initializeDebugger(instance);
 
   defineCustomRoutes(instance);
+
+  applyCallableRequestMethods(instance);
 }
 
 export function InitMixin(Rapid) {
