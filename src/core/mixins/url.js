@@ -34,9 +34,13 @@ export function UrlMixin(Rapid) {
    * @param {Array} urlParams
    * @param {Boolean} prepend
    * @param {Boolean} overwrite
-   * @return {this}
+   * @return {Rapid}
    */
-  Rapid.prototype.setURLParams = function setURLParams(urlParams = [], prepend = false, overwrite = false) {
+  Rapid.prototype.setURLParams = function setURLParams(
+    urlParams = [],
+    prepend = false,
+    overwrite = false,
+  ) {
     this.urlParams = this.urlParams || [];
 
     if (!Array.isArray(urlParams)) {
