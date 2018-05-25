@@ -9,13 +9,9 @@
     "copy-dev": "npm run compile && rm -rf ./demo/rapid && cp -R ./dist ./demo/rapid",
     "prepublish": "npm run compile",
     "lint": "eslint --ext .js src test",
+    "lint:fix": "npm run lint -- --fix",
     "unit": "jest --maxWorkers 2",
     "unit:watch": "jest test/**/*.test.js --watch"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
   },
   "repository": {
     "type": "git",
@@ -42,7 +38,7 @@
     "axios": "^0.16.0",
     "lodash": "^4.17.4",
     "pluralize": "^4.0.0",
-    "qs": "^6.4.0"
+    "qs-stringify": "^1.1.0"
   },
   "publishConfig": {
     "access": "public"
