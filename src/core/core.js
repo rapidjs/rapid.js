@@ -1,10 +1,7 @@
 // @ts-check
 
-import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Defaults from '../config/defaults';
-import Debugger from './../debug/debugger';
-import { sanitizeUrl } from '../utils/url';
 
 class Core {
   constructor(config) {
@@ -19,85 +16,6 @@ class Core {
     this.urlParams = [];
 
     this.initialize();
-  }
-
-  /**
-   * The order of these are important.
-
-   * boot() will allow overriding any config before we set up
-   * the http service and routes.
-   *
-   * sanitizeBaseURL() will sanitize the baseURL prior to setting up
-   * the http service and routes.
-   *
-   * generateRoutes() will set up the current routes (model, collection) and their paths
-   */
-  initialize() {
-    this.boot();
-
-    this.sanitizeBaseURL();
-
-    this.$setConfig('caseSensitive', this.config.caseSensitive);
-
-    this.initializeHttp();
-
-    this.initializeDebugger();
-
-    this.defineCustomRoutes();
-  }
-
-  /**
-   * Sanitize the baseURL before sending it to the http service
-   */
-  sanitizeBaseURL() {
-    this.config.baseURL = sanitizeUrl(this.config.baseURL, this.config.trailingSlash);
-  }
-
-  /**
-   * Initialize the API.
-   */
-  initializeHttp() {
-    if (this.config.http) {
-      this.http = this.config.http;
-    } else {
-      this.http = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
-      this.writeInterceptorsToAPI();
-    }
-  }
-
-  /**
-   * Initialze the debugger if debug is set to true.
-   */
-  initializeDebugger() {
-    this.debugger = this.config.debug ? new Debugger(this) : false;
-  }
-
-  /**
-   * Set up the custom routes if we have any
-   */
-  defineCustomRoutes() {
-    // if we have custom routes, set up a name:route mapping
-    if (this.config.customRoutes.length) {
-      this.config.customRoutes.forEach(route => {
-        this.customRoutes[route.name] = route;
-      });
-    }
-  }
-
-  /**
-   * Set the interceptors to the api object
-   */
-  writeInterceptorsToAPI() {
-    const { interceptors } = this.config;
-    const types = Object.keys(interceptors);
-
-    if (types.length) {
-      types.forEach(type => {
-        interceptors[type].forEach(interceptor => {
-          this.http.interceptors[type].use(interceptor);
-        });
-      });
-    }
   }
 }
 
