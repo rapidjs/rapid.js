@@ -22,9 +22,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * URL Methods
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Url = function (_Core) {
   _inherits(Url, _Core);
@@ -34,16 +32,6 @@ var Url = function (_Core) {
 
     return _possibleConstructorReturn(this, (Url.__proto__ || Object.getPrototypeOf(Url)).call(this, config));
   }
-
-  /**
-   * Based off the current route that's set this will take a set of params
-   * and split it into a URL. This will then reset the route to the default
-   * route after building the URL.
-   *
-   * @param {Spread} params Can be any length of params that will be joined by /
-   * @return {String}
-   */
-
 
   _createClass(Url, [{
     key: 'makeUrl',
@@ -58,51 +46,24 @@ var Url = function (_Core) {
 
       var url = this.sanitizeUrl([this.routes[this.currentRoute]].concat(params).filter(Boolean).join('/'));
 
-      // strip the extra .
-      // make sure routes don't need to regenerate
       if (this.config.extension) {
         url += '.' + this.config.extension;
       }
 
-      // reset currentRoute
       this.setCurrentRoute(this.config.defaultRoute);
 
       return url;
     }
-
-    /**
-     * This just makes sure there are no double slashes and no trailing
-     * slash unless the config for it is set.
-     *
-     * @param {String} url a url to sanitize
-     * @return {String}
-     */
-
   }, {
     key: 'sanitizeUrl',
     value: function sanitizeUrl(url) {
       return (0, _url.sanitizeUrl)(url, this.config.trailingSlash);
     }
-
-    /**
-     * Reset an URL params set from a relationship
-     */
-
   }, {
     key: 'resetURLParams',
     value: function resetURLParams() {
       this.urlParams = false;
     }
-
-    /**
-     * Set the URL params
-     *
-     * @param {Array} urlParams
-     * @param {Boolean} prepend
-     * @param {Boolean} overwrite
-     * @return {Rapid}
-     */
-
   }, {
     key: 'setURLParams',
     value: function setURLParams() {
@@ -130,16 +91,6 @@ var Url = function (_Core) {
 
       return this;
     }
-
-    // consider making a .url() alias of the above method?
-
-    /**
-     * Set the URL params normally
-     *
-     * @param {Spread} params
-     * @return {Rapid}
-     */
-
   }, {
     key: 'url',
     value: function url() {
@@ -147,14 +98,6 @@ var Url = function (_Core) {
 
       return this;
     }
-
-    /**
-     * Set the URL params, but prepending
-     *
-     * @param {Array} params
-     * @return {Rapid}
-     */
-
   }, {
     key: 'prepend',
     value: function prepend(params) {
@@ -162,14 +105,6 @@ var Url = function (_Core) {
 
       return this;
     }
-
-    /**
-     * Set the URL params, but appending them
-     *
-     * @param {Array} params
-     * @return {Rapid}
-     */
-
   }, {
     key: 'append',
     value: function append(params) {

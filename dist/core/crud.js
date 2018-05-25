@@ -16,9 +16,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * All the CRUD
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Crud = function (_Request) {
   _inherits(Crud, _Request);
@@ -31,30 +29,9 @@ var Crud = function (_Request) {
 
   _createClass(Crud, [{
     key: 'find',
-
-    /**
-     * Model Only Functions
-     */
-
-    /**
-     * Make a GET request to a url that would retrieve a single model.
-     * Prepends primaryKey if set
-     *
-     * @param {Number} id The model's id
-     * @return {Promise}
-     */
     value: function find(id) {
       return this.model.id(id).get();
     }
-
-    /**
-     * Make a request to update or destroy a model
-     *
-     * @param {String} method The method (update or destroy)
-     * @param {Spread} params Can be either (id, data) OR (data)
-     * @return {Promise}
-     */
-
   }, {
     key: 'updateOrDestroy',
     value: function updateOrDestroy(method) {
@@ -83,14 +60,6 @@ var Crud = function (_Request) {
 
       return this.model.buildRequest(this.config.methods[method], urlParams);
     }
-
-    /**
-     * See updateOrDestroy
-     *
-     * @param {Spread} params
-     * @return {Promise}
-     */
-
   }, {
     key: 'update',
     value: function update() {
@@ -100,28 +69,11 @@ var Crud = function (_Request) {
 
       return this.updateOrDestroy.apply(this, ['update'].concat(params));
     }
-
-    /**
-     * Alias of update
-     * See updateOrDestroy
-     *
-     * @param {Spread} params
-     * @return {Promise}
-     */
-
   }, {
     key: 'save',
     value: function save() {
       return this.update.apply(this, arguments);
     }
-
-    /**
-     * See updateOrDestroy
-     *
-     * @param {Spread} params
-     * @return {Promise}
-     */
-
   }, {
     key: 'destroy',
     value: function destroy() {
@@ -131,15 +83,6 @@ var Crud = function (_Request) {
 
       return this.updateOrDestroy.apply(this, ['destroy'].concat(params));
     }
-
-    /**
-     * Sends a config.suffixes.restore request to emulate a
-     * restore request
-     *
-     * @param {Number} id
-     * @return {Promise}
-     */
-
   }, {
     key: 'restore',
     value: function restore(id) {
@@ -155,75 +98,31 @@ var Crud = function (_Request) {
 
       return this.model.buildRequest(this.config.methods.restore, urlParams);
     }
-
-    /**
-     * Makes a request to create a new model based off the method and suffix for create
-     *
-     * @param {Object} data The data to be sent over for creation of model
-     * @return {Promise}
-     */
-
   }, {
     key: 'create',
     value: function create(data) {
       return this.withParams(data).buildRequest(this.config.methods.create, this.config.suffixes.create);
     }
-
-    /**
-     * This sets an id for a request
-     * currently it doens't work with any of the CRUD methods.
-     * It should work with this.
-     *
-     * @param {Number} id The id of the model
-     * @return {Promise}
-     */
-
   }, {
     key: 'id',
     value: function id(_id) {
       var params = [];
 
-      // this is checking if primaryKey is true, not if it exists
       if (this.config.primaryKey) {
         params = [this.config.primaryKey, _id];
       } else {
         params = [_id];
       }
 
-      // needs to prepend
       this.prepend(params);
 
       return this;
     }
-
-    /**
-     * Collection Only Functions
-     */
-
-    /**
-     * Makes a GET request on a collection route
-     *
-     * @return {Promise}
-     */
-
   }, {
     key: 'all',
     value: function all() {
       return this.collection.get();
     }
-
-    /**
-     * Collection and Model functions
-     */
-
-    /**
-     * Makes a GET request to find a model/collection by key, value
-     *
-     * @param {String|Number} key The key to search by
-     * @param {String|Number} value The value to search by
-     * @return {Promise}
-     */
-
   }, {
     key: 'findBy',
     value: function findBy(key, value) {

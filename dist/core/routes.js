@@ -24,9 +24,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * The Rapid Routes
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Routes = function (_Url) {
   _inherits(Routes, _Url);
@@ -37,28 +35,11 @@ var Routes = function (_Url) {
     return _possibleConstructorReturn(this, (Routes.__proto__ || Object.getPrototypeOf(Routes)).call(this, config));
   }
 
-  /**
-   * Set the current route.
-   * This will set the current route to either model, collection,
-   * or any to make appropriate requests
-   * Can also be changed by calling rapid.model.func() or rapid.collection.func()
-   *
-   * @param {String} route The route to set
-   */
-
-
   _createClass(Routes, [{
     key: 'setCurrentRoute',
     value: function setCurrentRoute(route) {
       this.currentRoute = route;
     }
-
-    /**
-     * Set the routes for the URL based off model/collection and config
-     *
-     * @param {String} route The key of the route to be set
-     */
-
   }, {
     key: 'setRoute',
     value: function setRoute(route) {
@@ -81,11 +62,6 @@ var Routes = function (_Url) {
 
       this.routes[route] = newRoute;
     }
-
-    /**
-     * Loop through the routes and set them
-     */
-
   }, {
     key: 'setRoutes',
     value: function setRoutes() {
