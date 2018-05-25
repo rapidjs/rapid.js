@@ -8,7 +8,7 @@ export function CrudMixin(Rapid) {
    * It should work with this.
    *
    * @param {Number} modelId The id of the model
-   * @return {this}
+   * @return {self}
    */
   Rapid.prototype.id = function id(modelId) {
     let params = [];

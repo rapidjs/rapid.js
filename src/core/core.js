@@ -4,9 +4,7 @@ import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Defaults from '../config/defaults';
 import Debugger from './../debug/debugger';
-import { routeTypes } from '../config';
 import { sanitizeUrl } from '../utils/url';
-import { generateRoute } from '../utils/routes';
 
 class Core {
   constructor(config) {
@@ -47,11 +45,6 @@ class Core {
 
     this.defineCustomRoutes();
   }
-
-  /**
-   * Set any config overrides in this method when extending
-   */
-  boot() {}
 
   /**
    * Sanitize the baseURL before sending it to the http service
@@ -105,64 +98,6 @@ class Core {
         });
       });
     }
-  }
-
-  /**
-   * Resets the request data
-   */
-  resetRequestData() {
-    this.requestData = Object.create({
-      params: {},
-      options: {},
-    });
-  }
-
-  /**
-   * Reset an URL params set from a relationship
-   */
-  resetURLParams() {
-    this.urlParams = [];
-  }
-
-  /**
-   * Loop through the routes and set them
-   */
-  generateRoutes() {
-    [routeTypes.MODEL, routeTypes.COLLECTION].forEach(route => {
-      this.routes[route] = generateRoute(route, this.config);
-    });
-  }
-
-  /**
-   * Set a config key and force routes to be regenerated
-   *
-   * @param {String} configKey
-   * @param {any} val
-   */
-  $setConfig(configKey, val) {
-    this.config[configKey] = val;
-    this.generateRoutes();
-  }
-
-  /**
-   * Setters and Getters
-   */
-  get collection() {
-    this.currentRoute = routeTypes.COLLECTION;
-
-    return this;
-  }
-
-  get model() {
-    this.currentRoute = routeTypes.MODEL;
-
-    return this;
-  }
-
-  get any() {
-    this.currentRoute = routeTypes.ANY;
-
-    return this;
   }
 }
 

@@ -9,6 +9,7 @@ module.exports = {
     'no-param-reassign': 0,
     'no-console': 0,
     'no-return-assign': 0,
+    'no-underscore-dangle': 0,
     'import/prefer-default-export': 0,
     'prefer-rest-params': 0,
     'consistent-return': 0,

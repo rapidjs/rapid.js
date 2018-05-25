@@ -171,4 +171,21 @@ export function RequestMixin(Rapid) {
 
     return this;
   };
+
+  /**
+   * Resets the request data
+   */
+  Rapid.prototype.resetRequestData = function resetRequestData() {
+    this.requestData = Object.create({
+      params: {},
+      options: {},
+    });
+  };
+
+  /**
+   * Reset an URL params for a request
+   */
+  Rapid.prototype.resetURLParams = function resetURLParams() {
+    this.urlParams = [];
+  };
 }
