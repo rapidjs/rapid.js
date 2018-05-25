@@ -48,6 +48,7 @@ describe('Custom Routes should work as designed', () => {
   });
 
   it('should find urlParams if they exist', () => {
+
     expect(model.getCustomRoute('get_user_forget_name').urlParams).toEqual([]);
     expect(model.getCustomRoute('user_save_friends').urlParams).toEqual(['id']);
     expect(model.getCustomRoute('multiple_values').urlParams).toEqual(['id', 'username']);

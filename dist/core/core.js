@@ -91,7 +91,7 @@ var Core = function () {
   }, {
     key: 'initializeAPI',
     value: function initializeAPI() {
-      this.http = _axios2.default.create((0, _defaultsDeep2.default)({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
+      this.api = _axios2.default.create((0, _defaultsDeep2.default)({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
       this.writeInterceptorsToAPI();
     }
   }, {

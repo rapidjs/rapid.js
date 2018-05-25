@@ -1,21 +1,10 @@
-// @ts-check
-
-import { requestSuffixes, requestTypes, routeTypes } from '../config';
-
 export default {
   /**
    * The possible allowed request types.
    *
    * @type {Array}
    */
-  allowedRequestTypes: [
-    requestTypes.GET,
-    requestTypes.POST,
-    requestTypes.PUT,
-    requestTypes.PATCH,
-    requestTypes.HEAD,
-    requestTypes.DELETE,
-  ],
+  allowedRequestTypes: ['get', 'post', 'put', 'patch', 'head', 'delete'],
 
   /**
    * Any config to be passed to axios.
@@ -57,7 +46,7 @@ export default {
    *
    * @type {String}
    */
-  defaultRoute: routeTypes.MODEL,
+  defaultRoute: 'model',
 
   /**
    * An optional extension to have on the end of each request (.json).
@@ -72,8 +61,6 @@ export default {
    * @type {Object}
    */
   globalParameters: {},
-
-  http: null,
 
   /**
    * An optional collection of interceptors for requests and responses.
@@ -92,10 +79,10 @@ export default {
    * @type {Object}
    */
   methods: {
-    create: requestTypes.POST,
-    update: requestTypes.POST,
-    destroy: requestTypes.POST,
-    restore: requestTypes.POST,
+    create: 'post',
+    update: 'post',
+    destroy: 'post',
+    restore: 'post',
   },
 
   /**
@@ -145,10 +132,10 @@ export default {
    * @type {Object}
    */
   suffixes: {
-    create: requestSuffixes.CREATE,
-    update: requestSuffixes.UPDATE,
-    destroy: requestSuffixes.DESTROY,
-    restore: requestSuffixes.RESTORE,
+    create: 'create',
+    update: 'update',
+    destroy: 'destroy',
+    restore: 'restore',
   },
 
   /**

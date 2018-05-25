@@ -68,6 +68,7 @@ describe('The basic CRUD methods should work', () => {
     testModel.restore('');
     expect(testModel.debugger.data.lastUrl).toBe('api/test-model/restore');
     expect((testModel.debugger.data.lastRequest.type === 'post')).toBeTruthy();
+
   });
 
   const anotherTestModel = createModel({
@@ -89,4 +90,5 @@ describe('The basic CRUD methods should work', () => {
 
     expect((anotherTestModel.debugger.data.lastRequest.type === 'get')).toBeTruthy();
   });
+
 });
