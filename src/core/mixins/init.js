@@ -7,6 +7,7 @@ import { routeTypes } from '../../config';
 import { generateRoute } from '../../utils/routes';
 import { sanitizeUrl } from '../../utils/url';
 import { applyCallableRequestMethods } from './request';
+
 /**
  * Loop through the routes and set them
  *
