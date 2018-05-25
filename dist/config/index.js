@@ -3,8 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-// @ts-check
-
 var requestSuffixes = exports.requestSuffixes = {
   CREATE: 'create',
   DESTROY: 'destroy',

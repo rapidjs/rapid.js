@@ -16,16 +16,8 @@ var _request = require('../../utils/request');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } // @ts-check
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-
-/**
- * Apply allowed request methods to the class
- *
- * By default this adds: get(), post(), put(), patch(), head(), delete()
- *
- * @param {Rapid} instance
- */
 function applyCallableRequestMethods(instance) {
   instance.config.allowedRequestTypes.forEach(function (requestType) {
     instance[requestType] = function () {
@@ -39,13 +31,6 @@ function applyCallableRequestMethods(instance) {
 }
 
 function RequestMixin(Rapid) {
-  /**
-   * Make the request
-   *
-   * @param {String} type The Request type
-   * @param {String} url The url
-   * @return {Promise}
-   */
   Rapid.prototype.request = function request(type, url) {
     var _this = this;
 
@@ -76,13 +61,6 @@ function RequestMixin(Rapid) {
     });
   };
 
-  /**
-   * Build a request URL
-   *
-   * @param {String} type
-   * @param {Array} urlParams
-   * @return {Promise}
-   */
   Rapid.prototype.buildRequest = function buildRequest(type, urlParams) {
     if (this.urlParams) {
       urlParams = this.urlParams.concat(urlParams);
@@ -94,50 +72,22 @@ function RequestMixin(Rapid) {
     return this.request(type, url);
   };
 
-  /**
-   * Before, after, and error
-   */
-
-  /**
-   * This is fired before the request
-   * @param {String} type
-   * @param {String} url
-   * @return {Function}
-   */
   Rapid.prototype.beforeRequest = function beforeRequest(type, url) {
     return this.config.beforeRequest(type, url);
   };
 
-  /**
-   * This is fired after each request
-   * @param {Object} response
-   */
   Rapid.prototype.afterRequest = function afterRequest(response) {
     this.resetRequestData();
     this.resetURLParams();
     this.config.afterRequest(response);
   };
 
-  /**
-   * This is fired on a request error
-   * @param {Object} error
-   */
   Rapid.prototype.onError = function onError(error) {
     this.resetRequestData();
     this.resetURLParams();
     this.config.onError(error);
   };
 
-  /**
-   * Params and Options
-   */
-
-  /**
-   * Send data and options with the request
-   *
-   * @param {Object} data An object of params: {}, options: {}
-   * @return {this}
-   */
   Rapid.prototype.withData = function withData() {
     var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -146,12 +96,6 @@ function RequestMixin(Rapid) {
     return this;
   };
 
-  /**
-   * Send params with the request
-   *
-   * @param {Object} params An object of params
-   * @return {this}
-   */
   Rapid.prototype.withParams = function withParams() {
     var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -160,25 +104,12 @@ function RequestMixin(Rapid) {
     return this;
   };
 
-  /**
-   * Send a single param with the request
-   *
-   * @param {Number|String} key The key name
-   * @param {Number|String} value The value
-   * @return {this}
-   */
   Rapid.prototype.withParam = function withParam(key, value) {
     this.requestData.params[key] = value;
 
     return this;
   };
 
-  /**
-   * Send options with the request
-   *
-   * @param {Object} options An object of options
-   * @return {this}
-   */
   Rapid.prototype.withOptions = function withOptions() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -187,22 +118,12 @@ function RequestMixin(Rapid) {
     return this;
   };
 
-  /**
-   * Send a single option with the request
-   *
-   * @param {Number|String} key The key name
-   * @param {Number|String} value The value
-   * @return {this}
-   */
   Rapid.prototype.withOption = function withOption(key, value) {
     this.requestData.options[key] = value;
 
     return this;
   };
 
-  /**
-   * Resets the request data
-   */
   Rapid.prototype.resetRequestData = function resetRequestData() {
     this.requestData = Object.create({
       params: {},
@@ -210,9 +131,6 @@ function RequestMixin(Rapid) {
     });
   };
 
-  /**
-   * Reset an URL params for a request
-   */
   Rapid.prototype.resetURLParams = function resetURLParams() {
     this.urlParams = [];
   };

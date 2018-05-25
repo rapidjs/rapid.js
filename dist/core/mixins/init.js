@@ -31,41 +31,20 @@ var _request = require('./request');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Loop through the routes and set them
- *
- * @param {Rapid} instance
- */
-// @ts-check
 function generateRoutes(instance) {
   [_config.routeTypes.MODEL, _config.routeTypes.COLLECTION].forEach(function (route) {
     instance.routes[route] = (0, _routes.generateRoute)(route, instance.config);
   });
 }
 
-/**
- * Sanitize the baseURL before sending it to the http service
- *
- * @param {Rapid} instance
- */
 function sanitizeBaseURL(instance) {
   instance.config.baseURL = (0, _url.sanitizeUrl)(instance.config.baseURL, instance.config.trailingSlash);
 }
 
-/**
- * Initialze the debugger if debug is set to true.
- *
- * @param {Rapid} instance
- */
 function initializeDebugger(instance) {
   instance.debugger = instance.config.debug ? new _debugger2.default(instance) : false;
 }
 
-/**
- * Set the interceptors to the api object
- *
- * @param {Rapid} instance
- */
 function writeInterceptorsToAPI(instance) {
   var interceptors = instance.config.interceptors;
 
@@ -80,11 +59,6 @@ function writeInterceptorsToAPI(instance) {
   }
 }
 
-/**
- * Initialize the API.
- *
- * @param {Rapid} instance
- */
 function initializeHttp(instance) {
   if (instance.config.http) {
     instance.http = instance.config.http;
@@ -95,13 +69,7 @@ function initializeHttp(instance) {
   }
 }
 
-/**
- * Set up the custom routes if we have any
- *
- * @param {Rapid} instance
- */
 function defineCustomRoutes(instance) {
-  // if we have custom routes, set up a name:route mapping
   if (instance.config.customRoutes.length) {
     instance.config.customRoutes.forEach(function (route) {
       instance.customRoutes[route.name] = route;
@@ -109,18 +77,6 @@ function defineCustomRoutes(instance) {
   }
 }
 
-/**
- * The order of these are important.
- * boot() will allow overriding any config before we set up
- * the http service and routes.
- *
- * sanitizeBaseURL() will sanitize the baseURL prior to setting up
- * the http service and routes.
- *
- * generateRoutes() will set up the current routes (model, collection) and their paths
- *
- * @param {Rapid} instance
- */
 function setup(instance) {
   instance.boot();
 
@@ -154,26 +110,14 @@ function InitMixin(Rapid) {
     setup(this);
   };
 
-  /**
-   * Set any config overrides in this method when extending
-   */
   Rapid.prototype.boot = function boot() {};
 
-  /**
-   * Set a config key and force routes to be regenerated
-   *
-   * @param {String} configKey
-   * @param {any} val
-   */
   Rapid.prototype.$setConfig = function $setConfig(configKey, val) {
     this.config[configKey] = val;
 
     generateRoutes(this);
   };
 
-  /**
-   * Getters for switching routes
-   */
   Object.defineProperty(Rapid.prototype, 'collection', {
     get: function collection() {
       this.currentRoute = _config.routeTypes.COLLECTION;
