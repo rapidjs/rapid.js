@@ -1,12 +1,12 @@
-import Rapid from './../src/rapid';
-import Auth from './../src/auth';
+import Rapid from './../../src/rapid';
+import Auth from './../../src/auth';
 
 /**
  * Create an auth model for testing
  * @param {Object} config
  * @return {Rapid}
  */
-export function createAuthModel (config) {
+export function createAuthModel(config) {
   const auth = new Auth(Object.assign(config, { debug: true }));
   auth.debugger.logEnabled = false;
 

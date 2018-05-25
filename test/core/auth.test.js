@@ -3,7 +3,6 @@ import { createAuthModel } from './helpers';
 const user = createAuthModel({ modelName: 'user' });
 
 describe('Rapid Auth Model', () => {
-
   it('should generate the login url', () => {
     user.login();
     expect(user.debugger.data.lastUrl).toBe('api/login');
@@ -82,5 +81,4 @@ describe('Rapid Auth Model', () => {
     userFive.register();
     expect(userFive.debugger.data.lastRequest.type).toBe('patch');
   });
-
 });

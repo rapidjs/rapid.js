@@ -1,4 +1,4 @@
-import Rapid from './core/rapid';
+import Rapid from './core/index';
 import Auth from './auth';
 
 module.exports = Rapid;

@@ -1,32 +1,32 @@
-import Rapid from './../src/rapid';
+import Rapid from './../../src/rapid';
 
 class GalleryWrapper extends Rapid {
-  boot () {
-    this.baseURL = 'https://mysite.com/api';
-    this.modelName = 'Gallery';
+  boot() {
+    this.config.baseURL = 'https://mysite.com/api';
+    this.$setConfig('modelName', 'Gallery');
   }
 
-  tagSearch (query) {
+  tagSearch(query) {
     return this.append('tagsearch').withParam('query', query);
   }
 
-  categorySearch (query) {
+  categorySearch(query) {
     return this.append('categorysearch').withParam('query', query);
   }
 
-  paginate (pagination) {
+  paginate(pagination) {
     return this.withParams(pagination);
   }
 
-  taxonomy (taxonomy) {
+  taxonomy(taxonomy) {
     return this.append(taxonomy);
   }
 
-  json () {
+  json() {
     return this.append('json');
   }
 
-  xml () {
+  xml() {
     return this.append('xml');
   }
 }
