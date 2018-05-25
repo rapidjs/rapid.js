@@ -6,7 +6,7 @@ import Debugger from '../../debug/debugger';
 import { routeTypes } from '../../config';
 import { generateRoute } from '../../utils/routes';
 import { sanitizeUrl } from '../../utils/url';
-
+import { applyCallableRequestMethods } from './request';
 /**
  * Loop through the routes and set them
  *
@@ -84,19 +84,6 @@ function defineCustomRoutes(instance) {
       instance.customRoutes[route.name] = route;
     });
   }
-}
-
-/**
- * Apply allowed request methods to the class
- *
- * By default this adds: get(), post(), put(), patch(), head(), delete()
- *
- * @param {Rapid} instance
- */
-function applyCallableRequestMethods(instance) {
-  instance.config.allowedRequestTypes.forEach(requestType => {
-    instance[requestType] = (...urlParams) => instance.buildRequest(requestType, urlParams);
-  });
 }
 
 /**

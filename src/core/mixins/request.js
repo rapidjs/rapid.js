@@ -3,6 +3,19 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import { sanitizeUrl } from '../../utils/url';
 import { isAllowedRequestType, parseRequestData } from '../../utils/request';
 
+/**
+ * Apply allowed request methods to the class
+ *
+ * By default this adds: get(), post(), put(), patch(), head(), delete()
+ *
+ * @param {Rapid} instance
+ */
+export function applyCallableRequestMethods(instance) {
+  instance.config.allowedRequestTypes.forEach(requestType => {
+    instance[requestType] = (...urlParams) => instance.buildRequest(requestType, urlParams);
+  });
+}
+
 export function RequestMixin(Rapid) {
   /**
    * Make the request
