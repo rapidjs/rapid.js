@@ -18,14 +18,95 @@ function generateRoutes(instance) {
   });
 }
 
-// /**
-//  * Initialze the debugger if debug is set to true.
-//  *
-//  * @param {Rapid} instance
-//  */
-// function initializeDebugger(instance) {
-//   instance.debugger = instance.config.debug ? new Debugger(instance) : false;
-// }
+/**
+ * Sanitize the baseURL before sending it to the http service
+ *
+ * @param {Rapid} instance
+ */
+function sanitizeBaseURL(instance) {
+  instance.config.baseURL = sanitizeUrl(instance.config.baseURL, instance.config.trailingSlash);
+}
+
+/**
+ * Initialze the debugger if debug is set to true.
+ *
+ * @param {Rapid} instance
+ */
+function initializeDebugger(instance) {
+  instance.debugger = instance.config.debug ? new Debugger(instance) : false;
+}
+
+/**
+ * Set the interceptors to the api object
+ *
+ * @param {Rapid} instance
+ */
+function writeInterceptorsToAPI(instance) {
+  const { interceptors } = instance.config;
+  const types = Object.keys(interceptors);
+
+  if (types.length) {
+    types.forEach(type => {
+      interceptors[type].forEach(interceptor => {
+        instance.http.interceptors[type].use(interceptor);
+      });
+    });
+  }
+}
+
+/**
+ * Initialize the API.
+ *
+ * @param {Rapid} instance
+ */
+function initializeHttp(instance) {
+  if (instance.config.http) {
+    instance.http = instance.config.http;
+  } else {
+    instance.http = axios.create(defaultsDeep({ baseURL: instance.config.baseURL.replace(/\/$/, '') }, instance.config.apiConfig));
+    writeInterceptorsToAPI(instance);
+  }
+}
+
+/**
+ * Set up the custom routes if we have any
+ *
+ * @param {Rapid} instance
+ */
+function defineCustomRoutes(instance) {
+  // if we have custom routes, set up a name:route mapping
+  if (instance.config.customRoutes.length) {
+    instance.config.customRoutes.forEach(route => {
+      instance.customRoutes[route.name] = route;
+    });
+  }
+}
+
+/**
+ * The order of these are important.
+ * boot() will allow overriding any config before we set up
+ * the http service and routes.
+ *
+ * sanitizeBaseURL() will sanitize the baseURL prior to setting up
+ * the http service and routes.
+ *
+ * generateRoutes() will set up the current routes (model, collection) and their paths
+ *
+ * @param {Rapid} instance
+ */
+function setup(instance) {
+  instance.boot();
+
+  sanitizeBaseURL(instance);
+
+  instance.$setConfig('caseSensitive', instance.config.caseSensitive);
+
+  initializeHttp(instance);
+
+  initializeDebugger(instance);
+
+  defineCustomRoutes(instance);
+}
 
 export function InitMixin(Rapid) {
   Rapid.prototype._init = function _init(config = {}) {
@@ -39,32 +120,7 @@ export function InitMixin(Rapid) {
     this.routes = this.config.routes;
     this.urlParams = [];
 
-    this.initialize();
-  };
-
-  /**
-   * The order of these are important.
-
-   * boot() will allow overriding any config before we set up
-   * the http service and routes.
-   *
-   * sanitizeBaseURL() will sanitize the baseURL prior to setting up
-   * the http service and routes.
-   *
-   * generateRoutes() will set up the current routes (model, collection) and their paths
-   */
-  Rapid.prototype.initialize = function initialize() {
-    this.boot();
-
-    this.sanitizeBaseURL();
-
-    this.$setConfig('caseSensitive', this.config.caseSensitive);
-
-    this.initializeHttp();
-
-    this.initializeDebugger();
-
-    this.defineCustomRoutes();
+    setup(this);
   };
 
   /**
@@ -82,62 +138,6 @@ export function InitMixin(Rapid) {
     this.config[configKey] = val;
 
     generateRoutes(this);
-  };
-
-  // remove these
-
-  /**
-   * Sanitize the baseURL before sending it to the http service
-   */
-  Rapid.prototype.sanitizeBaseURL = function sanitizeBaseURL() {
-    this.config.baseURL = sanitizeUrl(this.config.baseURL, this.config.trailingSlash);
-  };
-
-  /**
-   * Initialze the debugger if debug is set to true.
-   */
-  Rapid.prototype.initializeDebugger = function initializeDebugger() {
-    this.debugger = this.config.debug ? new Debugger(this) : false;
-  };
-
-  /**
-   * Initialize the API.
-   */
-  Rapid.prototype.initializeHttp = function initializeHttp() {
-    if (this.config.http) {
-      this.http = this.config.http;
-    } else {
-      this.http = axios.create(defaultsDeep({ baseURL: this.config.baseURL.replace(/\/$/, '') }, this.config.apiConfig));
-      this.writeInterceptorsToAPI();
-    }
-  };
-
-  /**
-   * Set up the custom routes if we have any
-   */
-  Rapid.prototype.defineCustomRoutes = function defineCustomRoutes() {
-    // if we have custom routes, set up a name:route mapping
-    if (this.config.customRoutes.length) {
-      this.config.customRoutes.forEach(route => {
-        this.customRoutes[route.name] = route;
-      });
-    }
-  };
-
-  /**
-   * Set the interceptors to the api object
-   */
-  Rapid.prototype.writeInterceptorsToAPI = function writeInterceptorsToAPI() {
-    const { interceptors } = this.config;
-    const types = Object.keys(interceptors);
-
-    if (types.length) {
-      types.forEach(type => {
-        interceptors[type].forEach(interceptor => {
-          this.http.interceptors[type].use(interceptor);
-        });
-      });
-    }
   };
 
   /**
