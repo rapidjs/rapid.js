@@ -34,9 +34,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * The Re-Quest to find the API
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Request = function (_Routes) {
   _inherits(Request, _Routes);
@@ -47,22 +45,12 @@ var Request = function (_Routes) {
     return _possibleConstructorReturn(this, (Request.__proto__ || Object.getPrototypeOf(Request)).call(this, config));
   }
 
-  /**
-   * Parse the request data prior to passing it to axios
-   *
-   * @param {String} type The request type
-   * @return {Object}
-   */
-
-
   _createClass(Request, [{
     key: 'parseRequestData',
     value: function parseRequestData(type) {
       var requestData = [];
       var options = this.requestData.options;
       var params = this.requestData.params;
-
-      // axios handles the options differently for the request type
 
       if (['put', 'post', 'patch'].includes(type)) {
         params = (0, _defaultsDeep2.default)(params, this.config.globalParameters);
@@ -75,15 +63,6 @@ var Request = function (_Routes) {
 
       return requestData;
     }
-
-    /**
-     * Make the request
-     *
-     * @param {String} type The Request type
-     * @param {String} url The url
-     * @return {Promise}
-     */
-
   }, {
     key: 'request',
     value: function request(type, url) {
@@ -115,14 +94,6 @@ var Request = function (_Routes) {
         });
       });
     }
-
-    /**
-     * Checks if is a valid request type
-     *
-     * @param {String} type The request type
-     * @return {Boolean}
-     */
-
   }, {
     key: 'isAllowedRequestType',
     value: function isAllowedRequestType(type) {
@@ -136,15 +107,6 @@ var Request = function (_Routes) {
 
       return true;
     }
-
-    /**
-     * Build a request URL
-     *
-     * @param {String} type
-     * @param {Array} urlParams
-     * @return {Promise}
-     */
-
   }, {
     key: 'buildRequest',
     value: function buildRequest(type, urlParams) {
@@ -157,14 +119,6 @@ var Request = function (_Routes) {
 
       return this.request(type, url);
     }
-
-    /**
-     * Make a GET request
-     *
-     * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     * @return {Promise}
-     */
-
   }, {
     key: 'get',
     value: function get() {
@@ -174,14 +128,6 @@ var Request = function (_Routes) {
 
       return this.buildRequest('get', urlParams);
     }
-
-    /**
-     * Make a POST request
-     *
-     * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     * @return {Promise}
-     */
-
   }, {
     key: 'post',
     value: function post() {
@@ -191,14 +137,6 @@ var Request = function (_Routes) {
 
       return this.buildRequest('post', urlParams);
     }
-
-    /**
-     * Make a PUT request
-     *
-     * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     * @return {Promise}
-     */
-
   }, {
     key: 'put',
     value: function put() {
@@ -208,14 +146,6 @@ var Request = function (_Routes) {
 
       return this.buildRequest('put', urlParams);
     }
-
-    /**
-     * Make a PATCH request
-     *
-     * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     * @return {Promise}
-     */
-
   }, {
     key: 'patch',
     value: function patch() {
@@ -225,14 +155,6 @@ var Request = function (_Routes) {
 
       return this.buildRequest('patch', urlParams);
     }
-
-    /**
-     * Make a HEAD request
-     *
-     * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     * @return {Promise}
-     */
-
   }, {
     key: 'head',
     value: function head() {
@@ -242,14 +164,6 @@ var Request = function (_Routes) {
 
       return this.buildRequest('head', urlParams);
     }
-
-    /**
-     * Make a DELETE request
-     *
-     * @param {Spread} urlParams The url params to be concatenated to the urlParams (See buildRequest)
-     * @return {Promise}
-     */
-
   }, {
     key: 'delete',
     value: function _delete() {
@@ -259,25 +173,6 @@ var Request = function (_Routes) {
 
       return this.buildRequest('delete', urlParams);
     }
-
-    /**
-       * Custom Routes
-       *
-       * These can be defined and passed via the customRoutes config attribute.
-       * This allows you to completely override Rapid's usual functionality
-       * and use this more like a router.
-       */
-
-    /**
-     * Make a request to a route via a given route name
-     * The request type depends on the type of request defined in the route
-     *
-     * @param {String} name
-     * @param {Object} routeParams
-     * @param {Object} requestParams
-     * @return {Promise}
-     */
-
   }, {
     key: 'route',
     value: function route() {
@@ -287,49 +182,26 @@ var Request = function (_Routes) {
 
       var route = this.getCustomRoute(name, routeParams);
 
-      // if there are request params, set them
       if (Object.keys(requestParams).length !== 0) {
         this.withParams(requestParams);
       }
 
       return this.request(route.type, route.url);
     }
-
-    /**
-       * Get a CustomRoute via given name
-       *
-       * @param {String} name
-       * @param {Object} routeParams
-      * @return {CustomRoute}
-       */
-
   }, {
     key: 'getCustomRoute',
     value: function getCustomRoute() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       var routeParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-      // if a route exists, return a new instance of CustomRoute
       if (Object.prototype.hasOwnProperty.call(this.customRoutes, name)) {
         return new _customRoute2.default(this.customRoutes[name], {
           routeParams: routeParams
         });
       }
 
-      // to prevent having undefined
       return new _customRoute2.default();
     }
-
-    /**
-     * Generate a url to a custom defined route
-     * This applies the baseURL and the trailing slash config
-     * as well
-     *
-     * @param {String} name
-     * @param {Object} routeParams
-     * @return {String}
-     */
-
   }, {
     key: 'generate',
     value: function generate() {
@@ -341,29 +213,11 @@ var Request = function (_Routes) {
 
       return url !== '' ? this.makeUrl(this.config.baseURL, url) : '';
     }
-
-    /**
-     * Before, after, and error
-     */
-
-    /**
-     * This is fired before the request
-     * @param {String} type
-     * @param {String} url
-     * @return {Function}
-     */
-
   }, {
     key: 'beforeRequest',
     value: function beforeRequest(type, url) {
       return this.config.beforeRequest(type, url);
     }
-
-    /**
-     * This is fired after each request
-     * @param {Object} response
-     */
-
   }, {
     key: 'afterRequest',
     value: function afterRequest(response) {
@@ -371,12 +225,6 @@ var Request = function (_Routes) {
       this.resetURLParams();
       this.config.afterRequest(response);
     }
-
-    /**
-     * This is fired on a request error
-     * @param {Object} error
-     */
-
   }, {
     key: 'onError',
     value: function onError(error) {
@@ -384,18 +232,6 @@ var Request = function (_Routes) {
       this.resetURLParams();
       this.config.onError(error);
     }
-
-    /**
-       * Params and Options
-       */
-
-    /**
-     * Send data and options with the request
-     *
-     * @param {Object} data An object of params: {}, options: {}
-     * @return {Rapid}
-     */
-
   }, {
     key: 'withData',
     value: function withData() {
@@ -405,14 +241,6 @@ var Request = function (_Routes) {
 
       return this;
     }
-
-    /**
-     * Send params with the request
-     *
-     * @param {Object} params An object of params
-     * @return {Rapid}
-     */
-
   }, {
     key: 'withParams',
     value: function withParams() {
@@ -422,15 +250,6 @@ var Request = function (_Routes) {
 
       return this;
     }
-
-    /**
-     * Send a single param with the request
-     *
-     * @param {Number|String} key The key name
-     * @param {Number|String} value The value
-     * @return {Rapid}
-     */
-
   }, {
     key: 'withParam',
     value: function withParam(key, value) {
@@ -438,14 +257,6 @@ var Request = function (_Routes) {
 
       return this;
     }
-
-    /**
-     * Send options with the request
-     *
-     * @param {Object} options An object of options
-     * @return {Rapid}
-     */
-
   }, {
     key: 'withOptions',
     value: function withOptions() {
@@ -455,15 +266,6 @@ var Request = function (_Routes) {
 
       return this;
     }
-
-    /**
-     * Send a single option with the request
-     *
-     * @param {Number|String} key The key name
-     * @param {Number|String} value The value
-     * @return {Rapid}
-     */
-
   }, {
     key: 'withOption',
     value: function withOption(key, value) {
