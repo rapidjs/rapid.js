@@ -2,6 +2,7 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 import { sanitizeUrl } from '../../utils/url';
 import { isAllowedRequestType, parseRequestData } from '../../utils/request';
+import { makeUrl } from './url';
 
 /**
  * Apply allowed request methods to the class
@@ -66,10 +67,10 @@ export function RequestMixin(Rapid) {
   Rapid.prototype.buildRequest = function buildRequest(type, urlParams) {
     if (this.urlParams) {
       urlParams = this.urlParams.concat(urlParams);
-      this.resetURLParams();
+      this.resetUrlParams();
     }
 
-    const url = Array.isArray(urlParams) ? this.makeUrl(...urlParams) : this.makeUrl(urlParams);
+    const url = Array.isArray(urlParams) ? makeUrl(this, ...urlParams) : makeUrl(this, urlParams);
 
     return this.request(type, url);
   };
@@ -94,7 +95,7 @@ export function RequestMixin(Rapid) {
    */
   Rapid.prototype.afterRequest = function afterRequest(response) {
     this.resetRequestData();
-    this.resetURLParams();
+    this.resetUrlParams();
     this.config.afterRequest(response);
   };
 
@@ -104,7 +105,7 @@ export function RequestMixin(Rapid) {
    */
   Rapid.prototype.onError = function onError(error) {
     this.resetRequestData();
-    this.resetURLParams();
+    this.resetUrlParams();
     this.config.onError(error);
   };
 
@@ -187,7 +188,7 @@ export function RequestMixin(Rapid) {
   /**
    * Reset an URL params for a request
    */
-  Rapid.prototype.resetURLParams = function resetURLParams() {
+  Rapid.prototype.resetUrlParams = function resetUrlParams() {
     this.urlParams = [];
   };
 }

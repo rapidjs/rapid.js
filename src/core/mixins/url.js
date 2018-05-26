@@ -1,33 +1,35 @@
 // @ts-check
 import { sanitizeUrl } from '../../utils/url';
 
+/**
+ * Based off the current route that's set this will take a set of params
+ * and split it into a URL. This will then reset the route to the default
+ * route after building the URL.
+ *
+ * @param {Rapid} instance
+ * @param {array} params Can be any length of params that will be joined by /
+ * @return {String}
+ */
+export function makeUrl(instance, ...params) {
+  if (instance.config.trailingSlash) {
+    params.push('');
+  }
+
+  const routeUrl = [instance.routes[instance.currentRoute]].concat(params).filter(Boolean).join('/');
+  let url = sanitizeUrl(routeUrl, instance.config.trailingSlash);
+
+  // strip the extra .
+  // make sure routes don't need to regenerate
+  if (instance.config.extension) {
+    url += `.${instance.config.extension}`;
+  }
+
+  instance.currentRoute = instance.config.defaultRoute;
+
+  return url;
+}
+
 export function UrlMixin(Rapid) {
-  /**
-   * Based off the current route that's set this will take a set of params
-   * and split it into a URL. This will then reset the route to the default
-   * route after building the URL.
-   *
-   * @param {array} params Can be any length of params that will be joined by /
-   * @return {String}
-   */
-  Rapid.prototype.makeUrl = function makeUrl(...params) {
-    if (this.config.trailingSlash) {
-      params.push('');
-    }
-
-    let url = sanitizeUrl([this.routes[this.currentRoute]].concat(params).filter(Boolean).join('/'), this.config.trailingSlash);
-
-    // strip the extra .
-    // make sure routes don't need to regenerate
-    if (this.config.extension) {
-      url += `.${this.config.extension}`;
-    }
-
-    this.currentRoute = this.config.defaultRoute;
-
-    return url;
-  };
-
   /**
    * Set the URL params
    *
@@ -36,7 +38,7 @@ export function UrlMixin(Rapid) {
    * @param {Boolean} overwrite
    * @return {Rapid}
    */
-  Rapid.prototype.setURLParams = function setURLParams(
+  Rapid.prototype.setUrlParams = function setUrlParams(
     urlParams = [],
     prepend = false,
     overwrite = false,
@@ -69,7 +71,7 @@ export function UrlMixin(Rapid) {
    * @return {this}
    */
   Rapid.prototype.url = function url(...params) {
-    this.setURLParams(...params);
+    this.setUrlParams(...params);
 
     return this;
   };
@@ -81,7 +83,7 @@ export function UrlMixin(Rapid) {
    * @return {this}
    */
   Rapid.prototype.prepend = function prepend(params) {
-    this.setURLParams(params, true);
+    this.setUrlParams(params, true);
 
     return this;
   };
@@ -93,7 +95,7 @@ export function UrlMixin(Rapid) {
    * @return {this}
    */
   Rapid.prototype.append = function append(params) {
-    this.setURLParams(params);
+    this.setUrlParams(params);
 
     return this;
   };

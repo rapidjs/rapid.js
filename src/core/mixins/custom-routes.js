@@ -1,5 +1,6 @@
 // @ts-check
 import CustomRoute from '../custom-route';
+import { makeUrl } from './url';
 
 /**
  * Custom Routes
@@ -61,6 +62,6 @@ export function CustomRoutesMixin(Rapid) {
   Rapid.prototype.generate = function generate(name = '', routeParams = {}) {
     const { url } = this.getCustomRoute(name, routeParams);
 
-    return url !== '' ? this.makeUrl(this.config.baseURL, url) : '';
+    return url !== '' ? makeUrl(this, this.config.baseURL, url) : '';
   };
 }
