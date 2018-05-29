@@ -173,5 +173,13 @@ export function InitMixin(Rapid) {
       return this;
     },
   });
+
+  Object.defineProperty(Rapid.prototype, 'default', {
+    get: function any() {
+      this.currentRoute = this.config.defaultRoute;
+
+      return this;
+    },
+  });
 }
 

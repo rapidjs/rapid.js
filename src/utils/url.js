@@ -40,7 +40,5 @@ export function makeUrl(instance, ...params) {
     url += `.${instance.config.extension}`;
   }
 
-  instance.currentRoute = instance.config.defaultRoute;
-
   return url;
 }

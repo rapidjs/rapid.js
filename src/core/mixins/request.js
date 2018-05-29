@@ -1,8 +1,7 @@
 // @ts-check
 import defaultsDeep from 'lodash/defaultsDeep';
-import { sanitizeUrl } from '../../utils/url';
+import { makeUrl, sanitizeUrl } from '../../utils/url';
 import { isAllowedRequestType, parseRequestData } from '../../utils/request';
-import { makeUrl } from '../../utils/url';
 
 /**
  * Apply allowed request methods to the class
@@ -80,17 +79,20 @@ export function RequestMixin(Rapid) {
    */
 
   /**
-   * This is fired before the request
+   * Reset the route to the default route
+   * and fire any defined
+   *
    * @param {String} type
    * @param {String} url
-   * @return {Function}
    */
   Rapid.prototype.beforeRequest = function beforeRequest(type, url) {
-    return this.config.beforeRequest(type, url);
+    this.resetToDefaultRoute();
+    this.config.beforeRequest(type, url);
   };
 
   /**
    * This is fired after each request
+   *
    * @param {Object} response
    */
   Rapid.prototype.afterRequest = function afterRequest(response) {
@@ -183,6 +185,13 @@ export function RequestMixin(Rapid) {
       params: {},
       options: {},
     });
+  };
+
+  /**
+   * Resets the request data
+   */
+  Rapid.prototype.resetToDefaultRoute = function resetToDefaultRoute() {
+    this.currentRoute = this.config.defaultRoute;
   };
 
   /**
