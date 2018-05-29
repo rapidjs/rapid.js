@@ -2,7 +2,7 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 import { sanitizeUrl } from '../../utils/url';
 import { isAllowedRequestType, parseRequestData } from '../../utils/request';
-import { makeUrl } from './url';
+import { makeUrl } from '../../utils/url';
 
 /**
  * Apply allowed request methods to the class

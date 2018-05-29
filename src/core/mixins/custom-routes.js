@@ -1,6 +1,6 @@
 // @ts-check
 import CustomRoute from '../custom-route';
-import { makeUrl } from './url';
+import { makeUrl } from '../../utils/url';
 
 /**
  * Custom Routes
