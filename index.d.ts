@@ -158,8 +158,10 @@ declare class Crud extends Request {
         method: RequestType,
         ...params: string[]
     ): Promise<AxiosResponse | any>;
-    update(...params: string[]): Promise<AxiosResponse | any>;
-    save(...params: string[]): Promise<AxiosResponse | any>;
+    update(id: number, payload: any): Promise<AxiosResponse | any>;
+    update(payload: {id: number}): Promise<AxiosResponse | any>;
+    save(id: number, payload: any): Promise<AxiosResponse | any>;
+    save(payload: {id: number}): Promise<AxiosResponse | any>;
     destroy(...params: string[]): Promise<AxiosResponse | any>;
     create(data: object): Promise<AxiosResponse | any>;
     id(id: any): this;
