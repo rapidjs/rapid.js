@@ -175,7 +175,7 @@ export function InitMixin(Rapid) {
   });
 
   Object.defineProperty(Rapid.prototype, 'default', {
-    get: function any() {
+    get: function def() {
       this.currentRoute = this.config.defaultRoute;
 
       return this;
