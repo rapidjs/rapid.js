@@ -8,11 +8,17 @@ describe('Mockid', () => {
 
       const rapid = new Rapid({
         http: mockHttp,
+        modelName: 'mock',
       });
 
-      rapid.get('/foobar').then(response => {
-        console.log(response); // eslint-disable-line
-      });
+      mockHttp.install(rapid);
+
+      rapid.get('/foobar')
+        .then(response => {
+          console.log(response); // eslint-disable-line
+
+          expect(response.url).toBe('api/mock/foobar');
+        });
     });
   });
 });
