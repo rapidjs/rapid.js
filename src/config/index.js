@@ -14,6 +14,7 @@ export const requestTypes = {
   PATCH: 'patch',
   POST: 'post',
   PUT: 'put',
+  OPTIONS: 'options',
 };
 
 export const routeTypes = {

@@ -15,6 +15,7 @@ export default {
     requestTypes.PATCH,
     requestTypes.HEAD,
     requestTypes.DELETE,
+    requestTypes.OPTIONS,
   ],
 
   /**
@@ -93,8 +94,8 @@ export default {
    */
   methods: {
     create: requestTypes.POST,
-    update: requestTypes.POST,
     destroy: requestTypes.POST,
+    update: requestTypes.POST,
     restore: requestTypes.POST,
   },
 
@@ -146,8 +147,8 @@ export default {
    */
   suffixes: {
     create: requestSuffixes.CREATE,
-    update: requestSuffixes.UPDATE,
     destroy: requestSuffixes.DESTROY,
+    update: requestSuffixes.UPDATE,
     restore: requestSuffixes.RESTORE,
   },
 
