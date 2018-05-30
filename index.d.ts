@@ -159,7 +159,7 @@ declare class Crud extends Request {
         ...params: string[]
     ): Promise<AxiosResponse | any>;
     update(id: number, payload: any): Promise<AxiosResponse | any>;
-    update(payload: {id: number}): Promise<AxiosResponse | any>;
+    update(payload: any): Promise<AxiosResponse | any>;
     save(id: number, payload: any): Promise<AxiosResponse | any>;
     save(payload: {id: number}): Promise<AxiosResponse | any>;
     destroy(id: number): Promise<AxiosResponse | any>;
