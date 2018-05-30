@@ -1,7 +1,27 @@
-import { createModel } from './helpers';
+import { createModel, createRapid } from './helpers';
 
 const userModel = createModel({
   modelName: 'user',
+});
+
+const mockModel = createRapid({
+  modelName: 'photoAlbum',
+});
+
+describe('CRUD Methods', () => {
+  describe('find()', () => {
+    it('should make a get request', () => {
+      mockModel.find(1).then(response => {
+        expect(response.requestType).toBe('get');
+      });
+    });
+
+    it('should make a request find a model by id', () => {
+      mockModel.find(123).then(response => {
+        expect(response.url).toBe('api/photo-album/123');
+      });
+    });
+  });
 });
 
 describe('The basic CRUD methods should work', () => {

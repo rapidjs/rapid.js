@@ -1,9 +1,9 @@
-import { createRapid } from './helpers';
+import { createModel } from './helpers';
 
 describe('The request functionality should work as expected', () => {
   it('should fire a afterRequest', () => {
     const callback = jest.fn();
-    const Crab = createRapid({
+    const Crab = createModel({
       modelName: 'Crab',
       baseURL: 'http://maryland.com/bay/',
       afterRequest() {
@@ -18,7 +18,7 @@ describe('The request functionality should work as expected', () => {
 
   it('should fire a beforeRequest', () => {
     const callback = jest.fn();
-    const Crab = createRapid({
+    const Crab = createModel({
       modelName: 'Crab',
       baseURL: 'http://maryland.com/bay/',
       beforeRequest() {
