@@ -1,14 +1,8 @@
-import { createModel } from './helpers';
-import { Mockid } from '../../src/debug/mockid';
-import Rapid from '../../src/core';
+import { createRapid } from './helpers';
 
-const mockHttp = new Mockid();
-const mockModel = new Rapid({
+const mockModel = createRapid({
   modelName: 'mock',
-  http: mockHttp,
 });
-
-mockHttp.install(mockModel);
 
 describe('Basic Request Methods', () => {
   it('should fire a basic get request', () => {
@@ -65,39 +59,5 @@ describe('Basic Request Methods', () => {
         expect(response.url).toBe('api/mock/some-options-request');
         expect(response.requestType).toBe('options');
       });
-  });
-});
-
-const lobster = createModel({ modelName: 'Lobster', baseURL: 'http://maine.com/ocean/' });
-
-describe('The request functionality should work as expected', () => {
-  it('afterRequest gets fired', () => {
-    const callback = jest.fn();
-    const Crab = createModel({
-      modelName: 'Crab',
-      baseURL: 'http://maryland.com/bay/',
-      afterRequest() {
-        callback();
-      },
-    });
-
-    Crab.find(1);
-
-    expect(callback.mock.calls.length).toBe(1);
-  });
-
-  it('beforeRequest gets fired', () => {
-    const callback = jest.fn();
-    const Crab = createModel({
-      modelName: 'Crab',
-      baseURL: 'http://maryland.com/bay/',
-      beforeRequest() {
-        callback();
-      },
-    });
-
-    Crab.find(1);
-
-    expect(callback.mock.calls.length).toBe(1);
   });
 });

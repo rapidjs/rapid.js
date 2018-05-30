@@ -1,31 +1,35 @@
-import Rapid from './../../src/rapid';
+import { Mockid } from '../../src/debug/mockid';
 import Auth from './../../src/auth';
-
+import Rapid from '../../src/core';
 /**
  * Create an auth model for testing
  * @param {Object} config
  * @return {Rapid}
  */
-export function createAuthModel(config) {
+export const createAuthModel = config => {
   const auth = new Auth(Object.assign(config, { debug: true }));
   auth.debugger.logEnabled = false;
 
   return auth;
-}
+};
 
 /**
  * Create a model for testing
  * @param {Object} config
  * @return {Rapid}
  */
-export function createModel(config) {
+export const createModel = config => {
   const auth = new Rapid(Object.assign(config, { debug: true }));
   auth.debugger.logEnabled = false;
 
   return auth;
-}
+};
 
-export default {
-  createAuthModel,
-  createModel,
+export const createRapid = config => {
+  const mockHttp = new Mockid();
+  const mockModel = new Rapid(Object.assign(config, { http: mockHttp }));
+
+  mockHttp.install(mockModel);
+
+  return mockModel;
 };
