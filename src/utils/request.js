@@ -1,3 +1,4 @@
+// @ts-check
 import defaultsDeep from 'lodash/defaultsDeep';
 import { requestTypes } from '../config';
 import { warn } from '../utils/debug';

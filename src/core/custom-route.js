@@ -1,5 +1,4 @@
 // @ts-check
-
 class CustomRoute {
   constructor(route = {}, config = {}) {
     // setup the default route object

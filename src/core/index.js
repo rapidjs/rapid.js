@@ -1,3 +1,4 @@
+// @ts-check
 import { InitMixin } from './mixins/init';
 import { UrlMixin } from './mixins/url';
 import { RequestMixin } from './mixins/request';

@@ -1,3 +1,4 @@
+// @ts-check
 import defaults from '../config/defaults';
 
 const defaultResponse = {
