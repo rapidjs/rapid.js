@@ -1,8 +1,5 @@
 import { createModel, createRapid } from './helpers';
 
-const userModel = createModel({
-  modelName: 'user',
-});
 
 const mockModel = createRapid({
   modelName: 'photoAlbum',
@@ -22,91 +19,172 @@ describe('CRUD Methods', () => {
       });
     });
   });
-});
 
-describe('The basic CRUD methods should work', () => {
-  it('that it will have the right url for find', () => {
-    userModel.find(1);
+  describe('all()', () => {
+    it('should make a get request', () => {
+      mockModel.all().then(response => {
+        expect(response.requestType).toBe('get');
+      });
+    });
 
-    expect(userModel.debugger.data.lastUrl).toBe('api/user/1');
+    it('should make a request to find a collection of items', () => {
+      mockModel.all().then(response => {
+        expect(response.url).toBe('api/photo-albums');
+      });
+    });
   });
 
-  it('that it will have the right url for all', () => {
-    userModel.all();
+  describe('findBy()', () => {
+    it('should make a get request', () => {
+      mockModel.findBy().then(response => {
+        expect(response.requestType).toBe('get');
+      });
+    });
 
-    expect(userModel.debugger.data.lastUrl).toBe('api/users');
+    it('should append a key and value to the request url', () => {
+      mockModel.findBy('tag', 'beautiful').then(response => {
+        expect(response.url).toBe('api/photo-album/tag/beautiful');
+      });
+    });
+
+    it('should find by a collection if collection is set instead', () => {
+      mockModel.collection.findBy('tag', 'beautiful').then(response => {
+        expect(response.url).toBe('api/photo-albums/tag/beautiful');
+      });
+    });
+
+    it('should do act as an alias of get() if no params are passed', () => {
+      mockModel.findBy().then(response => {
+        expect(response.url).toBe('api/photo-album');
+      });
+    });
   });
 
-  const myModel = createModel({
-    modelName: 'model',
+  describe('create()', () => {
+    it('should make a post request', () => {
+      mockModel.create({}).then(response => {
+        expect(response.requestType).toBe('post');
+      });
+    });
+
+    it('should make make a request with the model endpoint and suffix', () => {
+      mockModel.create({}).then(response => {
+        expect(response.url).toBe('api/photo-album/create');
+      });
+    });
+
+    it('should pass params to the http request config', () => {
+      mockModel.create({ name: 'Appalachian Trail 2015' }).then(response => {
+        expect(response.requestConfig).toEqual({ name: 'Appalachian Trail 2015' });
+      });
+    });
   });
 
-  it('that it will have the right url for findBy', () => {
-    myModel.findBy('key', 'value');
+  describe('update()', () => {
+    it('should make a post request', () => {
+      mockModel.update({}).then(response => {
+        expect(response.requestType).toBe('post');
+      });
+    });
 
-    expect(myModel.debugger.data.lastUrl).toBe('api/model/key/value');
+    it('should make make a request with the model endpoint and suffix', () => {
+      mockModel.update(23, {}).then(response => {
+        expect(response.url).toBe('api/photo-album/23/update');
+      });
+    });
 
-    myModel.collection.findBy('key', 'value');
-
-    expect(myModel.debugger.data.lastUrl).toBe('api/models/key/value');
+    it('should pass params to the http request config', () => {
+      mockModel.update(23, { name: 'Colorado Trail 2016' }).then(response => {
+        expect(response.requestConfig).toEqual({ name: 'Colorado Trail 2016' });
+      });
+    });
   });
 
-  const testModel = createModel({
-    modelName: 'testModel',
+  describe('destroy()', () => {
+    it('should make a post request', () => {
+      mockModel.destroy({}).then(response => {
+        expect(response.requestType).toBe('post');
+      });
+    });
+
+    it('should make make a request with the model endpoint and suffix', () => {
+      mockModel.destroy(23, {}).then(response => {
+        expect(response.url).toBe('api/photo-album/23/destroy');
+      });
+    });
+
+    it('should pass params to the http request config', () => {
+      mockModel.destroy(23, { name: 'Colorado Trail 2016' }).then(response => {
+        expect(response.requestConfig).toEqual({ name: 'Colorado Trail 2016' });
+      });
+    });
+  });
+
+  describe('restore()', () => {
+    it('should make a post request', () => {
+      mockModel.restore(1).then(response => {
+        expect(response.requestType).toBe('post');
+      });
+    });
+
+    it('should make make a request with the model endpoint and suffix', () => {
+      mockModel.restore(23).then(response => {
+        expect(response.url).toBe('api/photo-album/23/restore');
+      });
+    });
+  });
+
+  const anotherMock = createRapid({
+    modelName: 'photoAlbum',
     suffixes: {
       create: 'new',
       update: 'save',
       destroy: 'delete',
-    },
-  });
-
-  it('that create will have the correct url', () => {
-    testModel.create({});
-    expect(testModel.debugger.data.lastUrl).toBe('api/test-model/new');
-  });
-
-  it('that update will work', () => {
-    testModel.update({});
-    expect(testModel.debugger.data.lastUrl).toBe('api/test-model/save');
-
-    testModel.update(12345, {});
-    expect(testModel.debugger.data.lastUrl).toBe('api/test-model/12345/save');
-  });
-
-  it('that destroy will work', () => {
-    testModel.destroy({});
-    expect(testModel.debugger.data.lastUrl).toBe('api/test-model/delete');
-
-    testModel.destroy(12345, {});
-    expect(testModel.debugger.data.lastUrl).toBe('api/test-model/12345/delete');
-  });
-
-  it('that restore should work', () => {
-    testModel.restore(12345);
-    expect(testModel.debugger.data.lastUrl).toBe('api/test-model/12345/restore');
-
-    testModel.restore('');
-    expect(testModel.debugger.data.lastUrl).toBe('api/test-model/restore');
-    expect((testModel.debugger.data.lastRequest.type === 'post')).toBeTruthy();
-  });
-
-  const anotherTestModel = createModel({
-    modelName: 'testModel',
-    methods: {
-      restore: 'get',
-    },
-    suffixes: {
       restore: 'undelete',
     },
+    methods: {
+      create: 'put',
+      update: 'patch',
+      destroy: 'delete',
+      restore: 'post',
+    },
   });
 
-  it('that restore suffix and request type should work', () => {
-    anotherTestModel.restore(12345);
-    expect(anotherTestModel.debugger.data.lastUrl).toBe('api/test-model/12345/undelete');
+  describe('config suffixes', () => {
+    it('should overwrite default request suffixes with config suffixes', () => {
+      anotherMock.create({}).then(response => {
+        expect(response.url).toBe('api/photo-album/new');
+      });
 
-    anotherTestModel.restore('');
-    expect(anotherTestModel.debugger.data.lastUrl).toBe('api/test-model/undelete');
+      anotherMock.update(10, {}).then(response => {
+        expect(response.url).toBe('api/photo-album/10/save');
+      });
 
-    expect((anotherTestModel.debugger.data.lastRequest.type === 'get')).toBeTruthy();
+      anotherMock.destroy(45).then(response => {
+        expect(response.url).toBe('api/photo-album/45/delete');
+      });
+
+      anotherMock.restore(23).then(response => {
+        expect(response.url).toBe('api/photo-album/23/undelete');
+      });
+    });
+
+    it('should overwrite default request method types with config method types', () => {
+      anotherMock.create({}).then(response => {
+        expect(response.requestType).toBe('put');
+      });
+
+      anotherMock.update(10, {}).then(response => {
+        expect(response.requestType).toBe('patch');
+      });
+
+      anotherMock.destroy(45).then(response => {
+        expect(response.requestType).toBe('delete');
+      });
+
+      anotherMock.restore(23).then(response => {
+        expect(response.requestType).toBe('post');
+      });
+    });
   });
 });

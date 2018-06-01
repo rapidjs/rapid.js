@@ -70,9 +70,7 @@ export function CrudMixin(Rapid) {
       urlParams.push(this.config.suffixes[method]);
     }
 
-    if (method === requestSuffixes.UPDATE) {
-      this.withParams(data);
-    }
+    this.withParams(data);
 
     return this.model.buildRequest(this.config.methods[method], urlParams);
   };

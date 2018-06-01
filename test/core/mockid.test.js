@@ -15,7 +15,7 @@ describe('Mockid', () => {
 
       rapid.get('/foobar')
         .then(response => {
-          console.log(response); // eslint-disable-line
+          // console.log(response); // eslint-disable-line
 
           expect(response.url).toBe('api/mock/foobar');
         });

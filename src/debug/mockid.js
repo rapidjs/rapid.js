@@ -9,9 +9,12 @@ const defaultResponse = {
   request: {},
 };
 
-function fakeRequest(requestType, url, respondWith = defaultResponse) {
+function fakeRequest(requestType, url, requestConfig, respondWith = defaultResponse) {
   return {
-    requestType, url, response: respondWith,
+    requestType,
+    url,
+    requestConfig,
+    response: Object.assign(defaultResponse, respondWith),
   };
 }
 
