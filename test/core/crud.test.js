@@ -1,4 +1,4 @@
-import { createModel, createRapid } from './helpers';
+import { createRapid } from './helpers';
 
 
 const mockModel = createRapid({
