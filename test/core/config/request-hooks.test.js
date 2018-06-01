@@ -1,4 +1,4 @@
-import { createModel } from './helpers';
+import { createModel } from '../helpers';
 
 describe('The request functionality should work as expected', () => {
   it('should fire a afterRequest', () => {
