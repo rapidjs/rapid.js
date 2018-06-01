@@ -1,4 +1,4 @@
-import { createModel } from './helpers';
+import { createModel } from '../helpers';
 
 const doc = createModel({
   modelName: 'document',
