@@ -1,36 +1,60 @@
-import { createModel } from '../helpers';
+import { createModel, createRapid } from '../helpers';
 
-const doc = createModel({
+const mockDoc = createRapid({
   modelName: 'document',
-  extension: 'xml',
+  extension: 'json',
 });
 
-describe('The extension feature should work', () => {
-  it('CRUD works with extension', () => {
-    doc.id(23).find();
-    expect(doc.debugger.data.lastUrl).toBe('api/document/23.xml');
+describe('Config: extension', () => {
+  describe('CRUD Methods', () => {
+    it('should append an extension to the find() method', () => {
+      mockDoc.find(1234).then(response => {
+        expect(response.url).toBe('api/document/1234.json');
+      });
+    });
 
-    doc.id(234).save({});
-    expect(doc.debugger.data.lastUrl).toBe('api/document/234/update.xml');
+    it('should append an extension to the update() method', () => {
+      mockDoc.update(4567).then(response => {
+        expect(response.url).toBe('api/document/4567/update.json');
+      });
+    });
 
-    doc.id(456).destroy();
-    expect(doc.debugger.data.lastUrl).toBe('api/document/456/destroy.xml');
+    it('should append an extension to the destroy() method', () => {
+      mockDoc.destroy(1234).then(response => {
+        expect(response.url).toBe('api/document/1234/destroy.json');
+      });
+    });
+
+    it('should append an extension to the restore() method', () => {
+      mockDoc.restore(1234).then(response => {
+        expect(response.url).toBe('api/document/1234/restore.json');
+      });
+    });
   });
 
-  const issue = createModel({
-    modelName: 'issue',
-    defaultRoute: 'collection',
-    extension: 'json',
-  });
+  describe('Basic Request Methods', () => {
+    const issue = createRapid({
+      modelName: 'issue',
+      defaultRoute: 'collection',
+      extension: 'json',
+    });
 
-  it('works with extension', () => {
-    issue.get();
-    expect(issue.debugger.data.lastUrl).toBe('api/issues.json');
+    it('should add an extension with the get() method', () => {
+      issue.get().then(response => {
+        expect(response.url).toBe('api/issues.json');
+      });
+    });
 
-    issue.post();
-    expect(issue.debugger.data.lastUrl).toBe('api/issues.json');
+    it('should add an extension with the post() method', () => {
+      issue.post().then(response => {
+        expect(response.url).toBe('api/issues.json');
+      });
+    });
 
-    issue.id(234).get();
-    expect(issue.debugger.data.lastUrl).toBe('api/issues/234.json');
+    it('should add an extension with the id() method prefixed on get()', () => {
+      issue.id(2).get().then(response => {
+        expect(response.url).toBe('api/issues/2.json');
+      });
+    });
   });
 });
