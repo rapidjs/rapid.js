@@ -1,5 +1,6 @@
 // @ts-check
 import defaults from '../config/defaults';
+import { sanitizeUrl } from '../utils/url';
 
 const defaultResponse = {
   data: {},
@@ -27,7 +28,7 @@ function fakeRequest(requestType, url, requestConfig, respondWith = defaultRespo
  * @return {string}
  */
 function prepareUrl(instance, url) {
-  return [instance.config.baseURL, url].filter(Boolean).join('/');
+  return sanitizeUrl([instance.config.baseURL, url].filter(Boolean).join('/'));
 }
 
 function _applyCallableRequestMethods(instance) {

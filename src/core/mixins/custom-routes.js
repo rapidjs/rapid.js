@@ -1,6 +1,6 @@
 // @ts-check
 import CustomRoute from '../custom-route';
-import { makeUrl } from '../../utils/url';
+import { makeUrl, sanitizeUrl } from '../../utils/url';
 
 /**
  * Custom Routes
@@ -28,7 +28,7 @@ export function CustomRoutesMixin(Rapid) {
       this.withParams(requestParams);
     }
 
-    return this.request(customRoute.type, customRoute.url);
+    return this.request(customRoute.type, sanitizeUrl(customRoute.url, this.config.trailingSlash));
   };
 
   /**
