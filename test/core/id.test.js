@@ -1,36 +1,60 @@
-import { createModel } from './helpers';
+import { createRapid } from './helpers';
 
 
-const shark = createModel({
+const fakeModel = createRapid({
   modelName: 'shark',
 });
 
-describe('The id() method works as it should', () => {
-  it('works with basic CRUD', () => {
-    shark.id(23).find();
-    expect(shark.debugger.data.lastUrl).toBe('api/shark/23');
+describe('id()', () => {
+  describe('CRUD', () => {
+    it('should append an id with the find() method', () => {
+      fakeModel.id(23).find().then(response => {
+        expect(response.url).toBe('api/shark/23');
+      });
+    });
 
-    shark.id(234).save({});
-    expect(shark.debugger.data.lastUrl).toBe('api/shark/234/update');
+    it('should append an id with the between the model name and suffix for the save() method', () => {
+      fakeModel.id(234).save().then(response => {
+        expect(response.url).toBe('api/shark/234/update');
+      });
+    });
 
-    shark.id(456).destroy();
-    expect(shark.debugger.data.lastUrl).toBe('api/shark/456/destroy');
+    it('should append an id with the between the model name and suffix for the destroy() method', () => {
+      fakeModel.id(456).destroy().then(response => {
+        expect(response.url).toBe('api/shark/456/destroy');
+      });
+    });
   });
 
-  it('works with other requests', () => {
-    shark.id(23).get();
-    expect(shark.debugger.data.lastUrl).toBe('api/shark/23');
+  describe('Basic Request Methods', () => {
+    it('should append an id with the get() method', () => {
+      fakeModel.id(23).get().then(response => {
+        expect(response.url).toBe('api/shark/23');
+      });
+    });
 
-    shark.id(789).get('fish', 'are', 'friends', 'not', 'food');
-    expect(shark.debugger.data.lastUrl).toBe('api/shark/789/fish/are/friends/not/food');
+    it('should append an id with the post() method', () => {
+      fakeModel.id(23).post().then(response => {
+        expect(response.url).toBe('api/shark/23');
+      });
+    });
 
-    shark.id(23).post('swim');
-    expect(shark.debugger.data.lastUrl).toBe('api/shark/23/swim');
+    it('should append an id with the delete() method', () => {
+      fakeModel.id(23).delete().then(response => {
+        expect(response.url).toBe('api/shark/23');
+      });
+    });
 
-    shark.id(234).delete('eat', 'fish');
-    expect(shark.debugger.data.lastUrl).toBe('api/shark/234/eat/fish');
+    it('should append an id with the put() method', () => {
+      fakeModel.id(23).put().then(response => {
+        expect(response.url).toBe('api/shark/23');
+      });
+    });
 
-    shark.id(456).patch();
-    expect(shark.debugger.data.lastUrl).toBe('api/shark/456');
+    it('should append an id with the patch() method', () => {
+      fakeModel.id(23).patch().then(response => {
+        expect(response.url).toBe('api/shark/23');
+      });
+    });
   });
 });
