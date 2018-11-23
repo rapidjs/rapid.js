@@ -1,4 +1,3 @@
-// @ts-check
 import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
 import defaults from '../../config/defaults';
@@ -74,20 +73,6 @@ function initializeHttp(instance) {
 }
 
 /**
- * Set up the custom routes if we have any
- *
- * @param {Rapid} instance
- */
-function defineCustomRoutes(instance) {
-  // if we have custom routes, set up a name:route mapping
-  if (instance.config.customRoutes.length) {
-    instance.config.customRoutes.forEach(route => {
-      instance.customRoutes[route.name] = route;
-    });
-  }
-}
-
-/**
  * The order of these are important.
  * boot() will allow overriding any config before we set up
  * the http service and routes.
@@ -110,8 +95,6 @@ function setup(instance) {
 
   initializeDebugger(instance);
 
-  defineCustomRoutes(instance);
-
   applyCallableRequestMethods(instance);
 }
 
@@ -119,7 +102,6 @@ export function InitMixin(Rapid) {
   Rapid.prototype._init = function _init(config = {}) {
     this.config = Object.assign(defaultsDeep(config, defaults));
     this.currentRoute = this.config.defaultRoute;
-    this.customRoutes = [];
     this.requestData = {
       params: {},
       options: {},

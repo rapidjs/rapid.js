@@ -39,13 +39,6 @@ export default {
   caseSensitive: false,
 
   /**
-   * Any custom routes to be generated.
-   *
-   * @type {Array}
-   */
-  customRoutes: [],
-
-  /**
    * Whether or not debug should be on.
    *
    * @type {Boolean}
