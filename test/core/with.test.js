@@ -1,8 +1,4 @@
-import { createModel, createRapid } from './helpers';
-
-const postModel = createModel({
-  modelName: 'post',
-});
+import { createRapid } from './helpers';
 
 const fakePostModel = createRapid({
   modelName: 'post',
@@ -21,7 +17,7 @@ describe('with... Methods', () => {
     it('should flush the parameters after a request is made', () => {
       const expected = { options: {}, params: {} };
 
-      fakePostModel.withParams({ limit: 20, anotherParam: true }).get('/category/featured').then(response => {
+      fakePostModel.withParams({ limit: 20, anotherParam: true }).get('/category/featured').then(() => {
         expect(fakePostModel.requestData).toEqual(expected);
       });
 
@@ -91,7 +87,8 @@ describe('with... Methods', () => {
         .get()
         .then(response => {
           expect(response.requestConfig).toEqual(expected);
-        });
+        })
+        .catch();
     });
   });
 
@@ -113,14 +110,4 @@ describe('with... Methods', () => {
   // withConfig => withConfig (...config)
   // works with ID
   // works with CRUD?
-
-  it('that withConfig works', () => {
-    postModel.collection.withConfig({
-      params: {
-        limit: 20, published: true, orderBy: 'commentCount', order: 'desc',
-      },
-    }).findBy('category', 'featured');
-
-    expect(postModel.debugger.data.lastUrl).toBe('api/posts/category/featured?limit=20&published=true&orderBy=commentCount&order=desc');
-  });
 });
