@@ -12,7 +12,7 @@ import { isAllowedRequestType, parseRequestData } from '../../utils/request';
  */
 export function applyCallableRequestMethods(instance) {
   instance.config.allowedRequestTypes.forEach(requestType => {
-    instance[requestType] = (...urlParams) => instance.buildRequest(requestType, urlParams);
+    instance[requestType] = urlParams => instance.buildRequest(requestType, urlParams);
   });
 }
 
@@ -37,11 +37,16 @@ export function RequestMixin(Rapid) {
       return this.debugger.fakeRequest(type, url);
     }
 
+    const requestConfig = this.requestData;
+
+    // reset the config before sending off to avoid pollution
+    this.resetRequestData();
+
     return new Promise((resolve, reject) => {
       this.http[type].call(
         this,
         sanitizeUrl(url, this.config.trailingSlash),
-        ...parseRequestData(type, this.requestData, this.config),
+        ...parseRequestData(type, requestConfig, this.config),
       )
         .then(response => {
           this.afterRequest(response);
@@ -60,7 +65,7 @@ export function RequestMixin(Rapid) {
    * Build a request URL
    *
    * @param {String} type
-   * @param {Array} urlParams
+   * @param {String} urlParams
    * @return {Promise}
    */
   Rapid.prototype.buildRequest = function buildRequest(type, urlParams) {
@@ -121,7 +126,7 @@ export function RequestMixin(Rapid) {
    * @param {Object} data An object of params: {}, options: {}
    * @return {this}
    */
-  Rapid.prototype.withData = function withData(data = {}) {
+  Rapid.prototype.withConfig = function withConfig(data = {}) {
     this.requestData = defaultsDeep(data, this.requestData);
 
     return this;
@@ -181,10 +186,10 @@ export function RequestMixin(Rapid) {
    * Resets the request data
    */
   Rapid.prototype.resetRequestData = function resetRequestData() {
-    this.requestData = Object.create({
+    this.requestData = {
       params: {},
       options: {},
-    });
+    };
   };
 
   /**

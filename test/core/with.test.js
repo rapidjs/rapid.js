@@ -1,28 +1,121 @@
-import { createModel } from './helpers';
+import { createModel, createRapid } from './helpers';
 
 const postModel = createModel({
   modelName: 'post',
 });
 
-describe('The with methods all work as should', () => {
-  it('that withParams works', () => {
-    postModel.collection.withParams({ limit: 20 }).findBy('category', 'featured');
+const fakePostModel = createRapid({
+  modelName: 'post',
+});
 
-    expect(postModel.debugger.data.lastUrl).toBe('api/posts/category/featured?limit=20');
+describe('with... Methods', () => {
+  describe('withParams()', () => {
+    it('should set the parameters before a request', () => {
+      const expected = { limit: 20 };
+
+      fakePostModel.withParams({ limit: 20 }).get('/category/featured').then(response => {
+        expect(response.requestConfig.params).toEqual(expected);
+      });
+    });
+
+    it('should flush the parameters after a request is made', () => {
+      const expected = { options: {}, params: {} };
+
+      fakePostModel.withParams({ limit: 20, anotherParam: true }).get('/category/featured').then(response => {
+        expect(fakePostModel.requestData).toEqual(expected);
+      });
+
+      expect(fakePostModel.requestData).toEqual(expected);
+
+      fakePostModel.get('/category/featured').then(secondResponse => {
+        expect(fakePostModel.requestData).toEqual(expected);
+        expect(secondResponse.requestConfig.params).toEqual({});
+      });
+    });
+
+    it('will overwrite the current params if it is chained', () => {
+      const expected = { limit: 20 };
+
+      fakePostModel
+        .withParams({ status: 'published' })
+        .withParams({ limit: 20 })
+        .get().then(response => {
+          expect(response.requestConfig.params).toEqual(expected);
+        });
+    });
   });
 
-  it('that withParam works', () => {
-    postModel.withParam('status', 'published').get();
+  describe('withParam()', () => {
+    it('should set a single parameter before a request', () => {
+      const expected = { status: 'published' };
 
-    expect(postModel.debugger.data.lastUrl).toBe('api/post?status=published');
+      fakePostModel.withParam('status', 'published').get().then(response => {
+        expect(response.requestConfig.params).toEqual(expected);
+      });
+    });
 
-    postModel.collection.withParam('status', 'published').findBy('category', 'featured');
+    it('will merge the params when it is chained', () => {
+      const expected = { status: 'published', limit: 20 };
 
-    expect(postModel.debugger.data.lastUrl).toBe('api/posts/category/featured?status=published');
+      fakePostModel
+        .withParam('status', 'published')
+        .withParam('limit', 20)
+        .get().then(response => {
+          expect(response.requestConfig.params).toEqual(expected);
+        });
+    });
   });
 
-  it('that withData works', () => {
-    postModel.collection.withData({
+  describe('withOptions()', () => {
+
+  });
+
+  describe('withOption()', () => {
+
+  });
+
+  describe('withConfig()', () => {
+    it('should send params and options to the request', () => {
+      const expected = {
+        params: {
+          limit: 20,
+          published: true,
+          orderBy: 'commentCount',
+          order: 'desc',
+        },
+        options: { foo: 'bar' },
+      };
+
+      fakePostModel
+        .withConfig(expected)
+        .get()
+        .then(response => {
+          expect(response.requestConfig).toEqual(expected);
+        });
+    });
+  });
+
+  describe('Works with id()', () => {
+
+  });
+
+  describe('Works with CRUD methods', () => {
+
+  });
+
+  describe('Works with route methods', () => {
+
+  });
+
+
+  // withOptions
+  // withOption
+  // withConfig => withConfig (...config)
+  // works with ID
+  // works with CRUD?
+
+  it('that withConfig works', () => {
+    postModel.collection.withConfig({
       params: {
         limit: 20, published: true, orderBy: 'commentCount', order: 'desc',
       },

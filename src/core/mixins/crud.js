@@ -150,6 +150,6 @@ export function CrudMixin(Rapid) {
       urlParams.push(value);
     }
 
-    return this.get(...urlParams);
+    return this.get(urlParams.filter(Boolean).join('/'));
   };
 }

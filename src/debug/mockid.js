@@ -33,10 +33,10 @@ function prepareUrl(instance, url) {
 
 function _applyCallableRequestMethods(instance) {
   defaults.allowedRequestTypes.forEach(requestType => {
-    instance[requestType] = (url, ...requestData) => new Promise(resolve => {
+    instance[requestType] = (url, requestConfig) => new Promise(resolve => {
       instance.config.beforeRequest();
 
-      resolve(fakeRequest(requestType, prepareUrl(instance, url), ...requestData));
+      resolve(fakeRequest(requestType, prepareUrl(instance, url), requestConfig));
     });
   });
 }

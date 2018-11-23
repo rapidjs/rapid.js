@@ -22,7 +22,7 @@ export default {
    *
    * @type {Object}
    */
-  apiConfig: {},
+  httpConfig: {},
 
   /**
    * The baseURL for the requests.

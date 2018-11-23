@@ -66,7 +66,7 @@ function initializeHttp(instance) {
   } else {
     instance.http = axios.create(defaultsDeep(
       { baseURL: instance.config.baseURL },
-      instance.config.apiConfig,
+      instance.config.httpConfig,
     ));
 
     writeInterceptorsToAPI(instance);
@@ -150,7 +150,7 @@ export function InitMixin(Rapid) {
   /**
    * Getters for switching routes
    */
-  Object.defineProperty(Rapid.prototype, 'collection', {
+  Object.defineProperty(Rapid.prototype, routeTypes.COLLECTION, {
     get: function collection() {
       this.currentRoute = routeTypes.COLLECTION;
 
@@ -158,7 +158,7 @@ export function InitMixin(Rapid) {
     },
   });
 
-  Object.defineProperty(Rapid.prototype, 'model', {
+  Object.defineProperty(Rapid.prototype, routeTypes.MODEL, {
     get: function model() {
       this.currentRoute = routeTypes.MODEL;
 
@@ -166,7 +166,7 @@ export function InitMixin(Rapid) {
     },
   });
 
-  Object.defineProperty(Rapid.prototype, 'any', {
+  Object.defineProperty(Rapid.prototype, routeTypes.ANY, {
     get: function any() {
       this.currentRoute = routeTypes.ANY;
 

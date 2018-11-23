@@ -18,7 +18,7 @@ declare enum Method {
 declare interface Config {
     afterRequest?: (response: AxiosResponse | any) => any;
     allowedRequestTypes?: RequestType[];
-    apiConfig?: AxiosRequestConfig;
+    httpConfig?: AxiosRequestConfig;
     baseURL?: string;
     beforeRequest?: (type: RequestType, url: string) => any;
     caseSensitive?: boolean;
@@ -145,7 +145,7 @@ declare class Request extends Routes {
     beforeRequest(type: RequestType, url: string): any;
     afterRequest(response: AxiosResponse | any): void;
     onError(error: Error): void;
-    withData(data: object): this;
+    withConfig(data: object): this;
     withParams(params: object): this;
     withParam(key: string, value: any): this;
     withOptions(options: object): this;
