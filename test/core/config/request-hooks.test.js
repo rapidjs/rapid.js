@@ -1,37 +1,57 @@
-import { createModel } from '../helpers';
+import { createRapid } from '../helpers';
 
-describe('The request functionality should work as expected', () => {
-  it('should fire a afterRequest', () => {
-    const callback = jest.fn();
-    const Crab = createModel({
-      modelName: 'Crab',
-      baseURL: 'http://maryland.com/bay/',
-      afterRequest() {
-        callback();
-      },
-    });
+describe('Request Hooks', () => {
+  describe('beforeRequest', () => {
+    const beforeCallback = jest.fn();
 
-    Crab.find(1);
-
-    expect(callback.mock.calls.length).toBe(1);
-  });
-
-  it('should fire a beforeRequest', () => {
-    const callback = jest.fn();
-    const Crab = createModel({
+    const Crab = createRapid({
       modelName: 'Crab',
       baseURL: 'http://maryland.com/bay/',
       beforeRequest() {
-        callback();
+        beforeCallback();
       },
     });
 
-    Crab.find(1);
-
-    expect(callback.mock.calls.length).toBe(1);
+    it('should fire a beforeRequest', () => {
+      Crab.find(1).then(() => {
+        expect(beforeCallback.mock.calls.length).toBe(1);
+      }).catch(err => console.log(err)); // eslint-disable-line);
+    });
   });
 
-  it('should fire onError when an error occurs', () => {
+  describe('afterRequest', () => {
+    const afterCallback = jest.fn();
 
+    const Crab = createRapid({
+      modelName: 'Crab',
+      baseURL: 'http://maryland.com/bay/',
+      afterRequest() {
+        afterCallback();
+      },
+    });
+
+    it('should fire the callback after the request has been made', () => {
+      Crab.find(1).then(() => {
+        expect(afterCallback.mock.calls.length).toBe(1);
+      });
+    });
+  });
+
+  describe('onError', () => {
+    const onErrorCallback = jest.fn();
+
+    const Crab = createRapid({
+      modelName: 'Crab',
+      baseURL: 'http://maryland.com/bay/',
+      onError() {
+        onErrorCallback();
+      },
+    });
+
+    it('should call the onError callback if an error has been made', () => {
+      Crab.rejection().then(() => {
+        expect(onErrorCallback.mock.calls.length).toBe(1);
+      });
+    });
   });
 });

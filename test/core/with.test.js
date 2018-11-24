@@ -70,7 +70,7 @@ describe('with... Methods', () => {
 
   });
 
-  describe('withConfig()', () => {
+  describe.skip('withConfig()', () => {
     it('should send params and options to the request', () => {
       const expected = {
         params: {

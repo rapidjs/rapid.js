@@ -34,11 +34,21 @@ function prepareUrl(instance, url) {
 function _applyCallableRequestMethods(instance) {
   defaults.allowedRequestTypes.forEach(requestType => {
     instance[requestType] = (url, requestConfig) => new Promise(resolve => {
-      instance.config.beforeRequest();
-
       resolve(fakeRequest(requestType, prepareUrl(instance, url), requestConfig));
     });
   });
+}
+
+/**
+ * Apply a rejection method on Rapid so onError can be triggered
+ *
+ * @param {Rapid} instance
+ */
+function _applyRejectionMethod(instance) {
+  instance.config.allowedRequestTypes.push('fail');
+  instance.rejection = function rejectRequest() {
+    return instance.request('fail');
+  };
 }
 
 export class Mockid {
@@ -50,5 +60,6 @@ export class Mockid {
     this.config = instance.config;
 
     _applyCallableRequestMethods(this);
+    _applyRejectionMethod(instance);
   }
 }

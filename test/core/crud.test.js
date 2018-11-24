@@ -1,6 +1,5 @@
 import { createRapid } from './helpers';
 
-
 const mockModel = createRapid({
   modelName: 'photoAlbum',
 });
