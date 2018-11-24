@@ -37,24 +37,6 @@ function initializeDebugger(instance) {
 }
 
 /**
- * Set the interceptors to the api object
- *
- * @param {Rapid} instance
- */
-function writeInterceptorsToAPI(instance) {
-  const { interceptors } = instance.config;
-  const types = Object.keys(interceptors);
-
-  if (types.length) {
-    types.forEach(type => {
-      interceptors[type].forEach(interceptor => {
-        instance.http.interceptors[type].use(interceptor);
-      });
-    });
-  }
-}
-
-/**
  * Initialize the API.
  *
  * @param {Rapid} instance
@@ -67,8 +49,6 @@ function initializeHttp(instance) {
       { baseURL: instance.config.baseURL },
       instance.config.httpConfig,
     ));
-
-    writeInterceptorsToAPI(instance);
   }
 }
 
