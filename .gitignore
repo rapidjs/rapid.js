@@ -4,3 +4,4 @@
 npm-debug.log
 demo/node_modules
 /demo
+/coverage

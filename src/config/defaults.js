@@ -18,13 +18,6 @@ export default {
   ],
 
   /**
-   * Any config to be passed to axios.
-   *
-   * @type {Object}
-   */
-  httpConfig: {},
-
-  /**
    * The baseURL for the requests.
    *
    * @type {String}

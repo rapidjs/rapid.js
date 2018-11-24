@@ -1,4 +1,3 @@
-import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
 import defaults from '../../config/defaults';
 import { routeTypes } from '../../config';
@@ -32,14 +31,7 @@ function sanitizeBaseURL(instance) {
  * @param {Rapid} instance
  */
 function initializeHttp(instance) {
-  if (instance.config.http) {
-    instance.http = instance.config.http;
-  } else {
-    instance.http = axios.create(defaultsDeep(
-      { baseURL: instance.config.baseURL },
-      instance.config.httpConfig,
-    ));
-  }
+  instance.http = instance.config.http;
 }
 
 /**

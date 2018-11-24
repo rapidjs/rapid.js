@@ -35,11 +35,13 @@
     "jest": "^21.2.1"
   },
   "dependencies": {
-    "axios": "^0.16.0",
     "lodash": "^4.17.4",
     "pluralize": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "jest": {
+    "collectCoverage": true
   }
 }
