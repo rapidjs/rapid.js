@@ -32,13 +32,6 @@ export default {
   caseSensitive: false,
 
   /**
-   * Whether or not debug should be on.
-   *
-   * @type {Boolean}
-   */
-  debug: false,
-
-  /**
    * The default route. Can be model|collection.
    *
    * @type {String}
