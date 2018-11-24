@@ -1,4 +1,3 @@
-// @ts-check
 import defaults from '../config/defaults';
 import { sanitizeUrl } from '../utils/url';
 

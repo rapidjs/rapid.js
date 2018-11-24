@@ -1,4 +1,3 @@
-// @ts-check
 import defaultsDeep from 'lodash/defaultsDeep';
 import { makeUrl, sanitizeUrl } from '../../utils/url';
 import { isAllowedRequestType, parseRequestData } from '../../utils/request';
@@ -32,10 +31,6 @@ export function RequestMixin(Rapid) {
     }
 
     this.beforeRequest(type, url);
-
-    if (this.config.debug) {
-      return this.debugger.fakeRequest(type, url);
-    }
 
     const requestConfig = this.requestData;
 

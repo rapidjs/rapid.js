@@ -37,8 +37,7 @@
   "dependencies": {
     "axios": "^0.16.0",
     "lodash": "^4.17.4",
-    "pluralize": "^4.0.0",
-    "qs-stringify": "^1.1.0"
+    "pluralize": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"

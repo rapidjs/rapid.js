@@ -1,7 +1,6 @@
 // @ts-check
 import defaultsDeep from 'lodash/defaultsDeep';
 import { requestTypes } from '../config';
-import { warn } from '../utils/debug';
 
 /**
  * Parse the request data prior to passing it to the http service
@@ -38,10 +37,6 @@ export const parseRequestData = (requestType, requestData, config) => {
  */
 export const isAllowedRequestType = (requestType, config) => {
   if (!config.allowedRequestTypes.includes(requestType)) {
-    if (config.debug) {
-      warn(`'${requestType}' is not included in allowedRequestTypes: [${config.allowedRequestTypes.join(', ')}]`);
-    }
-
     return false;
   }
 

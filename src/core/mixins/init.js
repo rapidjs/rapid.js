@@ -1,7 +1,6 @@
 import axios from 'axios';
 import defaultsDeep from 'lodash/defaultsDeep';
 import defaults from '../../config/defaults';
-import Debugger from '../../debug/debugger';
 import { routeTypes } from '../../config';
 import { generateRoute } from '../../utils/routes';
 import { sanitizeUrl } from '../../utils/url';
@@ -25,15 +24,6 @@ function generateRoutes(instance) {
  */
 function sanitizeBaseURL(instance) {
   instance.config.baseURL = sanitizeUrl(instance.config.baseURL, instance.config.trailingSlash);
-}
-
-/**
- * Initialze the debugger if debug is set to true.
- *
- * @param {Rapid} instance
- */
-function initializeDebugger(instance) {
-  instance.debugger = instance.config.debug ? new Debugger(instance) : false;
 }
 
 /**
@@ -72,8 +62,6 @@ function setup(instance) {
   instance.$setConfig('caseSensitive', instance.config.caseSensitive);
 
   initializeHttp(instance);
-
-  initializeDebugger(instance);
 
   applyCallableRequestMethods(instance);
 }
