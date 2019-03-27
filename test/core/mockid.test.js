@@ -1,4 +1,4 @@
-import { Mockid } from '../../src/debug/mockid';
+import { Mockid } from '../debug/mockid';
 import Rapid from '../../src/core';
 
 describe('Mockid', () => {
@@ -15,8 +15,6 @@ describe('Mockid', () => {
 
       rapid.get('/foobar')
         .then(response => {
-          // console.log(response); // eslint-disable-line
-
           expect(response.url).toBe('api/mock/foobar');
         });
     });

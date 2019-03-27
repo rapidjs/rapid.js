@@ -1,4 +1,4 @@
-import { Mockid } from '../../src/debug/mockid';
+import { Mockid } from '../debug/mockid';
 import Rapid from '../../src/core';
 
 export const createRapid = config => {

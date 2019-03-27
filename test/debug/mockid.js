@@ -1,5 +1,5 @@
-import defaults from '../config/defaults';
-import { sanitizeUrl } from '../utils/url';
+import defaults from '../../src/config/defaults';
+import { sanitizeUrl } from '../../src/utils/url';
 
 const defaultResponse = {
   data: {},
