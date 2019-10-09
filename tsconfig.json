@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowJs": false,
+    "baseUrl": "./src",
+    "experimentalDecorators": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "lib": [
+      "es2017",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noEmitOnError": true,
+    "noImplicitThis": false,
+    "removeComments": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "paths": {
+      
+    },
+    "sourceMap": false,
+    "strict": true,
+    "target": "es2017",
+    "types": [
+      "node",
+      "@types/jest"
+    ],
+    "outDir": "dist",
+    "declaration": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

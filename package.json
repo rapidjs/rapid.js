@@ -25,14 +25,23 @@
   },
   "homepage": "https://github.com/rapidjs/rapid.js#readme",
   "devDependencies": {
+    "@types/jest": "^24.0.18",
     "babel-cli": "^6.24.0",
     "babel-eslint": "^8.0.2",
     "babel-preset-es2015": "^6.24.0",
     "eslint": "^4.11.0",
-    "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-airbnb-standard": "^1.6.5",
-    "eslint-plugin-import": "^2.8.0",
-    "jest": "^21.2.1"
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-loader": "2.1.1",
+    "eslint-plugin-prettier": "2.6.2",
+    "eslint-restricted-globals": "0.1.1",
+    "jest": "^21.2.1",
+    "typescript": "^3.6.3",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "prettier": "1.14.3",
+    "@typescript-eslint/eslint-plugin": "1.4.2",
+    "@typescript-eslint/parser": "1.4.2"
   },
   "dependencies": {
     "lodash": "^4.17.4",

@@ -1,7 +1,8 @@
 // @ts-check
-import { requestSuffixes, requestTypes, routeTypes } from '../config';
+import { requestSuffixes, requestTypes } from '.';
+import { Config } from './types';
 
-export default {
+export const config: Config.Model = {
   /**
    * The possible allowed request types.
    *
@@ -14,7 +15,7 @@ export default {
     requestTypes.PATCH,
     requestTypes.HEAD,
     requestTypes.DELETE,
-    requestTypes.OPTIONS,
+    requestTypes.OPTIONS
   ],
 
   /**
@@ -36,7 +37,7 @@ export default {
    *
    * @type {String}
    */
-  defaultRoute: routeTypes.MODEL,
+  defaultRoute: Config.RouteTypes.Model,
 
   /**
    * An optional extension to have on the end of each request (.json).
@@ -60,10 +61,10 @@ export default {
    * @type {Object}
    */
   methods: {
-    create: requestTypes.POST,
-    destroy: requestTypes.POST,
-    update: requestTypes.POST,
-    restore: requestTypes.POST,
+    create: Config.RequestTypes.Post,
+    destroy: Config.RequestTypes.Post,
+    update: Config.RequestTypes.Post,
+    restore: Config.RequestTypes.Post
   },
 
   /**
@@ -104,7 +105,7 @@ export default {
   routes: {
     model: '',
     collection: '',
-    any: '',
+    any: ''
   },
 
   /**
@@ -116,7 +117,7 @@ export default {
     create: requestSuffixes.CREATE,
     destroy: requestSuffixes.DESTROY,
     update: requestSuffixes.UPDATE,
-    restore: requestSuffixes.RESTORE,
+    restore: requestSuffixes.RESTORE
   },
 
   /**
@@ -133,5 +134,5 @@ export default {
   afterRequest(response) {},
 
   // eslint-disable-next-line no-unused-vars
-  onError(response) {},
+  onError(response) {}
 };

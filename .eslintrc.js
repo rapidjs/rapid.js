@@ -1,7 +1,16 @@
 module.exports = {
-  'parser': 'babel-eslint',
-  'extends': 'airbnb-base',
-  'rules': {
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    sourceType: 'module',
+    ecmaVersion: 2018,
+  },
+  extends: [
+    'airbnb-base',
+    'plugin:@typescript-eslint/recommended',
+    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
+  ],
+  rules: {
     'arrow-parens': ['error', 'as-needed'],
     'indent': ['error', 2],
     'class-methods-use-this': ['error', { 'exceptMethods': ['boot'] }],
@@ -19,9 +28,20 @@ module.exports = {
       'requireReturn': false,
       'requireParamDescription': false,
       'requireReturnDescription': false
-    }]
+    }],
+    '@typescript-eslint/camelcase': 0,
+    '@typescript-eslint/indent': 0,
+    '@typescript-eslint/array-type': ['error', 'array'],
+    '@typescript-eslint/interface-name': [true, 'never'],
+    '@typescript-eslint/no-angle-bracket-type-assertion': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-namespace': 0,
+    '@typescript-eslint/no-object-literal-type-assertion': 0,
+    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-use-before-define': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
   },
-  'globals': {
+  globals: {
     'it': true,
     'describe': true,
     'beforeAll': true,
