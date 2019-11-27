@@ -46,15 +46,23 @@
     "@babel/preset-typescript": "^7.0.0-beta.32",
     "@types/jest": "^22.1.4",
     "babel-eslint": "^8.0.2",
-    "eslint": "^4.11.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-config-airbnb-standard": "^1.6.5",
-    "eslint-plugin-import": "^2.8.0",
-    "jest": "^21.2.1",
-    "ts-jest": "^22.4.1",
-    "tslint-config-airbnb": "^5.7.0",
-    "typescript": "^2.7.2",
-    "typescript-eslint-parser": "^14.0.0"
+    "@typescript-eslint/eslint-plugin": "1.4.2",
+    "@typescript-eslint/parser": "1.4.2",
+    "eslint": "5.9.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-config-prettier": "4.0.0",
+    "eslint-friendly-formatter": "4.0.1",
+    "eslint-loader": "2.1.1",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-prettier": "2.6.2",
+    "eslint-restricted-globals": "0.1.1",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "24.0.0",
+    "ts-loader": "5.3.3",
+    "ts-node": "8.0.3",
+    "tslib": "^1.10.0",
+    "typescript": "3.3.3333"
   },
   "dependencies": {
     "axios": "^0.16.0",
@@ -66,17 +74,15 @@
     "access": "public"
   },
   "jest": {
-    "transform": {
-      "^.+\\.ts?$": "ts-jest"
-    },
-    "testRegex": "(/__test__/.*|(\\.|/)(test|spec))\\.(tsx?|ts?)$",
     "moduleFileExtensions": [
-      "ts",
-      "tsx",
       "js",
-      "jsx",
-      "json",
-      "node"
-    ]
+      "ts",
+      "json"
+    ],
+    "preset": "ts-jest",
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "rootDir": "./src"
   }
 }
