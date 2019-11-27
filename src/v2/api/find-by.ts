@@ -2,10 +2,13 @@ import { Rapid } from '../config/types';
 
 export function createFindByMethod(context: Rapid.Context) {
   return function findBy(key: Rapid.ModelId, value: Rapid.ModelId) {
-    const {
-      internals: { makeRequest },
-    } = context;
+    const { api } = context;
+    const urlParams = [key];
 
-    return makeRequest({});
+    if (value) {
+      urlParams.push(value);
+    }
+
+    return api.get();
   };
 }

@@ -1,16 +1,11 @@
-import { Rapid } from "../config/types";
+import { Rapid } from '../config/types';
 
-export function createRequestMethod(
-  context: Rapid.Context,
-  requestType: Rapid.RequestType
-) {
-  return function createRequestMethod() {
+export function createRequestMethod(context: Rapid.Context, requestType: Rapid.RequestType) {
+  return function request(params) {
     const {
-      internals: { makeRequest }
+      internals: { buildRequest },
     } = context;
 
-    return makeRequest({
-      type: requestType
-    });
+    return buildRequest(requestType, params);
   };
 }

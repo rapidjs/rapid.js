@@ -2,10 +2,8 @@ import { Rapid } from '../config/types';
 
 export function createFindMethod(context: Rapid.Context) {
   return function find(id: Rapid.ModelId) {
-    const {
-      internals: { makeRequest },
-    } = context;
+    const { api } = context;
 
-    return makeRequest({});
+    return api.model.id(id).get();
   };
 }

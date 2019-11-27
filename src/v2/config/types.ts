@@ -3,7 +3,7 @@ export namespace Rapid {
     all(): Promise<any>;
     find(id: ModelId): Promise<any>;
     findBy(key: ModelId, value: ModelId): Promise<any>;
-    get(): Promise<any>;
+    get(params): Promise<any>;
     id(id: ModelId): Chainable;
     collection: Chainable;
     model: Chainable;
@@ -19,7 +19,7 @@ export namespace Rapid {
     config: Config;
     currentRoute: Routes;
     internals: {
-      makeRequest(params): Promise<any>;
+      buildRequest(type: RequestType, url: string): Promise<any>;
       resetRequestData(): void;
       resetURLParams(): void;
     };
@@ -36,12 +36,11 @@ export namespace Rapid {
     baseURL?: string;
     beforeRequest?(type: RequestType, url: string): void;
     caseSensitive?: boolean;
-    debug?: boolean;
     defaultRoute?: Routes;
     extension?: string;
     onError?(error: () => void): void;
     globalParameters?: object;
-    // http?: HttpInstance;
+    http: HttpInstance;
     httpConfig?: object;
     modelName: string;
     methods?: {
@@ -80,5 +79,14 @@ export namespace Rapid {
     Patch = 'patch',
     Head = 'head',
     Delete = 'delete',
+  }
+
+  export interface HttpInstance<T = Promise<any>> {
+    get(url: string, params: object): T;
+    post(url: string, params: object): T;
+    put(url: string, params: object): T;
+    patch(url: string, params: object): T;
+    head(url: string, params: object): T;
+    delete(url: string, params: object): T;
   }
 }

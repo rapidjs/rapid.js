@@ -1,4 +1,4 @@
-import { Rapid } from "./types";
+import { Rapid } from './types';
 
 export function getDefaultConfig(): Rapid.Config {
   return {
@@ -13,7 +13,7 @@ export function getDefaultConfig(): Rapid.Config {
       Rapid.RequestType.Put,
       Rapid.RequestType.Patch,
       Rapid.RequestType.Head,
-      Rapid.RequestType.Delete
+      Rapid.RequestType.Delete,
     ],
 
     /**
@@ -21,7 +21,7 @@ export function getDefaultConfig(): Rapid.Config {
      *
      * @type {String}
      */
-    baseURL: "api",
+    baseURL: 'api',
 
     /**
      * Whether or not the routes should be case sensitive.
@@ -31,25 +31,18 @@ export function getDefaultConfig(): Rapid.Config {
     caseSensitive: false,
 
     /**
-     * Whether or not debug should be on.
-     *
-     * @type {Boolean}
-     */
-    debug: false,
-
-    /**
      * The default route. Can be model|collection.
      *
      * @type {String}
      */
-    defaultRoute: Rapid.Routes.Model,
+    defaultRoute: Rapid.Routes.Collection,
 
     /**
      * An optional extension to have on the end of each request (.json).
      *
      * @type {String}
      */
-    extension: "",
+    extension: '',
 
     /**
      * An optional set of request parameters to be global and attached to every request.
@@ -58,7 +51,8 @@ export function getDefaultConfig(): Rapid.Config {
      */
     globalParameters: {},
 
-    // http: AxiosAdapter,
+    // @ts-ignore
+    http: undefined,
 
     /**
      * The default request methods for the CRUD methods.
@@ -66,10 +60,10 @@ export function getDefaultConfig(): Rapid.Config {
      * @type {Object}
      */
     methods: {
-      create: "post",
-      update: "post",
-      destroy: "post",
-      restore: "post"
+      create: 'post',
+      update: 'post',
+      destroy: 'post',
+      restore: 'post',
     },
 
     /**
@@ -78,7 +72,7 @@ export function getDefaultConfig(): Rapid.Config {
      *
      * @type {String}
      */
-    modelName: "",
+    modelName: '',
 
     /**
      * An optional prefix for a primary key to be present in the urls.
@@ -86,7 +80,7 @@ export function getDefaultConfig(): Rapid.Config {
      *
      * @type {String}
      */
-    primaryKey: "",
+    primaryKey: '',
 
     /**
      * The route delimeter that handles splitting routes:
@@ -94,7 +88,7 @@ export function getDefaultConfig(): Rapid.Config {
      *
      * @type {String}
      */
-    routeDelimeter: "-",
+    routeDelimeter: '-',
 
     /**
      * The default route values for model, collection, and any.
@@ -108,9 +102,9 @@ export function getDefaultConfig(): Rapid.Config {
      * @type {Object}
      */
     routes: {
-      model: "",
-      collection: "",
-      any: ""
+      model: '',
+      collection: '',
+      any: '',
     },
 
     /**
@@ -119,10 +113,10 @@ export function getDefaultConfig(): Rapid.Config {
      * @type {Object}
      */
     suffixes: {
-      create: "create",
-      update: "update",
-      destroy: "destroy",
-      restore: "restore"
+      create: 'create',
+      update: 'update',
+      destroy: 'destroy',
+      restore: 'restore',
     },
 
     /**
@@ -136,6 +130,6 @@ export function getDefaultConfig(): Rapid.Config {
 
     afterRequest(response) {},
 
-    onError(response) {}
+    onError(response) {},
   };
 }

@@ -8,6 +8,14 @@ import { createIdMethod } from './api/id';
 import { getDefaultConfig } from './config/get-default-config';
 
 export function createRapid(config: Rapid.Config): Rapid.API {
+  if (!config.modelName) {
+    throw new Error('You must specify a modelName.');
+  }
+
+  if (!config.http) {
+    throw new Error('You must specify an http instance to use.');
+  }
+
   Object.assign(config, defaultsDeep(config, getDefaultConfig()));
 
   const context: Rapid.Context = {
@@ -15,7 +23,7 @@ export function createRapid(config: Rapid.Config): Rapid.API {
     config,
     currentRoute: <Rapid.Routes>config.defaultRoute,
     internals: {
-      makeRequest,
+      buildRequest,
       resetRequestData,
       resetURLParams,
     },
@@ -52,8 +60,39 @@ export function createRapid(config: Rapid.Config): Rapid.API {
     },
   };
 
-  function makeRequest(params): Promise<any> {
-    return Promise.resolve();
+  function makeRequest(type: Rapid.RequestType, url: string): Promise<any> {
+    if (config.beforeRequest) {
+      config.beforeRequest(type, url);
+    }
+    // .call(this, this.sanitizeUrl(url), ...this.parseRequestData(type))
+
+    return new Promise((resolve, reject) => {
+      config.http[type](url, {})
+        .then(response => {
+          resetRequestData();
+          resetURLParams();
+
+          if (config.afterRequest) {
+            config.afterRequest(response);
+          }
+
+          resolve(response);
+        })
+        .catch(error => {
+          resetRequestData();
+          resetURLParams();
+
+          if (config.onError) {
+            config.onError(error);
+          }
+
+          reject(error);
+        });
+    });
+  }
+
+  function buildRequest(type: Rapid.RequestType, url: string): Promise<any> {
+    return makeRequest(type, url);
   }
 
   /**
