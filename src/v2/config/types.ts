@@ -81,7 +81,8 @@ export namespace Rapid {
       restore?: string;
     };
     trailingSlash?: boolean;
-    transformURL?(url): string;
+    transformRequestData(data: Context['requestData']): any;
+    transformURL?(url: string): string;
   }
 
   export interface ConfigWithModel extends InitializerConfig {
