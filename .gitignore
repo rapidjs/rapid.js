@@ -30,3 +30,5 @@ node_modules/
 # Others
 demo/node_modules
 /demo
+
+legacy
