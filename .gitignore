@@ -2,7 +2,7 @@
 /node_modules
 .nyc_output
 npm-debug.log
-# referece: https://github.com/github/gitignore/blob/master/Node.gitignore
+# reference: https://github.com/github/gitignore/blob/master/Node.gitignore
 
 # Logs
 logs
