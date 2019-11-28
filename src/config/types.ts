@@ -5,6 +5,7 @@ export namespace Rapid {
     findBy(key: ModelId, value: ModelId): Promise<any>;
     get(params): Promise<any>;
     id(id: ModelId): Chainable;
+    withParams(params: object): Chainable;
   }
 
   export type Thunk = (modelName: string) => API;
@@ -81,7 +82,7 @@ export namespace Rapid {
       restore?: string;
     };
     trailingSlash?: boolean;
-    transformRequestData(data: Context['requestData']): any;
+    transformRequestData?(data: Context['requestData']): any;
     transformURL?(url: string): string;
   }
 

@@ -5,6 +5,7 @@ import { createFindMethod } from './api/find';
 import { createFindByMethod } from './api/find-by';
 import { createRequestMethod } from './api/request';
 import { createIdMethod } from './api/id';
+import { createWithParamsMethod } from './api/with-params';
 import { getDefaultConfig } from './config/get-default-config';
 
 export function createRapid(config: Rapid.ConfigWithModel): Rapid.API;
@@ -39,6 +40,7 @@ export function createRapid(config: Rapid.InitializerConfig | Rapid.ConfigWithMo
     findBy: createFindByMethod(context),
     get: createRequestMethod(context, Rapid.RequestType.Get),
     id: createIdMethod(context),
+    withParams: createWithParamsMethod(context),
   };
 
   // if a model name is provided, we return the standard API to be used a singleton
@@ -65,7 +67,7 @@ export function createRapid(config: Rapid.InitializerConfig | Rapid.ConfigWithMo
     // .call(this, this.sanitizeUrl(url), ...this.parseRequestData(type))
 
     return new Promise((resolve, reject) => {
-      context.config.http[requestType](preparedUrl, {})
+      context.config.http[requestType](preparedUrl, context.requestData)
         .then(response => {
           resetRequestData();
           resetURLParams();

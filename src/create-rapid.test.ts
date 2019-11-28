@@ -25,7 +25,7 @@ function createMockHttp(): MockHttp {
     return Promise[promiseMethod]({
       url,
       type,
-      params,
+      requestData: params,
     });
   }
 
@@ -109,7 +109,7 @@ describe('API', () => {
       http: createMockHttp(),
     });
 
-    it('should make a GET request', async() => {
+    it('should make a GET request', async () => {
       const request = await rapid('users').all();
 
       expect(request.type).toBe(Rapid.RequestType.Get);
@@ -123,7 +123,7 @@ describe('API', () => {
       http: createMockHttp(),
     });
 
-    it('should make a GET request', async() => {
+    it('should make a GET request', async () => {
       const request = await rapid.all();
 
       expect(request.type).toEqual(Rapid.RequestType.Get);
@@ -131,12 +131,12 @@ describe('API', () => {
     });
   });
 
-  const rapid = createRapid({
-    http: createMockHttp(),
-  });
-
   describe('find()', () => {
-    it('should make a GET request with the id in the url', async() => {
+    it('should make a GET request with the id in the url', async () => {
+      const rapid = createRapid({
+        http: createMockHttp(),
+      });
+
       const request = await rapid('users').find(1);
 
       expect(request.type).toBe(Rapid.RequestType.Get);
@@ -145,7 +145,10 @@ describe('API', () => {
   });
 
   describe('findBy()', () => {
-    it('should make a GET request with key/value in the URL', async() => {
+    it('should make a GET request with key/value in the URL', async () => {
+      const rapid = createRapid({
+        http: createMockHttp(),
+      });
       const request = await rapid('users').findBy('key', 'value');
 
       expect(request.type).toBe(Rapid.RequestType.Get);
@@ -154,7 +157,11 @@ describe('API', () => {
   });
 
   describe('id()', () => {
-    it('it should return a chainable API', async() => {
+    it('it should return a chainable API', async () => {
+      const rapid = createRapid({
+        http: createMockHttp(),
+      });
+
       const request = rapid('users').id(1234);
 
       expect(request.get).not.toBeUndefined();
@@ -162,13 +169,36 @@ describe('API', () => {
       request.get({}); // flush the id for the next test
     });
 
-    it('it should set the URL params with an id', async() => {
+    it('it should set the URL params with an id', async () => {
+      const rapid = createRapid({
+        http: createMockHttp(),
+      });
+
       const request = await rapid('users')
         .id(1234)
         .get({});
 
       expect(request.type).toBe(Rapid.RequestType.Get);
       expect(request.url).toBe('users/1234');
+    });
+  });
+
+  describe('withParams()', () => {
+    it('should add params to the request', async () => {
+      const params = { foo: 'bar', user: { id: 1 } };
+      const rapid = createRapid({
+        http: createMockHttp(),
+      });
+      const request = await rapid('users')
+        .withParams(params)
+        .get({});
+
+      expect(request.type).toBe(Rapid.RequestType.Get);
+      expect(request.requestData.params).toEqual(params);
+    });
+
+    it('should flush params after request?', () => {
+      expect(true).toBe(true);
     });
   });
 });
