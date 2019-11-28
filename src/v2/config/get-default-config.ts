@@ -21,7 +21,7 @@ export function getDefaultConfig(): Rapid.Config {
      *
      * @type {String}
      */
-    baseURL: 'api',
+    baseURL: '',
 
     /**
      * Whether or not the routes should be case sensitive.
@@ -29,27 +29,6 @@ export function getDefaultConfig(): Rapid.Config {
      * @type {Boolean}
      */
     caseSensitive: false,
-
-    /**
-     * The default route. Can be model|collection.
-     *
-     * @type {String}
-     */
-    defaultRoute: Rapid.Routes.Collection,
-
-    /**
-     * An optional extension to have on the end of each request (.json).
-     *
-     * @type {String}
-     */
-    extension: '',
-
-    /**
-     * An optional set of request parameters to be global and attached to every request.
-     *
-     * @type {Object}
-     */
-    globalParameters: {},
 
     // @ts-ignore
     http: undefined,
@@ -75,37 +54,12 @@ export function getDefaultConfig(): Rapid.Config {
     modelName: '',
 
     /**
-     * An optional prefix for a primary key to be present in the urls.
-     * e.g. /api/my-model/id/1/update
-     *
-     * @type {String}
-     */
-    primaryKey: '',
-
-    /**
      * The route delimeter that handles splitting routes:
      * e.g. /api/my-model/create
      *
      * @type {String}
      */
     routeDelimeter: '-',
-
-    /**
-     * The default route values for model, collection, and any.
-     * This is handled by default, but can be overridden here.
-     *
-     * Ex. Blog =>
-     *  model: 'blog',
-     *  collection: 'blogs',
-     *  any: ''
-     *
-     * @type {Object}
-     */
-    routes: {
-      model: '',
-      collection: '',
-      any: '',
-    },
 
     /**
      * The default request suffixes for the CRUD methods.
@@ -125,11 +79,5 @@ export function getDefaultConfig(): Rapid.Config {
      * @type {Boolean}
      */
     trailingSlash: false,
-
-    beforeRequest(type, url) {},
-
-    afterRequest(response) {},
-
-    onError(response) {},
   };
 }

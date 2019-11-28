@@ -1,4 +1,4 @@
-import defaultsDeep from 'lodash/defaultsDeep';
+import defaultsDeep from 'defaults-deep';
 import { Rapid } from './config/types';
 import { createAllMethod } from './api/all';
 import { createFindMethod } from './api/find';
@@ -7,21 +7,20 @@ import { createRequestMethod } from './api/request';
 import { createIdMethod } from './api/id';
 import { getDefaultConfig } from './config/get-default-config';
 
-export function createRapid(config: Rapid.Config): Rapid.API {
-  if (!config.modelName) {
-    throw new Error('You must specify a modelName.');
+export function createRapid(config: Rapid.ConfigWithModel): Rapid.API;
+export function createRapid(config: Rapid.InitializerConfig): Rapid.Thunk;
+export function createRapid(config: Rapid.InitializerConfig | Rapid.ConfigWithModel): Rapid.Thunk | Rapid.API {
+  if (!config) {
+    throw new Error(Rapid.Errors.NoConfigProvided);
   }
 
   if (!config.http) {
-    throw new Error('You must specify an http instance to use.');
+    throw new Error(Rapid.Errors.NoHttp);
   }
-
-  Object.assign(config, defaultsDeep(config, getDefaultConfig()));
 
   const context: Rapid.Context = {
     api: <Rapid.API>{},
-    config,
-    currentRoute: <Rapid.Routes>config.defaultRoute,
+    config: Object.assign(config, defaultsDeep(config, getDefaultConfig())),
     internals: {
       buildRequest,
       resetRequestData,
@@ -40,40 +39,39 @@ export function createRapid(config: Rapid.Config): Rapid.API {
     findBy: createFindByMethod(context),
     get: createRequestMethod(context, Rapid.RequestType.Get),
     id: createIdMethod(context),
-
-    /**
-     * A getter for chaining requests and switching to `collection` mode
-     */
-    get collection(): Rapid.Chainable {
-      context.currentRoute = Rapid.Routes.Collection;
-
-      return context.api;
-    },
-
-    /**
-     * A getter for chaining requests and switching to `model` mode
-     */
-    get model(): Rapid.Chainable {
-      context.currentRoute = Rapid.Routes.Model;
-
-      return context.api;
-    },
   };
 
-  function makeRequest(type: Rapid.RequestType, url: string): Promise<any> {
-    if (config.beforeRequest) {
-      config.beforeRequest(type, url);
+  // if a model name is provided, we return the standard API to be used a singleton
+  if (context.config.modelName) {
+    return context.api;
+  }
+
+  return function rapid(modelName: string): Rapid.API {
+    if (!modelName) {
+      throw new Error(Rapid.Errors.NoModelName);
+    }
+
+    context.config.modelName = modelName;
+
+    return context.api;
+  };
+
+  function makeRequest(requestType: Rapid.RequestType): Promise<any> {
+    const preparedUrl = makeUrl(requestType);
+
+    if (context.config.beforeRequest) {
+      context.config.beforeRequest(requestType, preparedUrl);
     }
     // .call(this, this.sanitizeUrl(url), ...this.parseRequestData(type))
 
     return new Promise((resolve, reject) => {
-      config.http[type](url, {})
+      context.config.http[requestType](preparedUrl, {})
         .then(response => {
           resetRequestData();
           resetURLParams();
 
-          if (config.afterRequest) {
-            config.afterRequest(response);
+          if (context.config.afterRequest) {
+            context.config.afterRequest(response);
           }
 
           resolve(response);
@@ -82,8 +80,8 @@ export function createRapid(config: Rapid.Config): Rapid.API {
           resetRequestData();
           resetURLParams();
 
-          if (config.onError) {
-            config.onError(error);
+          if (context.config.onError) {
+            context.config.onError(error);
           }
 
           reject(error);
@@ -92,7 +90,7 @@ export function createRapid(config: Rapid.Config): Rapid.API {
   }
 
   function buildRequest(type: Rapid.RequestType, url: string): Promise<any> {
-    return makeRequest(type, url);
+    return makeRequest(type);
   }
 
   /**
@@ -112,5 +110,24 @@ export function createRapid(config: Rapid.Config): Rapid.API {
     context.urlParams = [];
   }
 
-  return context.api;
+  function makeUrl(requestType: Rapid.RequestType): string {
+    const params = [context.config.modelName, ...context.urlParams].filter(Boolean);
+
+    if (context.config.baseURL) {
+      params.unshift(context.config.baseURL);
+    }
+
+    // apply a suffix for the request type if applicable
+    if (context.config.suffixes[requestType]) {
+      params.push(context.config.suffixes[requestType]);
+    }
+
+    if (context.config.trailingSlash) {
+      params.push('');
+    }
+
+    const url = params.join('/');
+
+    return context.config.transformURL ? context.config.transformURL(url) : url;
+  }
 }

@@ -1,18 +1,28 @@
 import { createRapid } from './create-rapid';
 import { Rapid } from './config/types';
 
-function createMockHttp(): Rapid.HttpInstance {
-  return {
+interface MockHttp extends Rapid.HttpInstance {
+  shouldReject: boolean;
+}
+
+function createMockHttp(): MockHttp {
+  const api = {
     get,
     post,
     put,
     patch,
     head,
     delete: deleteMethod,
+    shouldReject: false,
   };
 
+  return api;
+
   function mockPromise({ type, url, params }: { url: string; params: object; type: Rapid.RequestType }): Promise<any> {
-    return Promise.resolve({
+    const promiseMethod = api.shouldReject ? 'reject' : 'resolve';
+
+    // @ts-ignore
+    return Promise[promiseMethod]({
       url,
       type,
       params,
@@ -44,45 +54,123 @@ function createMockHttp(): Rapid.HttpInstance {
   }
 }
 
-describe('createRapid', () => {
-  it('should create a rapid instance', () => {
+describe('Constructor', () => {
+  it('should create a rapid instance with an API when modelName is passed', () => {
     // @ts-ignore
     const rapid = createRapid({
       modelName: 'user',
       http: createMockHttp(),
     });
 
-    expect(rapid).not.toBeUndefined();
+    expect(rapid.all).not.toBeUndefined();
+  });
+
+  it('should create a thunk when modelName is omitted', () => {
+    // @ts-ignore
+    const rapid = createRapid({
+      http: createMockHttp(),
+    });
+
+    // @ts-ignore
+    expect(rapid.all).toBeUndefined();
+    expect(typeof rapid).toBe('function');
   });
 
   it('should throw an error when there is no modelName', () => {
+    const rapid = createRapid({
+      http: createMockHttp(),
+    });
+
     expect(() => {
       // @ts-ignore
-      const rapid = createRapid({
-        http: createMockHttp(),
-      });
-    }).toThrow();
+      rapid().all();
+    }).toThrow(Rapid.Errors.NoModelName);
+  });
+
+  it('should throw an error when there is no config', () => {
+    expect(() => {
+      // @ts-ignore
+      createRapid();
+    }).toThrow(Rapid.Errors.NoConfigProvided);
   });
 
   it('should throw an error when there is no http', () => {
     expect(() => {
       // @ts-ignore
-      const rapid = createRapid({
-        modelName: 'user',
-      });
-    }).toThrow();
+      createRapid({});
+    }).toThrow(Rapid.Errors.NoHttp);
   });
+});
 
-  describe('all()', () => {
+describe('API', () => {
+  // thunking
+  describe('all() - thunk', () => {
     const rapid = createRapid({
-      modelName: 'user',
       http: createMockHttp(),
     });
 
-    it('should make a GET request', async () => {
+    it('should make a GET request', async() => {
+      const request = await rapid('users').all();
+
+      expect(request.type).toBe(Rapid.RequestType.Get);
+      expect(request.url).toBe('users');
+    });
+  });
+
+  describe('all() - API', () => {
+    const rapid = createRapid({
+      modelName: 'users',
+      http: createMockHttp(),
+    });
+
+    it('should make a GET request', async() => {
       const request = await rapid.all();
 
       expect(request.type).toEqual(Rapid.RequestType.Get);
+      expect(request.url).toBe('users');
+    });
+  });
+
+  const rapid = createRapid({
+    http: createMockHttp(),
+  });
+
+  describe('find()', () => {
+    it('should make a GET request with the id in the url', async() => {
+      const request = await rapid('users').find(1);
+
+      expect(request.type).toBe(Rapid.RequestType.Get);
+      expect(request.url).toBe('users/1');
+    });
+  });
+
+  describe('findBy()', () => {
+    it('should make a GET request with key/value in the URL', async() => {
+      const request = await rapid('users').findBy('key', 'value');
+
+      expect(request.type).toBe(Rapid.RequestType.Get);
+      expect(request.url).toBe('users/key/value');
+    });
+  });
+
+  describe('id()', () => {
+    it('it should return a chainable API', async() => {
+      const request = rapid('users').id(1234);
+
+      expect(request.get).not.toBeUndefined();
+
+      request.get({}); // flush the id for the next test
+    });
+
+    it('it should set the URL params with an id', async() => {
+      const request = await rapid('users')
+        .id(1234)
+        .get({});
+
+      expect(request.type).toBe(Rapid.RequestType.Get);
+      expect(request.url).toBe('users/1234');
     });
   });
 });
+
+describe('Hooks: beforeRequest, afterRequest, onError', () => {});

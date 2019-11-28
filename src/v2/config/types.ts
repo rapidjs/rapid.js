@@ -5,9 +5,9 @@ export namespace Rapid {
     findBy(key: ModelId, value: ModelId): Promise<any>;
     get(params): Promise<any>;
     id(id: ModelId): Chainable;
-    collection: Chainable;
-    model: Chainable;
   }
+
+  export type Thunk = (modelName: string) => API;
 
   /**
    * An alias for methods that are chainable
@@ -17,7 +17,6 @@ export namespace Rapid {
   export interface Context {
     api: API;
     config: Config;
-    currentRoute: Routes;
     internals: {
       buildRequest(type: RequestType, url: string): Promise<any>;
       resetRequestData(): void;
@@ -27,35 +26,54 @@ export namespace Rapid {
       params: object;
       options: object;
     };
+    // url: {
+    //   id?: ModelId;
+    //   params: ModelId[];
+    // },
     urlParams: ModelId[];
   }
 
-  export interface Config {
+  // this config should be the config that is always present at minimum
+  export interface Config extends InitializerConfig {
+    allowedRequestTypes: RequestType[];
+    baseURL: string;
+    caseSensitive: boolean;
+    http: HttpInstance;
+    methods: {
+      create: string;
+      update: string;
+      destroy: string;
+      restore: string;
+    };
+    modelName: string;
+    routeDelimeter: string;
+    suffixes: {
+      create: string;
+      update: string;
+      destroy: string;
+      restore: string;
+    };
+    trailingSlash: boolean;
+  }
+
+  export interface InitializerConfig {
     afterRequest?(response): void;
     allowedRequestTypes?: RequestType[];
     baseURL?: string;
     beforeRequest?(type: RequestType, url: string): void;
     caseSensitive?: boolean;
-    defaultRoute?: Routes;
     extension?: string;
     onError?(error: () => void): void;
     globalParameters?: object;
     http: HttpInstance;
-    httpConfig?: object;
-    modelName: string;
     methods?: {
       create?: string;
       update?: string;
       destroy?: string;
       restore?: string;
     };
-    primaryKey?: string;
+    modelName?: string;
     routeDelimeter?: string;
-    routes?: {
-      any?: string;
-      model?: string;
-      collection?: string;
-    };
     suffixes?: {
       create?: string;
       update?: string;
@@ -63,14 +81,14 @@ export namespace Rapid {
       restore?: string;
     };
     trailingSlash?: boolean;
+    transformURL?(url): string;
+  }
+
+  export interface ConfigWithModel extends InitializerConfig {
+    modelName: string;
   }
 
   export type ModelId = string | number;
-
-  export enum Routes {
-    Model = 'model',
-    Collection = 'collection',
-  }
 
   export enum RequestType {
     Get = 'get',
@@ -88,5 +106,11 @@ export namespace Rapid {
     patch(url: string, params: object): T;
     head(url: string, params: object): T;
     delete(url: string, params: object): T;
+  }
+
+  export const enum Errors {
+    NoConfigProvided = 'You must provide a config object.',
+    NoHttp = 'You provide an http instance in `config.http`.',
+    NoModelName = 'You must provide a modelName.',
   }
 }

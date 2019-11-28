@@ -4,6 +4,6 @@ export function createFindMethod(context: Rapid.Context) {
   return function find(id: Rapid.ModelId) {
     const { api } = context;
 
-    return api.model.id(id).get();
+    return api.id(id).get({});
   };
 }
